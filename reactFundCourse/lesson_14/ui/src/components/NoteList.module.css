@@ -1,0 +1,11 @@
+.note-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.note-list-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+}

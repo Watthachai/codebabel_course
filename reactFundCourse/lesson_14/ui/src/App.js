@@ -1,11 +1,19 @@
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <div>TESTSET</div>
-    </div>
-  );
+import PostList from "./api/postList";
+import UserList from "./api/userList";
+import axios from "axios";
+import NoteApp from "./components/NoteApp";
+
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
+export default function App() {
+
+    return(
+        <>
+         <UserList></UserList>
+         <PostList></PostList>
+         <NoteApp></NoteApp>
+        </>
+
+    )
 }
-
-export default App;

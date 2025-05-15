@@ -1,0 +1,14 @@
+{
+  "name": "workshop_product",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "concurrently -k yarn:start:backend yarn:start:frontend",
+    "start:backend": "yarn --cwd backend start",
+    "start:frontend": "yarn --cwd frontend start"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
