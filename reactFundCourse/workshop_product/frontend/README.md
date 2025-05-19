@@ -383,4 +383,383 @@ export default function Content() {
 ```
 
 # จัดการเส้นทางในหน้าเพจด้วย React Router
-## 1. การประกาศ Route และการใช้ Switch
+
+## การติดตั้ง React Router
+```bash
+yarn add react-router-dom
+```
+
+## การเปลี่ยนแปลงจาก React Router v5 เป็น v6
+
+### 1. การเปลี่ยนจาก Switch เป็น Routes
+
+**React Router v5 (เดิม):**
+```jsx
+<Switch>
+    <Route path="/products">
+        <ProductRoutes></ProductRoutes>
+    </Route>
+    <Route path="/cart">
+        <CartRoutes></CartRoutes>
+    </Route>
+</Switch>
+```
+
+**React Router v6 (ใหม่):**
+```jsx
+<Routes>
+    <Route path="/products" element={<ProductRoutes />} />
+    <Route path="/cart" element={<CartRoutes />} />
+</Routes>
+```
+
+### 2. การจัดการ Root Component
+
+**React Router v6:**
+```jsx
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>
+);
+```
+
+### 3. ตัวอย่างการใช้งาน Nested Routes
+
+**ตัวอย่างในไฟล์ /src/modules/ui/components/Routes.js:**
+```jsx
+<Routes>
+    <Route path="/" element={<ProductList />} />
+    <Route path="/products/*" element={<ProductRoutes />} />
+    <Route path="/cart" element={<CartRoutes />} />
+</Routes>
+```
+
+### ข้อควรระวัง:
+- ใน React Router v6 เมื่อใช้ nested routes ต้องเพิ่ม `/*` ที่ path ของ parent route
+- ไม่ต้องมี prefix ของ parent path ใน child routes
+
+## 2. การเข้าถึงข้อมูล path ด้วย useParams แทน useRouteMatch
+
+ใน React Router v6 มีการเปลี่ยนแปลง API อย่างมาก โดย useRouteMatch ถูกแทนที่ด้วย Hooks ตัวใหม่แล้ว
+
+### การเปลี่ยนแปลงใน React Router v6
+React Router v6 ได้แยก Hooks ให้เฉพาะเจาะจงมากขึ้น ทำให้โค้ดอ่านง่ายและกระชับ:
+
+- `useParams()` - สำหรับเข้าถึง URL parameters
+- `useSearchParams()` - สำหรับเข้าถึง query parameters
+- `useLocation()` - สำหรับข้อมูล URL ปัจจุบัน
+- `useNavigate()` - สำหรับการนำทาง (แทน useHistory)
+
+### ตัวอย่างการแก้ไข
+ใน `frontend/src/modules/products/components/ProductDetails.js` ผมได้แก้ไขโดย:
+
+```javascript
+// เพิ่ม
+const { id } = useParams();
+
+// ใน useEffect
+useEffect(() => {
+    // เพิ่ม id เป็นพารามิเตอร์
+    // ...
+}, [id]);
+```
+
+## 3. การเปลี่ยนหน้าเพจด้วย Link และ useNavigate แทน useHistory (หัวข้อที่ 4)
+
+### การเปลี่ยนจาก useHistory เป็น useNavigate
+React Router v6 ได้แทนที่ `useHistory` ด้วย `useNavigate` เพื่อ:
+- สื่อความหมายชัดเจนกว่า
+- รองรับฟีเจอร์ใหม่
+- ใช้งานง่ายขึ้น
+
+### วิธีแก้ไขโค้ด
+**จากเดิม:**
+```javascript
+import { useHistory } from 'react-router-dom';
+
+export default function Header() {
+    const history = useHistory();
+    
+    const navigateToCart = () => {
+        history.push('/cart');
+    }
+}
+```
+
+**เปลี่ยนเป็น:**
+```javascript
+import { useNavigate } from 'react-router-dom';
+
+export default function Header() {
+    const navigate = useNavigate();
+    
+    const navigateToCart = () => {
+        navigate('/cart');
+        // หรือใช้ replace: navigate('/cart', { replace: true });
+    }
+}
+```
+
+### ฟีเจอร์เพิ่มเติมของ useNavigate
+```javascript
+const navigate = useNavigate();
+
+// การนำทางพื้นฐาน
+navigate('/products');
+
+// แบบ replace (ไม่เพิ่มในประวัติ)
+navigate('/products', { replace: true });
+
+// ส่งข้อมูลไปด้วย
+navigate('/products', { state: { from: 'home' } });
+
+// ย้อนกลับ/ไปข้างหน้า
+navigate(-1); // ย้อนกลับ
+navigate(1);  // ไปข้างหน้า
+```
+
+## 4. การสร้าง Utility สำหรับจัดการ Path
+
+เพื่อให้การจัดการ path เป็นระบบและง่ายต่อการบำรุงรักษา ผมได้สร้างไฟล์ utility แยกต่างหาก:
+
+### สร้างไฟล์ `frontend/src/utils/urlUtils.js`
+```javascript
+export const paths = {
+    products: '/products',
+    cart: '/cart',
+    // เพิ่ม path อื่นๆ ตามต้องการ
+};
+
+export function buildUrl(basePath, ...segments) {
+    return `${basePath}/${segments.join('/')}`;
+}
+```
+
+### วิธีใช้งานใน ProductItem.js
+```javascript
+import { paths, buildUrl } from '../../../utils/urlUtils';
+
+export default function ProductItem({ id, image, name, desc, category, price }) {
+    return (
+        <Grid item xs={12} sm={6} lg={4}>
+            <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea component={Link} to={buildUrl(paths.products, id)}>
+                    {/* ...content... */}
+                </CardActionArea>
+            </Card>
+        </Grid>
+    )
+}
+```
+
+ด้วยวิธีนี้ หากในอนาคตต้องเปลี่ยน URL structure เราสามารถแก้ไขได้ที่ไฟล์ `urlUtils.js` ไฟล์เดียว
+
+## 5. การดึงค่า Dynamic Segments ด้วย useParams
+บาง URL ประกอบด้วย Dynamic Segments หรือส่วนที่เปลี่ยนแปลงได้ เช่น `/products/:id` เรียก `:id` ว่า Dynamic Segments บทเรียนนี้จะพูดถึงการทำงานกับ Dynamic Segments ผ่าน `useParams` ซึ่งผู้เรียน อธิบายไว้ให้แล้วในขั้นตอนที่ 2. การเข้าถึงข้อมูล path ด้วย useParams แทน useRouteMatch
+
+## 6. การดึงค่า Query String ผ่าน useLocation
+
+หลังจากนั้นสามารถใช้ `useLocation()` ต่อได้ตามปกติตามคลิปเลย ในหัวข้อนี้มีการใช้งาน query-string ทำการติดตั้งก่อน:
+
+```bash
+yarn add query-string
+```
+
+### การปรับใช้งานในหน้า ProductList.js:
+```javascript
+// เพิ่มส่วนนี้เข้าไป
+const { search } = useLocation();
+const { category } = queryString.parse(search); 
+// หมายเหตุ: การ Deconstruct นี้ทำให้ดึงเฉพาะ property "category" จาก object ที่ได้จากการ parse
+// เช่น ถ้า search = "?category=electronics" จะได้ category = "electronics"
+```
+
+### เปลี่ยนแปลงใน useEffect()
+ปรับการกรองสินค้าตามค่า category ที่ได้จาก query string
+
+### การปรับใช้งานในหน้า CategoryItem.js:
+```javascript
+// เปลี่ยนจาก useHistory เป็น useNavigate
+const navigate = useNavigate();  
+
+const filterProductsByCategory = () => {
+    navigate(`${paths.products}?category=${title}`);
+}
+```
+
+## 7. Redirect ใน React Router
+
+> **การเปลี่ยนแปลงสำคัญจาก React Router v5 ไปยัง v6**
+
+### แบบเดิม (v5):
+```jsx
+<Route>
+  <div>Page not found</div>
+</Route>
+```
+
+### แบบใหม่ (v6):
+```jsx
+<Route path="*" element={<div>Page not found</div>} />
+```
+
+### เหตุผลที่มีการเปลี่ยนแปลง:
+1. **เปลี่ยนจาก Children API เป็น Element Props** - v6 ใช้ element prop แทนการใส่ component โดยตรงเป็น children
+2. **ความชัดเจนมากขึ้น** - เห็นชัดเจนว่าอะไรจะถูก render เมื่อ route นั้นถูกเรียกใช้
+3. **รองรับโครงสร้างแบบลำดับชั้น** - ทำให้สร้าง nested routes ได้ง่ายขึ้น ผ่าน Outlet component
+4. **แยก matching logic และ rendering logic** - แยก logic การจับคู่ URL (path) และการแสดงผล (element) ออกจากกัน
+5. **Performance ดีขึ้น** - ช่วยให้ optimize การ render components ได้ดีขึ้น
+
+# การจัดการฟอร์มด้วย React Hook Form
+
+## 1. เปรียบเทียบ Formik กับ React Hook Form
+ปัจจุบันมีไลบรารี่สำหรับการทำงานกับฟอร์มที่ได้รับความนิยมคือ Formik และ React Hook Form บทเรียนนี้จะทำการเปรียบเทียบสองสิ่งนี้ พร้อมทั้งระบุเหตุผลที่คอร์สนี้เลือกใช้ React Hook Form
+
+## 2. การสร้างฟอร์มด้วย React Hook Form ผ่าน useForm
+## 3. ตรวจสอบความถูกต้องของฟอร์มด้วย Yup
+
+### การติดตั้ง:
+```bash
+yarn add react-hook-form @hookform/resolvers yup
+```
+
+### การแก้ไขจาก API เวอร์ชันเก่าให้เป็นเวอร์ชันใหม่:
+
+#### 1. การใช้งาน register:
+- **แบบเก่า (จากคลิป)**: `inputRef={register}`
+- **แบบใหม่**: `{...register("fieldName")}`
+
+#### 2. การเข้าถึง errors:
+- **แบบเก่า (จากคลิป)**:
+  ```javascript
+  const { register, errors } = useForm();
+  // ...
+  {errors.name && <span>{errors.name.message}</span>}
+  ```
+- **แบบใหม่**:
+  ```javascript
+  const { register, formState: { errors } } = useForm();
+  // ...
+  {errors.name && <span>{errors.name.message}</span>}
+  ```
+
+#### 3. การใช้งาน handleSubmit:
+- **เพิ่มใน form**: `<form onSubmit={handleSubmit(submit)}>`
+
+#### 4. การสร้าง validation schema:
+- **แบบเก่า**:
+  ```javascript
+  yup.string().required()
+  ```
+- **แบบใหม่**:
+  ```javascript
+  yup.string().required("Address is required")
+  ```
+
+# บริหาร state ในแอพพลิเคชันด้วย Redux
+
+## 1. Redux คืออะไร ทำไมจึงสำคัญ
+        เว็บแอพทั่วไปมักมีข้อมูลที่ต้องส่งผ่านระหว่างคอมโพแนนท์หรือใช้งานร่วมกัน เราจึงต้องการเครื่องมือที่ทำให้การส่งผ่านข้อมูลหรือ state ระหว่างคอมโพแนนท์เป็นไปอย่างสะดวกและสามารถ Debug หรือรู้ลำดับการทำงานอย่างชัดแจ้ง บทเรียนนี้จึงยก Redux ที่เป็นตัวจัดการ state (state management) ยอดนิยมใน React มาพูดถึง
+
+        Redux คือ .... Store = single source of thruth .... 
+        State is read-only....
+        Changes are made with pure funtions.....
+
+## 2. Store และ Reducers
+    ก่อนอื่นเลยให้ลง Redux ในฝั่ง frontend โดยการเพิ่ม package =>> yarn add redux react-redux
+
+    และ yarn add -D redux-devtools-extension จากนั้นติดตั้งส่วนเสริม Redix Devtools
+
+    คำเตือน!!
+    เนื่องจากในคลิปโค้ดนี้เป็นแบบเก่าของ Redux (v4 หรือเก่ากว่า) ซึ่งในปัจจุบัน Redux Toolkit เป็นแบบมาตรฐานที่แนะนำ
+
+    แบบเก่า
+
+    import { applyMiddleware, createStore } from "redux";
+
+export default function configureStore(initialState) {
+    const middleware = [];
+    
+    const store = createStore(
+        reducer,
+        initialState,
+        applyMiddleware( ...middleware)
+    );
+    return store;
+    
+}
+
+    ถ้าอยากใช้แบบเก่าเหมือนกันแต่ต้องเปลี่ยนเป็น rootReducer 
+
+    import { applyMiddleware, createStore, combineReducers } from "redux";
+
+// Import reducers
+// ตัวอย่าง: import cartReducer from "./cart/reducer";
+// ตัวอย่าง: import productsReducer from "./products/reducer";
+
+// นำ reducers มารวมกัน
+const rootReducer = combineReducers({
+  // cart: cartReducer,
+  // products: productsReducer,
+  // เพิ่ม reducers อื่นๆ ที่นี่
+});
+
+export default function configureStore(initialState) {
+    const middleware = [];
+    
+    const store = createStore(
+        rootReducer,  // เปลี่ยนจาก reducer เป็น rootReducer
+        initialState,
+        applyMiddleware(...middleware)
+    );
+    return store;
+}
+
+การใช้ Redux Toolkit (แนะนำ):
+แต่การใช้ Redux แบบดั้งเดิมไม่ใช่วิธีที่แนะนำในปัจจุบัน Redux ทีมพัฒนาได้สร้าง Redux Toolkit (RTK) เพื่อทำให้การใช้งานง่ายขึ้น:
+
+import { configureStore } from "@reduxjs/toolkit";
+
+// Import slices
+// ตัวอย่าง: import cartSlice from "./cart/slice";
+// ตัวอย่าง: import productsSlice from "./products/slice";
+
+export default function setupStore(preloadedState) {
+  return configureStore({
+    reducer: {
+      // cart: cartSlice.reducer,
+      // products: productsSlice.reducer,
+      // เพิ่ม reducers อื่นๆ ที่นี่
+    },
+    preloadedState
+  });
+}
+ความแตกต่างและข้อดี:
+Redux Toolkit ง่ายกว่า: ลดจำนวนโค้ด boilerplate เช่น ไม่ต้องกำหนด action types แยก
+
+มี middleware ในตัว: configureStore มี middleware พื้นฐาน (redux-thunk) และ development tools ในตัว
+
+ใช้ immer ในตัว: ช่วยให้เขียน reducer ได้ง่ายขึ้น ไม่ต้องกังวลเรื่องการสร้าง immutable state
+
+type safety ที่ดีกว่า: เข้ากับ TypeScript ได้ดีกว่ารุ่นเก่า
+
+คลิปที่ผมดูอาจจะเป็นเวอร์ชันเก่าของ Redux ซึ่งใช้ applyMiddleware และ createStore โดยตรง แต่ในปัจจุบัน Redux ทีมแนะนำให้ใช้ Redux Toolkit แทน ถ้าเริ่มโปรเจกต์ใหม่ แนะนำให้ใช้ RTK เพราะจะทำให้การพัฒนาง่ายและรวดเร็วกว่า
+
+แต่ตอนนี้ผมยังจะคงใช้แบบเดิมเพื่อลดการเปลี่ยนแปลงจาก สื่อที่กำลังเรียนอยู่และไม่แปลกมากเกินไปครับ 
+
+!!ถึงแม้จะเปลี่ยนแล้ว โคดยังคงเตือนว่า """@deprecated
+We recommend using the configureStore method of the @reduxjs/toolkit package, which replaces createStore.
+
+Redux Toolkit is our recommended approach for writing Redux logic today, including store setup, reducers, data fetching, and more.
+
+For more details, please read this Redux docs page: https://redux.js.org/introduction/why-rtk-is-redux-today"""
+
+## 3. Actions และ Action Creators
+
+    ผู้เรียนจะได้รู้จักกับ Actions ซึ่งเป็นเหตุการณ์ที่ทำให้เกิดการขับเคลื่อนในระบบของ Redux รวมถึงการสร้าง Action Creators ซึ่งเป็นฟังก์ชันสำหรับสร้าง Actions อีกทีนึง
+    
+    ใช้แนวคิด purefunction ต้องใช้ค่าที่คาดเดาได้

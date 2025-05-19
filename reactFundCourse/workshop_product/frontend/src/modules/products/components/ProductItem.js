@@ -1,6 +1,8 @@
-import { Grid, Card, Chip, CardContent, Typography, CardActionArea, CardActions, Button, CardMedia, styled } from '@mui/material'
-import React from 'react'
-import currencyFormat from 'utils/currencyFormat'
+import { Grid, Card, Chip, CardContent, Typography, CardActionArea, CardActions, Button, CardMedia, styled } from '@mui/material';
+import React from 'react';
+import currencyFormat from 'utils/currencyFormat';
+import { Link } from 'react-router-dom';
+import { paths, buildUrl } from 'utils/urlUtils';
 
 export default function ProductItem({ id, image, name, desc, category, price,}) {
     
@@ -21,7 +23,7 @@ export default function ProductItem({ id, image, name, desc, category, price,}) 
     lg={4}
     >
         <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea component={Link} to={buildUrl(paths.products, id)}>
         <CardMediaItems
           component="img"
           height="140"

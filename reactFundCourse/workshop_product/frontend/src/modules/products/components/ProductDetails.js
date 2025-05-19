@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { styled, useTheme, useMediaQuery, Grid, Paper, Typography, ButtonGroup, Button } from '@mui/material';
 import axios from 'axios';
+import { useNavigate, useParams,  } from 'react-router-dom'; // Add this import
 
 // สร้าง styled components แทน makeStyles
 const DetailsPaper = styled(Paper)(({ theme }) => ({
@@ -11,19 +12,12 @@ const ContentGrid = styled(Grid)(({ theme }) => ({
   height: '100%',
 }));
 
-const AmountContainer = styled('div')(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-}));
-
-const Amount = styled('span')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-}));
-
 export default function ProductDetails() {
-  const id = 1;
+  const { id } = useParams();
   const [product, setProduct] = useState();
   const theme = useTheme();
   const isMediumUp = useMediaQuery(theme.breakpoints.up('md'));
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -32,9 +26,13 @@ export default function ProductDetails() {
     };
 
     loadProduct();
-  }, []);
+  }, [id]);
 
   if (!product) return null;
+
+  const buyNow = () => {
+     navigate('/cart');
+  }
 
   return (
     <DetailsPaper>
@@ -64,7 +62,7 @@ export default function ProductDetails() {
                 color="primary"
                 aria-label="primary button group"
               >
-                <Button>Buy Now</Button>
+                <Button onClick={buyNow}>Buy Now</Button>
                 <Button>Add to Cart</Button>
               </ButtonGroup>
             </Grid>

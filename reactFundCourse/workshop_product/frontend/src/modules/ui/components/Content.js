@@ -1,8 +1,8 @@
 import { Container, styled, Toolbar, Snackbar, Button } from '@mui/material'
-import ProductDetails from 'modules/products/components/ProductDetails';
 import React from 'react'
+import AppRoutes from './Routes'
 
-// สร้าง Styled Component จาก HTML tag main
+// Styled Component from HTML tag main
 const Main = styled('main')(({ theme }) => ({
     padding: theme.spacing(2, 0),
 }));
@@ -12,7 +12,7 @@ export default function Content() {
     <Main>
         <Container maxWidth="lg">
             <Toolbar />
-            <ProductDetails />
+            <AppRoutes />
             <Snackbar
               open
               message="Hello"

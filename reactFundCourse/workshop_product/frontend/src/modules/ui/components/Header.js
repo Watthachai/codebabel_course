@@ -10,8 +10,13 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { ShoppingCart } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom';
 
 import logo from 'assets/images/logo.png'
+import { Link as RouterLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+
+import * as actions from '../actions';
 
 // สร้าง styled components
 const AppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -32,26 +37,42 @@ const Spacer = styled(Box)({
 });
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const navigateToCart = () => {
+    navigate('/cart');  // ไปยัง "/cart" โดยเพิ่มเข้าไปใน history stack
+    // หรือ navigate('/cart', { replace: true });  // ใช้ replace แทน push
+  }
+
+  const dispatch = useDispatch();
+
+  const toggleDarkMode = () => {
+
+    dispatch(actions.toggleDarkMode())
+  }
+
   return (
     <AppBar position="fixed">
       <Toolbar>
         <LogoLink
-          href="/"
+          to="/"
           color="inherit"
           underline="none"
+          component={RouterLink}
         >
           <LogoImage src={logo} alt="Babel Shopping" />
         </LogoLink>
-        <Link href="/products" color="inherit" underline="none">
+        <Link to="/products" color="inherit" underline="none" component={RouterLink}>
           Products
         </Link>
+
         <Spacer />
         <FormControlLabel
-          control={<Switch color="secondary" />}
+          control={<Switch color="secondary" onChange={toggleDarkMode} />}
           label="Dark"
           labelPlacement="end"
         />
-        <Badge badgeContent={5} color="secondary">
+        <Badge badgeContent={5} color="secondary" onClick={navigateToCart}>
           <ShoppingCart />
         </Badge>
       </Toolbar>
