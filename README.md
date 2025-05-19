@@ -8,7 +8,7 @@
 
 ## 📊 แดชบอร์ดการเรียนรู้
 
-<table>
+<table align="center">
   <tr>
     <th colspan="4" align="center"><h3>จุดโฟกัสปัจจุบัน</h3></th>
   </tr>
@@ -24,7 +24,7 @@
         <img src="https://img.shields.io/badge/React-พื้นฐาน-61DAFB?style=flat-square&logo=react" alt="React พื้นฐาน"/>
       </a>
     </td>
-    <td><span style="color:#1E88E5">⟢ กำลังเรียน</span></td>
+    <td>⟢ กำลังเรียน</td>
     <td>
       <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
         <div style="background-color:#1E88E5;height:100%;width:75%;border-radius:5px;"></div>
