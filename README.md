@@ -126,6 +126,7 @@
             </td>
         </tr>
         <tr>
+<<<<<<< HEAD
     <td width="50%" align="center">
         <img src="https://img.shields.io/badge/Phase-3-lightgrey?style=for-the-badge" alt="Phase 3"/>
         <h3>Front-End ขั้นสูง</h3>
@@ -145,6 +146,27 @@
         <p><strong>กำหนดการเรียน 📅</strong></p>
     </td>
 </tr>
+=======
+            <td width="50%" align="center">
+                <img src="https://img.shields.io/badge/Phase-3-lightgrey?style=for-the-badge" alt="Phase 3"/>
+                <h3>Front-End ขั้นสูง</h3>
+                <a href="./nextjs_course/README.md">
+                    <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js"/>
+                </a>
+                <p>TypeScript, Next.js, Tailwind</p>
+                <p><strong>กำหนดการเรียน 📅</strong></p>
+            </td>
+            <td width="50%" align="center">
+                <img src="https://img.shields.io/badge/Phase-4-lightgrey?style=for-the-badge" alt="Phase 4"/>
+                <h3>Full-Stack ครบวงจร</h3>
+                <a href="./mean_stack/README.md">
+                    <img src="https://img.shields.io/badge/MEAN-Stack-DD0031?style=flat-square&logo=angular" alt="MEAN Stack"/>
+                </a>
+                <p>MongoDB, Express, Angular, Node</p>
+                <p><strong>กำหนดการเรียน 📅</strong></p>
+            </td>
+        </tr>
+>>>>>>> 62812ad (add readme on landing page Day 4)
         <tr>
             <td width="100%" align="center" colspan="2">
                 <img src="https://img.shields.io/badge/Phase-5-lightgrey?style=for-the-badge" alt="Phase 5"/>
