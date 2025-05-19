@@ -663,43 +663,32 @@ yarn add react-hook-form @hookform/resolvers yup
 # บริหาร state ในแอพพลิเคชันด้วย Redux
 
 ## 1. Redux คืออะไร ทำไมจึงสำคัญ
-        เว็บแอพทั่วไปมักมีข้อมูลที่ต้องส่งผ่านระหว่างคอมโพแนนท์หรือใช้งานร่วมกัน เราจึงต้องการเครื่องมือที่ทำให้การส่งผ่านข้อมูลหรือ state ระหว่างคอมโพแนนท์เป็นไปอย่างสะดวกและสามารถ Debug หรือรู้ลำดับการทำงานอย่างชัดแจ้ง บทเรียนนี้จึงยก Redux ที่เป็นตัวจัดการ state (state management) ยอดนิยมใน React มาพูดถึง
 
-        Redux คือ .... Store = single source of thruth .... 
-        State is read-only....
-        Changes are made with pure funtions.....
+เว็บแอพทั่วไปมักมีข้อมูลที่ต้องส่งผ่านระหว่างคอมโพแนนท์หรือใช้งานร่วมกัน เราจึงต้องการเครื่องมือที่ทำให้การส่งผ่านข้อมูลหรือ state ระหว่างคอมโพแนนท์เป็นไปอย่างสะดวกและสามารถ Debug หรือรู้ลำดับการทำงานอย่างชัดแจ้ง บทเรียนนี้จึงยก Redux ที่เป็นตัวจัดการ state (state management) ยอดนิยมใน React มาพูดถึง
+
+Redux คือไลบรารีสำหรับการจัดการ state ที่มีหลักการสำคัญ 3 ประการ:
+1. **Store เป็น Single Source of Truth** - ข้อมูลทั้งหมดของแอพถูกเก็บไว้ในที่เดียว ทำให้การติดตามและจัดการ state ง่ายขึ้น
+2. **State is Read-Only** - state ไม่สามารถเปลี่ยนแปลงได้โดยตรง ต้องส่ง Action ไปที่ Store เพื่อบอกว่าต้องการเปลี่ยนแปลงอะไร
+3. **Changes are Made with Pure Functions** - การเปลี่ยนแปลง state ทำผ่าน Reducer ซึ่งเป็น Pure Function ที่รับ state เก่าและ action แล้วคืนค่า state ใหม่
 
 ## 2. Store และ Reducers
-    ก่อนอื่นเลยให้ลง Redux ในฝั่ง frontend โดยการเพิ่ม package =>> yarn add redux react-redux
 
-    และ yarn add -D redux-devtools-extension จากนั้นติดตั้งส่วนเสริม Redix Devtools
+เริ่มต้นด้วยการติดตั้ง Redux ในโปรเจค React ของผม:
 
-    คำเตือน!!
-    เนื่องจากในคลิปโค้ดนี้เป็นแบบเก่าของ Redux (v4 หรือเก่ากว่า) ซึ่งในปัจจุบัน Redux Toolkit เป็นแบบมาตรฐานที่แนะนำ
+```bash
+yarn add redux react-redux
+yarn add -D redux-devtools-extension
+```
 
-    แบบเก่า
+จากนั้นให้ติดตั้งส่วนเสริม Redux DevTools บนเบราว์เซอร์เพื่อช่วยในการ debug
 
-    import { applyMiddleware, createStore } from "redux";
+**คำเตือน!**
+ในบทเรียนนี้ผมใช้ Redux แบบดั้งเดิม (v4 หรือเก่ากว่า) ซึ่งต่างจากปัจจุบันที่ Redux Toolkit ได้กลายเป็นมาตรฐานที่แนะนำ ผมเลือกใช้แบบเดิมเพื่อให้สอดคล้องกับบทเรียนที่กำลังศึกษา
 
-export default function configureStore(initialState) {
-    const middleware = [];
-    
-    const store = createStore(
-        reducer,
-        initialState,
-        applyMiddleware( ...middleware)
-    );
-    return store;
-    
-}
+**แบบเก่า (ที่ใช้ในบทเรียนนี้):**
 
-    ถ้าอยากใช้แบบเก่าเหมือนกันแต่ต้องเปลี่ยนเป็น rootReducer 
-
-    import { applyMiddleware, createStore, combineReducers } from "redux";
-
-// Import reducers
-// ตัวอย่าง: import cartReducer from "./cart/reducer";
-// ตัวอย่าง: import productsReducer from "./products/reducer";
+```javascript
+import { applyMiddleware, createStore, combineReducers } from "redux";
 
 // นำ reducers มารวมกัน
 const rootReducer = combineReducers({
@@ -712,54 +701,60 @@ export default function configureStore(initialState) {
     const middleware = [];
     
     const store = createStore(
-        rootReducer,  // เปลี่ยนจาก reducer เป็น rootReducer
+        rootReducer,
         initialState,
         applyMiddleware(...middleware)
     );
     return store;
 }
+```
 
-การใช้ Redux Toolkit (แนะนำ):
-แต่การใช้ Redux แบบดั้งเดิมไม่ใช่วิธีที่แนะนำในปัจจุบัน Redux ทีมพัฒนาได้สร้าง Redux Toolkit (RTK) เพื่อทำให้การใช้งานง่ายขึ้น:
+**แบบใหม่ด้วย Redux Toolkit (เพื่อการอ้างอิง):**
 
+```javascript
 import { configureStore } from "@reduxjs/toolkit";
-
-// Import slices
-// ตัวอย่าง: import cartSlice from "./cart/slice";
-// ตัวอย่าง: import productsSlice from "./products/slice";
 
 export default function setupStore(preloadedState) {
   return configureStore({
     reducer: {
       // cart: cartSlice.reducer,
       // products: productsSlice.reducer,
-      // เพิ่ม reducers อื่นๆ ที่นี่
     },
     preloadedState
   });
 }
-ความแตกต่างและข้อดี:
-Redux Toolkit ง่ายกว่า: ลดจำนวนโค้ด boilerplate เช่น ไม่ต้องกำหนด action types แยก
+```
 
-มี middleware ในตัว: configureStore มี middleware พื้นฐาน (redux-thunk) และ development tools ในตัว
+**ข้อดีของ Redux Toolkit:**
+- ลดโค้ด boilerplate ลงมาก
+- มี middleware ในตัว (redux-thunk)
+- ใช้ immer ช่วยจัดการ immutable state
+- รองรับ TypeScript ได้ดีกว่า
 
-ใช้ immer ในตัว: ช่วยให้เขียน reducer ได้ง่ายขึ้น ไม่ต้องกังวลเรื่องการสร้าง immutable state
-
-type safety ที่ดีกว่า: เข้ากับ TypeScript ได้ดีกว่ารุ่นเก่า
-
-คลิปที่ผมดูอาจจะเป็นเวอร์ชันเก่าของ Redux ซึ่งใช้ applyMiddleware และ createStore โดยตรง แต่ในปัจจุบัน Redux ทีมแนะนำให้ใช้ Redux Toolkit แทน ถ้าเริ่มโปรเจกต์ใหม่ แนะนำให้ใช้ RTK เพราะจะทำให้การพัฒนาง่ายและรวดเร็วกว่า
-
-แต่ตอนนี้ผมยังจะคงใช้แบบเดิมเพื่อลดการเปลี่ยนแปลงจาก สื่อที่กำลังเรียนอยู่และไม่แปลกมากเกินไปครับ 
-
-!!ถึงแม้จะเปลี่ยนแล้ว โคดยังคงเตือนว่า """@deprecated
-We recommend using the configureStore method of the @reduxjs/toolkit package, which replaces createStore.
-
-Redux Toolkit is our recommended approach for writing Redux logic today, including store setup, reducers, data fetching, and more.
-
-For more details, please read this Redux docs page: https://redux.js.org/introduction/why-rtk-is-redux-today"""
+แม้ว่า Redux แบบดั้งเดิมจะแสดงข้อความเตือนว่าควรใช้ Redux Toolkit แทน แต่ผมยังคงใช้แบบเดิมในบทเรียนนี้เพื่อให้เข้าใจพื้นฐานของ Redux และไม่สับสนกับเนื้อหาที่กำลังเรียน
 
 ## 3. Actions และ Action Creators
 
-    ผู้เรียนจะได้รู้จักกับ Actions ซึ่งเป็นเหตุการณ์ที่ทำให้เกิดการขับเคลื่อนในระบบของ Redux รวมถึงการสร้าง Action Creators ซึ่งเป็นฟังก์ชันสำหรับสร้าง Actions อีกทีนึง
-    
-    ใช้แนวคิด purefunction ต้องใช้ค่าที่คาดเดาได้
+Actions คือวัตถุ JavaScript ธรรมดา (plain objects) ที่อธิบายว่าเกิดอะไรขึ้นในแอพพลิเคชัน โดยต้องมี property ชื่อ `type` เสมอ ซึ่งระบุประเภทของ action
+
+Action Creators คือฟังก์ชันที่สร้างและส่งคืน action object ช่วยให้เราไม่ต้องเขียน action object ซ้ำๆ และเพิ่มความสะดวกในการส่ง actions
+
+ตัวอย่างเช่น:
+
+```javascript
+// Action type
+const ADD_TO_CART = 'ADD_TO_CART';
+
+// Action creator
+function addToCart(product, quantity) {
+  return {
+    type: ADD_TO_CART,
+    payload: {
+      product,
+      quantity
+    }
+  };
+}
+```
+
+ในการใช้งานจริง ผมสามารถเรียกใช้ action creator นี้เมื่อต้องการเพิ่มสินค้าลงตะกร้า โดยผลลัพธ์จะเป็น pure function ที่ให้ค่าคงที่และคาดเดาได้เสมอเมื่อใส่ input เดิม
