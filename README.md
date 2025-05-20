@@ -85,7 +85,22 @@
     </div>
     <strong>100%</strong>
   </td>
-  <td>18 พ.ค. 2568</td>
+  <td>20 พ.ค. 2568</td>
+  </tr>
+  <tr>
+  <td>
+    <a href="./devops_course/README.md">
+    <img src="https://img.shields.io/badge/DevOps-Fundamentals-326CE5?style=flat-square&logo=kubernetes" alt="DevOps Fundamentals"/>
+    </a>
+  </td>
+  <td>⭐ กำลังเรียน</td>
+  <td>
+    <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
+    <div style="background-color:#326CE5;height:100%;width:10%;border-radius:5px;"></div>
+    </div>
+    <strong>10%</strong>
+  </td>
+  <td>20 พ.ค. 2568</td>
   </tr>
 </table>
 
@@ -237,3 +252,4 @@
   <p><strong>ปรับปรุงล่าสุด:</strong> 20 พ.ค. 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
+
