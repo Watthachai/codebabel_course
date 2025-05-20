@@ -1,8 +1,7 @@
 # 🚀 CodeBabel Course Progress
-
 <div align="center">
-  
-![Overall Progress](https://img.shields.io/badge/Progress-30%25-1A73E8?style=for-the-badge&width=500)
+
+![Overall Progress](https://img.shields.io/badge/Progress-24%25-1A73E8?style=for-the-badge&width=500)
 
 ## 📊 Learning Curve & Time Investment (2 Month Plan)
 
@@ -17,9 +16,9 @@
   <td>React Fundamentals</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#61DAFB;height:100%;border-radius:5px;width:65%"></div>
+    <div style="background:#4CAF50;height:100%;border-radius:5px;width:100%"></div>
     </div>
-    <span>Medium</span>
+    <span>Completed ✅</span>
   </td>
   <td>40 hrs</td>
   <td>Weeks 1-3</td>
@@ -28,9 +27,9 @@
   <td>DevOps (Docker, K8s)</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#326CE5;height:100%;border-radius:5px;width:85%"></div>
+    <div style="background:#326CE5;height:100%;border-radius:5px;width:0%"></div>
     </div>
-    <span>High</span>
+    <span>Currently Learning ⭐</span>
   </td>
   <td>50 hrs</td>
   <td>Weeks 3-5</td>
@@ -235,6 +234,6 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 18 พ.ค. 2568</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 20 พ.ค. 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
