@@ -757,4 +757,460 @@ function addToCart(product, quantity) {
 }
 ```
 
-ในการใช้งานจริง ผมสามารถเรียกใช้ action creator นี้เมื่อต้องการเพิ่มสินค้าลงตะกร้า โดยผลลัพธ์จะเป็น pure function ที่ให้ค่าคงที่และคาดเดาได้เสมอเมื่อใส่ input เดิม
+ในการใช้งานจริง ผมสามารถเรียกใช้ action creator นี้เมื่อต้องการเพิ่มสินค้าลงตะกร้า โดยผลลัพธ์จะเป็น pure function ที่ให้ค่าคงที่และคาดเดาได้เสมอเมื่อใส่ input เดิม (สามารถทำตามคลิปได้เลย)
+
+## 4. การทำงานของ Async Actions และการใช้งาน Redux Thunk
+
+การติดต่อ API เป็นการทำงานแบบ Asynchronous จึงต้องการ Actions พิเศษที่เป็น Async Actions มาจัดการ บทเรียนนี้เราจะพูดถึงการสร้างการทำงานแบบ Async Actions ผ่าน Redux Thunk
+
+### การติดตั้ง Redux Thunk
+
+```bash
+yarn add redux-thunk
+```
+
+### ไฟล์ที่ทำการเพิ่มหรือแก้ไขในหัวข้อนี้
+
+#### ไฟล์ที่เพิ่ม:
+- `frontend/src/modules/products/actions.js`
+
+#### ไฟล์ที่แก้ไข:
+1. **frontend/src/store/configureStore.js**
+
+  > **หมายเหตุ:** Redux Thunk มีการเปลี่ยนแปลง API ใหม่
+  > 
+  > จากเดิมที่เคยใช้: `import reduxThunk from 'redux-thunk'`
+  > 
+  > ต้องเปลี่ยนเป็น: `import { thunk } from 'redux-thunk'`
+  > 
+  > หรือถ้าต้องการตั้งชื่อเหมือนเดิม: `import { thunk as reduxThunk } from 'redux-thunk'`
+
+2. **frontend/src/modules/products/components/ProductList.js**
+
+3. **frontend/src/modules/products/reducer.js**
+
+4. **frontend/src/modules/reducers.js**
+  
+  เนื่องจากเกิด Error: `Cannot destructure property 'isLoading' of '(0 , react_redux__WEBPACK_IMPORTED_MODULE_11__.useSelector)(...)' as it is undefined.`
+  
+  ต้องแก้ไขจาก:
+  ```js
+  import { combineReducers } from 'redux';
+  
+  import ui from 'modules/ui/reducer';
+  import product from 'modules/products/reducer';
+  import cart from 'modules/cart/reducer'
+  
+  export default combineReducers({
+     ui,
+     product,
+     cart
+  })
+  ```
+  
+  เป็น:
+  ```js
+  import { combineReducers } from 'redux';
+  import productsReducer from './products/reducer';
+  import cartReducer from './cart/reducer';
+  import uiReducer from './ui/reducer';
+  
+  const rootReducer = combineReducers({
+    products: productsReducer, // สังเกตว่าเปลี่ยนชื่อจาก product เป็น products
+    cart: cartReducer,
+    ui: uiReducer
+  });
+  
+  export default rootReducer;
+  ```
+
+5. **frontend/src/modules/products/components/ProductDetails.js**
+
+### 🚀 เข้าใจ Redux Thunk แบบง่ายๆ
+
+#### ทำไมต้องใช้ Redux Thunk?
+- เพื่อแยกส่วน UI ออกจาก Logic การเรียก API
+- ทำให้ Component มีหน้าที่แสดงผลอย่างเดียว
+- โค้ดสะอาดขึ้น ทดสอบง่ายขึ้น
+
+#### การจัดการ Async Actions มี 3 สถานะหลัก
+1. **เริ่มโหลดข้อมูล** → `LOAD_PRODUCTS_REQUEST`
+2. **โหลดสำเร็จ** → `LOAD_PRODUCTS_SUCCESS`
+3. **โหลดล้มเหลว** → `LOAD_PRODUCTS_FAILURE`
+
+#### ตัวอย่างการสร้าง Async Action Creator
+```js
+// actions/productActions.js
+
+export const loadProducts = (query = "") => {
+  return async (dispatch) => {
+   // 1. แจ้งว่ากำลังโหลด
+   dispatch({ type: "LOAD_PRODUCTS_REQUEST" });
+
+   try {
+    // 2. เรียก API
+    const response = await axios.get(`/products${query}`);
+    // 3. โหลดสำเร็จ
+    dispatch({
+      type: "LOAD_PRODUCTS_SUCCESS",
+      payload: { products: response.data },
+    });
+   } catch (error) {
+    // 4. โหลดล้มเหลว
+    dispatch({
+      type: "LOAD_PRODUCTS_FAILURE",
+      payload: { error: error.message },
+    });
+   }
+  };
+};
+```
+
+#### วิธีการทำงานของ Redux Thunk
+1. Redux Thunk เป็น middleware ที่ทำให้ Redux รองรับการ dispatch ฟังก์ชัน
+2. การตั้งค่า Redux Store กับ Redux Thunk:
+```js
+// store.js
+import { applyMiddleware, createStore } from "redux";
+import { thunk } from "redux-thunk";
+import rootReducer from "./reducers";
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+```
+
+#### การสร้าง Reducer ให้รองรับ 3 สถานะของ Async Action
+```js
+// reducers/productReducer.js
+
+const initialState = {
+  isLoading: false,
+  items: [],
+  error: null,
+};
+
+export default function productReducer(state = initialState, action) {
+  switch (action.type) {
+   case "LOAD_PRODUCTS_REQUEST":
+    return { ...state, isLoading: true, items: [], error: null };
+   case "LOAD_PRODUCTS_SUCCESS":
+    return { ...state, isLoading: false, items: action.payload.products };
+   case "LOAD_PRODUCTS_FAILURE":
+    return { ...state, isLoading: false, error: action.payload.error };
+   default:
+    return state;
+  }
+}
+```
+
+#### การใช้งานใน Component
+```jsx
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { loadProducts } from "../actions/productActions";
+
+export default function ProductList() {
+  const dispatch = useDispatch();
+  const { isLoading, items: products, error } = useSelector(
+   (state) => state.products
+  );
+
+  useEffect(() => {
+   dispatch(loadProducts());
+  }, [dispatch]);
+
+  if (isLoading) return <p>กำลังโหลดข้อมูล...</p>;
+  if (error) return <p>เกิดข้อผิดพลาด: {error}</p>;
+
+  return (
+   <ul>
+    {products.map((product) => (
+      <li key={product.id}>{product.name}</li>
+    ))}
+   </ul>
+  );
+}
+```
+
+### ✅ ลำดับการทำงานของ Redux Thunk
+
+1. Component ถูกโหลด (mounted) → useEffect ทำงาน
+2. dispatch(loadProducts()) ถูกเรียก
+3. Redux Thunk จับฟังก์ชันและเรียกมันโดยส่ง dispatch เข้าไปให้
+4. ภายใน loadProducts():
+  - dispatch LOAD_PRODUCTS_REQUEST (เริ่มโหลด)
+  - เรียก API ด้วย axios.get(...)
+  - ถ้าสำเร็จ → dispatch LOAD_PRODUCTS_SUCCESS
+  - ถ้าเกิด error → dispatch LOAD_PRODUCTS_FAILURE
+5. Reducer อัปเดต state และ UI รีเฟรชตามข้อมูลใหม่
+
+![Redux Thunk Flow](../assets/images/redux_thunk_process.png)
+
+### 🎯 ข้อแนะนำจากประสบการณ์
+
+- แยก async logic ออกจาก Component เสมอ ควรอยู่ใน Action Creator
+- ประกาศตัวแปรเก็บชื่อ action type แทนการพิมพ์เป็น string ซ้ำๆ
+- ใช้ Redux DevTools เพื่อดูการ dispatch action ทั้งหมด
+- ถ้ามี Action หลายตัว แนะนำให้ export พร้อมกันในกลุ่มเดียว
+
+## 5. จัดการสถานะของ Route ด้วย React Router และ Redux
+
+เนื่องจาก `connected-react-router` ไม่รองรับ React Router v6/v7 แล้ว แต่เรายังต้องการเปลี่ยนหน้าเพจจากใน Actions และบันทึกข้อมูลการนำทางใน Redux Store เราจะใช้ React Router Hooks ร่วมกับ Redux แทน
+
+### ปัญหาที่พบ
+```
+ERROR in ./src/store/configureStore.js 7:0-47
+Module not found: Error: Can't resolve 'history' in '/Users/itswatthachai/codebabel_course/reactFundCourse/workshop_product/frontend/src/store'
+```
+
+### สาเหตุของปัญหา
+1. แพ็คเกจ `history` ไม่ได้ถูกติดตั้ง
+2. วิธีการจัดการกับ history เปลี่ยนไปใน React Router v6/v7
+3. `connected-react-router` ไม่รองรับ React Router v6/v7
+
+### วิธีแก้ไข
+
+#### 1. แก้ไข reducers.js
+```javascript
+import { combineReducers } from 'redux';
+import productsReducer from './products/reducer';
+import cartReducer from './cart/reducer';
+import uiReducer from './ui/reducer';
+
+// ไม่ใช้ connectRouter จาก connected-react-router อีกต่อไป
+export default combineReducers({
+  products: productsReducer, 
+  cart: cartReducer,
+  ui: uiReducer
+});
+```
+
+#### 2. แก้ไข configureStore.js ให้ใช้ Redux Toolkit
+```javascript
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from 'modules/reducers';
+
+export default function setupStore(initialState) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState,
+  });
+}
+```
+
+#### 3. เพิ่ม action type สำหรับ checkout success ใน actions.js
+```javascript
+// เพิ่ม action type
+const CHECKOUT_SUCCESS = 'app/cart/CHECKOUT_SUCCESS';
+
+// เพิ่มตรงส่วน export
+export {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CHECKOUT_SUCCESS, // เพิ่มบรรทัดนี้
+  addToCart,
+  loadCart,
+  removeFromCart,
+  checkout,
+}
+```
+
+#### 4. ปรับปรุง checkout function ใน actions.js
+```javascript
+function checkout(deliveryInfo) {
+  return async (dispatch, getState) => {
+    try {
+      const {
+        cart: { productIds, price },
+      } = getState();
+
+      // สร้าง order object (จำลอง API response)
+      const orderData = {
+        id: Date.now(),
+        deliveryInfo,
+        productIds,
+        price,
+        date: new Date().toISOString(),
+      };
+
+      // แจ้งเตือนว่าสั่งซื้อสำเร็จ
+      dispatch(uiActions.setFlashMessage('Your order has been placed!'));
+
+      // บันทึกข้อมูลคำสั่งซื้อลงใน Redux store
+      dispatch({ 
+        type: CHECKOUT_SUCCESS, 
+        payload: { order: orderData } 
+      });
+
+      return true;
+    } catch (error) {
+      dispatch(
+        uiActions.setFlashMessage(
+          'Failed to place order: ' + error.message,
+          'error'
+        )
+      );
+      return false;
+    }
+  }
+}
+```
+
+#### 5. ปรับปรุง reducer.js เพื่อรองรับ CHECKOUT_SUCCESS
+```javascript
+import { ADD_TO_CART, REMOVE_FROM_CART, CHECKOUT_SUCCESS } from './actions';
+import { LOAD_PRODUCTS_SUCCESS } from 'modules/products/actions';
+
+const initialState = {
+  price: 0,
+  productIds: [],
+  lastOrder: null, // เพิ่มสถานะสำหรับเก็บข้อมูลออเดอร์ล่าสุด
+};
+
+export default function cartReducer(state = initialState, action) {
+  switch (action.type) {
+    // case อื่นๆ คงเดิม...
+    case CHECKOUT_SUCCESS:
+      return {
+        ...state,
+        productIds: [], // เคลียร์ตะกร้า
+        price: 0,
+        lastOrder: action.payload.order, // บันทึกข้อมูลออเดอร์ล่าสุด
+      };
+    // case อื่นๆ คงเดิม...
+    default:
+      return state;
+  }
+}
+```
+
+#### 6. แก้ไข Cart.js เพื่อใช้ useNavigate
+```javascript
+import React, { useEffect } from 'react';
+import { styled, Typography, Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // เพิ่ม useNavigate
+
+import Delivery from './Delivery';
+import Order from './Order';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from '../actions';
+
+// styled components คงเดิม...
+
+export default function Cart() {
+  const productIds = useSelector((state) => state.cart.productIds);
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // เพิ่ม useNavigate
+
+  useEffect(() => {
+    dispatch(actions.loadCart());
+  },[dispatch]);
+
+  // เพิ่มฟังก์ชัน handleCheckout
+  const handleCheckout = (deliveryInfo) => {
+    // เรียกใช้ action checkout พร้อมส่งข้อมูล deliveryInfo
+    dispatch(actions.checkout(deliveryInfo));
+    // นำทางกลับไปหน้าหลักหลังจากสั่งซื้อสำเร็จ
+    navigate('/');
+  };
+
+  if(productIds.length === 0) {
+    return <p className={TitleTypography}>No order found</p>;
+  }
+
+  return (
+    <>
+      <TitleTypography variant="h4" component="h1">
+        Order Summary
+      </TitleTypography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={8}>
+          <Order />
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Delivery onSubmit={handleCheckout} />
+        </Grid>
+      </Grid>
+    </>
+  );
+}
+```
+
+#### 7. แก้ไข Delivery.js เพื่อรับ onSubmit
+```javascript
+import React from 'react';
+import { 
+  styled, 
+  Button, 
+  TextField, 
+  CardActions, 
+  Card, 
+  CardContent, 
+  Typography 
+} from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+// styled components คงเดิม...
+
+export default function Delivery({ onSubmit }) { // เพิ่มการรับ prop
+  const schema = yup.object({
+    // schema คงเดิม...
+  });
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    mode: 'onBlur',
+    resolver: yupResolver(schema),
+  });
+
+  // อัพเดทฟังก์ชัน submit
+  const submit = (deliveryInfo) => {
+    if (onSubmit) {
+      onSubmit(deliveryInfo);
+    }
+  };
+
+  // ส่วนที่เหลือคงเดิม...
+}
+```
+
+#### 8. (ตัวเลือก) สร้างคอมโพเนนต์แสดงออเดอร์ล่าสุด
+```javascript
+// LastOrder.js
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Paper, Typography, Box } from '@mui/material';
+
+export default function LastOrder() {
+  const lastOrder = useSelector(state => state.cart.lastOrder);
+  
+  if (!lastOrder) return null;
+  
+  return (
+    <Paper sx={{ p: 2, mt: 2 }}>
+      <Typography variant="h6">Your Last Order</Typography>
+      <Box>
+        <Typography>Order #: {lastOrder.id}</Typography>
+        <Typography>Name: {lastOrder.deliveryInfo.name}</Typography>
+        <Typography>Email: {lastOrder.deliveryInfo.email}</Typography>
+        <Typography>Address: {lastOrder.deliveryInfo.address}</Typography>
+        <Typography>Date: {new Date(lastOrder.date).toLocaleString()}</Typography>
+        <Typography>Total: ${lastOrder.price}</Typography>
+      </Box>
+    </Paper>
+  );
+}
+```
+
+### วิธีทดสอบว่าทำงานถูกต้อง
+1. เปิดแอปพลิเคชันในเบราวเซอร์
+2. เพิ่มสินค้าเข้าตะกร้า
+3. ไปที่หน้าตะกร้า
+4. กรอกข้อมูลการจัดส่งและกดปุ่ม "Place Order"
+5. ควรถูกนำทางกลับไปหน้าแรกโดยอัตโนมัติและเห็นข้อความแจ้งเตือน
+6. เปิด Redux DevTools และตรวจสอบที่ `state.cart.lastOrder` จะพบข้อมูลคำสั่งซื้อที่เพิ่งทำ
+
+### หมายเหตุ
+- ข้อมูลใน Redux Store จะอยู่เฉพาะในระหว่างที่แอปทำงาน หากรีเฟรชหน้าเว็บข้อมูลจะหาย
+- หากต้องการเก็บข้อมูลถาวร ควรใช้ localStorage หรือส่งข้อมูลไปเก็บที่ฐานข้อมูลในฝั่ง Backend
+- เราสามารถใช้ `react-router-dom` และ Redux ทำงานร่วมกันได้โดยไม่ต้องใช้ `connected-react-router`

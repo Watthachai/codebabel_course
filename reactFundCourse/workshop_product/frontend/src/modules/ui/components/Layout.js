@@ -3,27 +3,31 @@ import { CssBaseline, ThemeProvider, createTheme, useMediaQuery } from "@mui/mat
 import Header from "./Header";
 import Content from "./Content";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as actions from '../actions';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 export default function Layout() {
     // ตรวจสอบ system preference สำหรับ dark mode
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const darkMode = useSelector(state => state.ui.darkMode)
+    const darkModeFromStore = useSelector(state => state.ui.darkMode)
 
-    // สร้าง state โดยใช้ค่าเริ่มต้นจาก system preference
-    const [darkMode, setDarkMode] = useState(prefersDarkMode);
+    // สร้าง state โดยใช้ค่าเริ่มต้นจาก system preference และ store
+    const [darkMode, setDarkMode] = useState(darkModeFromStore ?? prefersDarkMode);
     
+    const dispatch = useDispatch();
     // ติดตามการเปลี่ยนแปลงของ system preference
     useEffect(() => {
-        setDarkMode(prefersDarkMode);
-    }, [prefersDarkMode]);
+        const action = actions.setDarkMode(prefersDarkMode)
+
+        dispatch(action)
+    }, [prefersDarkMode, dispatch]);
     
     // สร้าง theme ตามโหมดที่เลือก และใช้ useMemo เพื่อ optimize performance
     const theme = useMemo(() => createTheme({
         palette: {
-            mode: darkMode ? 'dark' : 'light',
+            mode: darkModeFromStore  ? 'dark' : 'light',
             primary: {
                 main: '#1976d2',
             },
@@ -37,7 +41,7 @@ export default function Layout() {
                 fontWeight: 600,
             },
         },
-    }), [darkMode]);
+    }), [darkModeFromStore]);
     
     // ฟังก์ชันสำหรับสลับโหมด
     const toggleDarkMode = () => {

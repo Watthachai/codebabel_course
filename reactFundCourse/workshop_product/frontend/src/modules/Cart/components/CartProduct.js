@@ -10,6 +10,9 @@ import {
 } from '@mui/material'
 import { Delete } from '@mui/icons-material'
 
+import * as actions from '../actions'
+import { useDispatch } from 'react-redux'
+
 import currencyFormat from 'utils/currencyFormat'
 
 // สร้าง styled components แทน makeStyles
@@ -25,7 +28,13 @@ const ProductImage = styled(CardMedia)({
   width: 150,
 });
 
-export default function CartProduct({ image, name, price }) {
+
+
+export default function CartProduct({ id, image, name, price }) {
+
+  const dispatch = useDispatch()
+  const remove = () => dispatch(actions.removeFromCart(id))
+
   return (
     <ProductCard>
       <ProductImage image={image} title={name} />
@@ -42,8 +51,8 @@ export default function CartProduct({ image, name, price }) {
             <div>{currencyFormat(price)}</div>
           </Grid>
           <Grid item>
-            <IconButton aria-label="delete" size="small">
-              <Delete />
+            <IconButton aria-label="delete" size="small" onClick={remove}>
+              <Delete></Delete>
             </IconButton>
           </Grid>
         </Grid>

@@ -23,7 +23,7 @@ const SubmitButton = styled(Button)({
   flex: 1,
 });
 
-export default function Delivery({ onSubmit }) {
+export default function Delivery({ onSubmit }) { // เพิ่มการรับ prop
 
   const schema = yup.object({
     name: yup.string().required("Name is required"),
@@ -36,6 +36,7 @@ export default function Delivery({ onSubmit }) {
     resolver: yupResolver(schema),
   });
 
+  // อัพเดทฟังก์ชัน submit
   const submit = (deliveryInfo) => {
     if (onSubmit) {
       onSubmit(deliveryInfo);

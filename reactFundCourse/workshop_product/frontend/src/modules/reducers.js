@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
+import productsReducer from './products/reducer';
+import cartReducer from './cart/reducer';
+import uiReducer from './ui/reducer';
 
-import ui from 'modules/ui/reducer';
-import product from 'modules/products/reducer';
-import cart from 'modules/products/reducer'
-
+// ไม่ใช้ connectRouter จาก connected-react-router อีกต่อไป
 export default combineReducers({
-    ui,
-    product,
-    cart
-
-})
+  products: productsReducer, 
+  cart: cartReducer,
+  ui: uiReducer
+});

@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 import logo from 'assets/images/logo.png'
 import { Link as RouterLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as actions from '../actions';
 
@@ -38,13 +38,14 @@ const Spacer = styled(Box)({
 
 export default function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const darkMode = useSelector(state => state.ui.darkMode);
+  const cartCount = useSelector(state => state.cart.productIds).length 
 
   const navigateToCart = () => {
     navigate('/cart');  // ไปยัง "/cart" โดยเพิ่มเข้าไปใน history stack
     // หรือ navigate('/cart', { replace: true });  // ใช้ replace แทน push
   }
-
-  const dispatch = useDispatch();
 
   const toggleDarkMode = () => {
 
@@ -68,11 +69,11 @@ export default function Header() {
 
         <Spacer />
         <FormControlLabel
-          control={<Switch color="secondary" onChange={toggleDarkMode} />}
+          control={<Switch color="secondary" checked={darkMode} onChange={toggleDarkMode} />}
           label="Dark"
           labelPlacement="end"
         />
-        <Badge badgeContent={5} color="secondary" onClick={navigateToCart}>
+        <Badge badgeContent={cartCount} color="secondary" onClick={navigateToCart}>
           <ShoppingCart />
         </Badge>
       </Toolbar>

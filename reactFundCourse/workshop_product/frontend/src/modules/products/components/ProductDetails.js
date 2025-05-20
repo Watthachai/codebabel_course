@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { styled, useTheme, useMediaQuery, Grid, Paper, Typography, ButtonGroup, Button } from '@mui/material';
-import axios from 'axios';
-import { useNavigate, useParams,  } from 'react-router-dom'; // Add this import
+import { useNavigate, useParams,  } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import * as productActions from '../actions'
+import * as cartActions from '../../cart/actions'
 
 // สร้าง styled components แทน makeStyles
 const DetailsPaper = styled(Paper)(({ theme }) => ({
@@ -13,26 +15,30 @@ const ContentGrid = styled(Grid)(({ theme }) => ({
 }));
 
 export default function ProductDetails() {
-  const { id } = useParams();
-  const [product, setProduct] = useState();
-  const theme = useTheme();
-  const isMediumUp = useMediaQuery(theme.breakpoints.up('md'));
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const [product] = useSelector((state) => state.products.items)
+  const productIds = useSelector((state) => state.cart.productIds)
+  const exists = productIds.includes(id)
+  const theme = useTheme()
+  const isMediumUp = useMediaQuery(theme.breakpoints.up('md'))
   const navigate = useNavigate();
 
+
   useEffect(() => {
-    const loadProduct = async () => {
-      const { data } = await axios.get(`/products/${id}`);
-      setProduct(data);
-    };
+    const action = productActions.loadProduct(id)
 
-    loadProduct();
-  }, [id]);
+    dispatch(action)
+  }, [dispatch, id])
 
-  if (!product) return null;
+  const addToCart = () => dispatch(cartActions.addToCart(id))
 
   const buyNow = () => {
-     navigate('/cart');
+    addToCart();
+    navigate('/cart');
   }
+
+  if (!product) return null;
 
   return (
     <DetailsPaper>
@@ -56,6 +62,7 @@ export default function ProductDetails() {
               </Typography>
               <p>{product.desc}</p>
             </Grid>
+              {!exists && (
             <Grid item>
               <ButtonGroup
                 variant="contained"
@@ -63,9 +70,10 @@ export default function ProductDetails() {
                 aria-label="primary button group"
               >
                 <Button onClick={buyNow}>Buy Now</Button>
-                <Button>Add to Cart</Button>
+                <Button onClick={addToCart}>Add to Cart</Button>
               </ButtonGroup>
             </Grid>
+              )}
           </ContentGrid>
         </Grid>
       </Grid>
