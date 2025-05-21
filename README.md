@@ -11,6 +11,7 @@
   <th>Learning Curve</th>
   <th>Est. Hours</th>
   <th>Timeline</th>
+  <th>Actual Dates</th>
   </tr>
   <tr>
   <td>React Fundamentals</td>
@@ -22,6 +23,7 @@
   </td>
   <td>40 hrs</td>
   <td>Weeks 1-3</td>
+  <td>13-18 พ.ค. 2568</td>
   </tr>
   <tr>
   <td>DevOps (Docker, K8s)</td>
@@ -33,6 +35,7 @@
   </td>
   <td>50 hrs</td>
   <td>Weeks 3-5</td>
+  <td>-</td>
   </tr>
   <tr>
   <td>Next.js/TypeScript</td>
@@ -44,6 +47,7 @@
   </td>
   <td>35 hrs</td>
   <td>Weeks 5-7</td>
+  <td>-</td>
   </tr>
   <tr>
   <td>Go REST API</td>
@@ -55,6 +59,7 @@
   </td>
   <td>40 hrs</td>
   <td>Weeks 8-9</td>
+  <td>-</td>
   </tr>
 </table>
 
@@ -252,4 +257,3 @@
   <p><strong>ปรับปรุงล่าสุด:</strong> 20 พ.ค. 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
-
