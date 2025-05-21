@@ -2,46 +2,23 @@
 
 ## 📚 เนื้อหาหลักสูตร
 - [DevOps คืออะไร](documents/document_course_details.md#devops---คู่มือฉบับเข้าใจง่าย)
-- [เทคโนโลยี Cloud Computing](#เทคโนโลยี-cloud-computing)
-- [Microservices](#microservices)
-    - [Microservices Workshop](#microservices-workshop)
-- [เทคโนโลยีคอนเทนเนอร์](#เทคโนโลยีคอนเทนเนอร์)
-    - [Docker](#docker)
-    - [Docker Workshop](#docker-workshop)
-    - [Kong API Gateway](#kong-api-gateway)
-- [GitOps](#gitops)
-    - [Infrastructure as Code และ Terraform](#infrastructure-as-code-และ-terraform)
-    - [GitOps คืออะไร](#gitops-คืออะไร)
-    - [CI / CD](#ci--cd)
-    - [CI / CD Workshop](#ci--cd-workshop)
-- [Logging และ Monitoring](#logging-และ-monitoring)
-- [Kubernetes](#kubernetes)
-    - [Kubernetes Workshop](#kubernetes-workshop)
-    - [Horizontal Pod Autoscaler](#horizontal-pod-autoscaler)
-- [บทส่งท้าย](#บทส่งท้าย)
-    - [วัฒนธรรมองค์กรของ DevOps](#วัฒนธรรมองค์กรของ-devops)
+- [เทคโนโลยี Cloud Computing](documents/document_course_details.md#เทคโนโลยี-cloud-computing)
+- [Microservices](documents/document_course_details.md#1-microservices-คืออะไร)
+    - [Microservices Workshop](documents/microservices_workshop.md)
+- [เทคโนโลยีคอนเทนเนอร์]
+    - [Docker](documents/document_course_details.md#สร้าง-dockerfile-ขั้นพื้นฐาน)
+    - [Docker Workshop](documents/docker_workshop.md)
+    - [Kong API Gateway](documents/document_course_details.md#kong-api-gateway)
+- [GitOps](documents/document_course_details.md#gitops-คืออะไร)
+    - [Infrastructure as Code และ Terraform](documents/document_course_details.md#infrastructure-as-code-และการใช้-terraform)
+    - [GitOps คืออะไร](documents/document_course_details.md#gitops-คืออะไร)
+    - [CI / CD](documents/document_course_details.md#cicd-pipeline-การทำงานอัตโนมัติในการพัฒนาซอฟต์แวร์)
+    - [CI / CD Workshop](documents/cicd_workshop.md)
+- [Kubernetes](documents/document_course_details.md#kubernetes-หลักการและองค์ประกอบพื้นฐาน)
+    - [Kubernetes Workshop](documents/kubernetes_workshop.md)
+    - [Horizontal Pod Autoscaler](documents/document_course_details.md#horizontal-pod-autoscaler-คืออะไร)
 
-## 🎥 บันทึกการสอน
-1. [แนะนำคอร์ส](#1-แนะนำคอร์ส)
-2. [DevOps คืออะไร](#2-devops-คืออะไร)
-3. [Cloud Computing](#3-cloud-computing)
-4. [Microservices](#4-microservices)
-5. [Microservices Workshop](#5-microservices-workshop)
-6. [Docker และ Docker Compose](#6-docker-และ-docker-compose)
-7. [Docker Build และ Push](#7-docker-build-และ-push)
-8. [Kong Gateway API](#8-kong-gateway-api)
-9. [Terraform](#9-terraform)
-10. [ทบทวนเนื้อหาวันแรก](#10-ทบทวนเนื้อหาวันแรก)
-11. [GitOps](#11-gitops)
-12. [Continuous Integration Flow](#12-continuous-integration-flow)
-13. [Continuous Delivery Flow](#13-continuous-delivery-flow)
-14. [Continuous Deployment Flow](#14-continuous-deployment-flow)
-15. [Kubernetes](#15-kubernetes)
-16. [HPA](#16-hpa)
-17. [Datadog](#17-datadog)
-18. [บทส่งท้าย](#18-บทส่งท้าย)
-
-## 📝 รายละเอียดคอร์ส
+## 📝 รายละเอียด
 
 DevOps เป็นหนึ่งในแนวปฏิบัติที่สำคัญขององค์กร IT ยุคใหม่ เพื่อการพัฒนาซอฟต์แวร์ที่เน้นการรวมการพัฒนาซอฟต์แวร์ (Dev) และ IT operations (Ops) ผ่านเครื่องมือ แนวคิดและการเน้นขั้นตอนการทำงานแบบอัตโนมัติ อันจะนำไปสู่การนำผลิตภัณฑ์ที่ดีกว่าให้กับลูกค้าได้เร็วขึ้น
 
@@ -70,13 +47,6 @@ DevOps เป็นหนึ่งในแนวปฏิบัติที่�
 * เข้าใจ GitOps และการสร้าง CI/CD pipeline
 * เข้าใจการทำ Logging, Monitoring ด้วย Datadog
 * ทราบหลักการของ Kubernetes และการใช้งานเบื้องต้น
-
-## 👨‍💻 คอร์สนี้เหมาะกับใคร
-* ผู้ที่ต้องการเรียนรู้ DevOps อย่างครอบคลุมในเวลาสั้นๆ
-* นักพัฒนาที่สนใจเรื่อง DevOps
-* นักวิเคราะห์ระบบที่ต้องการเข้าใจภาพรวมด้าน IT
-* องค์กรที่ต้องการปรับเปลี่ยนสู่แนวทาง DevOps
-* นักศึกษาหรือผู้สนใจที่มีพื้นฐานการพัฒนาซอฟต์แวร์
 
 ## 📋 ความรู้พื้นฐานที่จำเป็น
 * สามารถใช้คอมพิวเตอร์พื้นฐานได้
