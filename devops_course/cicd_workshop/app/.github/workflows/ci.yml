@@ -1,0 +1,23 @@
+name: CI
+on: [push]
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - name: Install site dependencies
+        run: cd site && npm ci
+      - name: Test site
+        run: cd site && npm test
+      - name: Setup Go 1.21.x
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21.x"
+      - name: Install api dependencies
+        run: cd api && go mod download
+      - name: Test api
+        run: cd api && go test ./...

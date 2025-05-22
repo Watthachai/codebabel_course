@@ -1,0 +1,85 @@
+name: CD
+on:
+  push:
+    branches:
+      - main
+env:
+  TF_CLI_CONFIG_FILE: "./.terraformrc"
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Setup Terraform Config File
+        id: terraform-config
+        run: |-
+          cat > .terraformrc <<EOF
+          credentials "app.terraform.io" {
+            token = "${{ secrets.TF_API_TOKEN }}"
+          }
+          EOF
+
+      - name: Terraform Init
+        id: init
+        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
+
+      - name: Terraform Apply
+        id: apply
+        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
+
+      - name: Terraform Output
+        id: output
+        run: terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
+
+      - name: Check SSH Port Alive
+        id: check-ssh-alive
+        run: |
+          while ! nc -z ${{ steps.output.outputs.ip }} 22; do   
+            sleep 1
+            echo "port not response"
+          done
+
+      - name: Read Config
+        id: config
+        run: |
+          docker_content=$(cat ./docker-compose.yml)
+          echo "docker_content<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$docker_content" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+          kong_content=$(cat ./kong/kong.yml)
+          echo "kong_content<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$kong_content" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy
+        id: deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ steps.output.outputs.ip }}
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker compose down
+
+            rm -f ./docker-compose.yml
+
+            mkdir -p ./kong
+            cat > ./kong/kong.yml <<EOF
+            ${{steps.config.outputs.kong_content}}
+            EOF
+            cat > ./docker-compose.yml <<EOF
+            ${{steps.config.outputs.docker_content}}
+            EOF
+
+            docker compose up -d
