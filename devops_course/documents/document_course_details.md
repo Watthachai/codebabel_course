@@ -534,11 +534,11 @@ Microservices เป็นสถาปัตยกรรมที่ช่วย
 
 ```bash
 # คำสั่งสร้างและรันคอนเทนเนอร์
-docker run -p 5152:80 babelcoder/intro-to-devops-ui:1.0
+docker run -p 5152:80 itswatthachai/intro-to-devops-ui:1.0
 ```
 
 คำสั่งนี้บอก Docker Engine ให้:
-1. ดาวน์โหลด Image `babelcoder/intro-to-devops-ui:1.0` (ถ้ายังไม่มีในเครื่อง)
+1. ดาวน์โหลด Image `itswatthachai/intro-to-devops-ui:1.0` (ถ้ายังไม่มีในเครื่อง)
 2. สร้างคอนเทนเนอร์จาก Image นั้น
 3. ทำ port mapping จากพอร์ต 80 ในคอนเทนเนอร์ไปยังพอร์ต 5152 ในเครื่องโฮสต์
 
@@ -555,13 +555,13 @@ Image เหล่านี้สร้างมาจาก Dockerfile
 
 ```bash
 # สร้างและรันคอนเทนเนอร์
-docker run -p 5152:80 babelcoder/intro-to-devops-ui:1.0
+docker run -p 5152:80 itswatthachai/intro-to-devops-ui:1.0
 
 # ดูคอนเทนเนอร์ที่กำลังทำงาน
 docker ps
 # ผลลัพธ์:
 # CONTAINER ID   IMAGE                               COMMAND                  CREATED         STATUS         PORTS                  NAMES
-# 625f8285698b   babelcoder/intro-to-devops-ui:1.0   "/docker-entrypoint.…"   5 seconds ago   Up 5 seconds   0.0.0.0:5152->80/tcp   amazing_lamarr
+# 625f8285698b   itswatthachai/intro-to-devops-ui:1.0   "/docker-entrypoint.…"   5 seconds ago   Up 5 seconds   0.0.0.0:5152->80/tcp   amazing_lamarr
 
 # หยุดการทำงานของคอนเทนเนอร์
 docker stop amazing_lamarr
@@ -587,12 +587,12 @@ Docker Compose ช่วยจัดการคอนเทนเนอร์�
 version: '3'
 services:
     site:
-        image: babelcoder/intro-to-devops-ui:1.0
+        image: itswatthachai/intro-to-devops-ui:1.0
         ports:
             - 5152:80
     
     api:
-        image: babelcoder/intro-to-devops-api:1.0
+        image: itswatthachai/intro-to-devops-api:1.0
         ports:
             - 5153:8080
         environment:
@@ -671,9 +671,9 @@ CMD ["./api"]
 ### การสร้าง Docker Image
 
 ```bash
-docker build -t babelcoder/intro-to-devops-api:1.0 .
+docker build -t itswatthachai/intro-to-devops-api:1.0 .
 ```
-- `babelcoder/intro-to-devops-api`: ชื่อ Image
+- `itswatthachai/intro-to-devops-api`: ชื่อ Image
 - `1.0`: เวอร์ชันหรือ tag
 - `.`: Build Context (โฟลเดอร์ปัจจุบัน)
 
@@ -694,7 +694,7 @@ node_modules
 
 1. สร้าง Image โดยใช้ชื่อ username ของคุณนำหน้า:
 ```bash
-docker build -t yourusername/your-app:1.0 .
+docker build -t itswatthachai/your-app:1.0 .
 ```
 
 2. ล็อกอินเข้า Docker Hub:
@@ -704,7 +704,7 @@ docker login
 
 3. อัปโหลด Image:
 ```bash
-docker push yourusername/your-app:1.0
+docker push itswatthachai/your-app:1.0
 ```
 
 ## 7. คำสั่งพื้นฐานที่ควรรู้

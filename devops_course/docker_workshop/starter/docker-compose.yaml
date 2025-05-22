@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  site:
+    image: itswatthachai/devops-site:1.0
+    ports:
+      - 5151:80
+  api:
+    image: itswatthachai/devops-api:1.0
+    ports:
+      - 5152:3000
+    environment:
+      - DATABASE_URL=redis://db:6379
+      - PORT=3000
+      - APP_ENV=production
+  db:
+    image: redis:7.2.4-alpine
+    ports:
+      - 6379:6379
+  kong:
+    image: kong:3.9.0
+    platform: linux/arm64      
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+    ports:
+      - 8000:8000
+    volumes:
+      - "./kong:/usr/local/kong/declarative"
