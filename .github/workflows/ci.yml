@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     paths:
-      - 'devops_course/cicd_workshop/devops_dv_app/**'
+      - 'devops_course/cicd_workshop/app/**'
   pull_request:
     paths:
-      - 'devops_course/cicd_workshop/devops_dv_app/**'
+      - 'devops_course/cicd_workshop/app/**'
 
 jobs:
   testing:
@@ -21,10 +21,10 @@ jobs:
           node-version: '20.x'
 
       - name: Install site dependencies
-        run: cd devops_course/cicd_workshop/devops_dv_app/site && npm ci
+        run: cd devops_course/cicd_workshop/app/site && npm ci
 
       - name: Test site
-        run: cd devops_course/cicd_workshop/devops_dv_app/site && npm test
+        run: cd devops_course/cicd_workshop/app/site && npm test
 
       - name: Set up Go
         uses: actions/setup-go@v4
@@ -32,7 +32,7 @@ jobs:
           go-version: '1.21.x'
 
       - name: Install API dependencies
-        run: cd devops_course/cicd_workshop/devops_dv_app/api && go mod download
+        run: cd devops_course/cicd_workshop/app/api && go mod download
 
       - name: Test API
-        run: cd devops_course/cicd_workshop/devops_dv_app/api && go test -v ./...
+        run: cd devops_course/cicd_workshop/app/api && go test -v ./...
