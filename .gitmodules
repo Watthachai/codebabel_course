@@ -1,0 +1,3 @@
+[submodule "devops_course/cicd_workshop/devops_course/cicd_workshop/devops_dv_app"]
+	path = devops_course/cicd_workshop/devops_course/cicd_workshop/devops_dv_app
+	url = https://github.com/Watthachai/devops_dv_app.git
