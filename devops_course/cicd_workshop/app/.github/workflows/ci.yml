@@ -1,23 +1,38 @@
 name: CI
-on: [push]
+
+on:
+  push:
+    paths:
+      - 'devops_course/cicd_workshop/devops_dv_app/**'
+  pull_request:
+    paths:
+      - 'devops_course/cicd_workshop/devops_dv_app/**'
+
 jobs:
   testing:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: '20.x'
+
       - name: Install site dependencies
-        run: cd site && npm ci
+        run: cd devops_course/cicd_workshop/devops_dv_app/site && npm ci
+
       - name: Test site
-        run: cd site && npm test
-      - name: Setup Go 1.21.x
+        run: cd devops_course/cicd_workshop/devops_dv_app/site && npm test
+
+      - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: "1.21.x"
-      - name: Install api dependencies
-        run: cd api && go mod download
-      - name: Test api
-        run: cd api && go test ./...
+          go-version: '1.21.x'
+
+      - name: Install API dependencies
+        run: cd devops_course/cicd_workshop/devops_dv_app/api && go mod download
+
+      - name: Test API
+        run: cd devops_course/cicd_workshop/devops_dv_app/api && go test -v ./...
