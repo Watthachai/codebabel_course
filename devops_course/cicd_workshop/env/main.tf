@@ -16,18 +16,18 @@ terraform {
   } 
 }
 
-variable "do_token" {
+variable "terraform" {
   type        = string
   description = "The DigitalOcean Personal Access Token"
   sensitive = true
 }
 
 provider "digitalocean" {
-  token = var.do_token
+  token = var.terraform
 }
 
 data "digitalocean_ssh_key" "terraform" {
-  name = "do_terraform"
+  name = "terraform_testing"
 }
 
 resource "digitalocean_droplet" "my-node" {
