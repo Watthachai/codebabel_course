@@ -1,6 +1,9 @@
 name: CD_ENV
 on:
-  push:
+  workflow_run:
+    workflows: ["CD"]
+    types:
+      - completed
     branches:
       - main
 env:
