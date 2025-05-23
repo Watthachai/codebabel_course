@@ -23,7 +23,7 @@ jobs:
         id: init
         run: |
           cd devops_course/cicd_workshop/env
-          terraform init -input=false
+          TF_VAR_do_token=${{ secrets.DO_TOKEN }} terraform init -input=false
 
       - name: Terraform Validate
         id: validate
