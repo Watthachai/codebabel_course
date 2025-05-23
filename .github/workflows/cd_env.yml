@@ -16,17 +16,25 @@ jobs:
       - name: Setup Terraform Config File
         id: terraform-config
         run: |-
-          cat > .terraformrc <<EOF
+          # Create Terraform CLI config file in the HOME directory where Terraform looks for it by default
+          cat > $HOME/.terraformrc <<EOF
           credentials "app.terraform.io" {
             token = "${{ secrets.TF_API_TOKEN }}"
           }
           EOF
+          
+          # Set DigitalOcean token as environment variable for Terraform to use
+          echo "TF_VAR_do_token=${{ secrets.DO_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Debug .terraformrc File
+        run: |
+          cat .terraformrc || echo ".terraformrc file not found!"
 
       - name: Terraform Init
         id: init
         run: |
           cd ${{ env.TF_WORKING_DIR }}
-          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
+          terraform init
 
       - name: Terraform Validate
         id: validate
@@ -38,13 +46,13 @@ jobs:
         id: plan
         run: |
           cd ${{ env.TF_WORKING_DIR }}
-          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
+          terraform plan -no-color
 
       - name: Terraform Apply
         id: apply
         run: |
           cd ${{ env.TF_WORKING_DIR }}
-          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
+          terraform apply -auto-approve -no-color
 
       - name: Terraform Output
         id: output
