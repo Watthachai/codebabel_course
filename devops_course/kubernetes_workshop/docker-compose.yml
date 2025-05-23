@@ -1,0 +1,43 @@
+# version: "3.9"
+# services:
+#   site:
+#     build:
+#       context: ./site
+#       dockerfile: Dockerfile
+#     env_file:
+#       - ./site/.env
+#     ports:
+#       - 5151:80
+#   api:
+#     build:
+#       context: ./api
+#       dockerfile: Dockerfile
+#     ports:
+#       - 5152:3000
+#     environment:
+#       - DATABASE_URL=redis://db:6379
+#       - PORT=3000
+#       - APP_ENV=production
+#   db:
+#     image: redis:7.2.4-alpine
+#     ports:
+#       - 6379:6379
+
+version: "3.9"
+services:
+  site:
+    image: babelcoder/intro-to-devops-ui:1.0
+    ports:
+      - 5151:80
+  api:
+    image: babelcoder/intro-to-devops-api:1.0
+    ports:
+      - 5152:3000
+    environment:
+      - DATABASE_URL=redis://db:6379
+      - PORT=3000
+      - APP_ENV=production
+  db:
+    image: redis:7.2.4-alpine
+    ports:
+      - 6379:6379

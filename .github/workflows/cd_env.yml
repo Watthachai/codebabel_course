@@ -1,31 +1,8 @@
-name: CD Env
-# This workflow is triggered by the completion of the CD workflow
-# and is responsible for deploying the application to the environment.
-# It uses the Terraform CLI to manage infrastructure and deploys the application using Docker Compose.
-# The workflow is triggered when the CD workflow completes successfully.
-# It checks out the code, sets up Terraform, initializes the configuration,
-# validates the configuration, creates a plan, and applies the changes.
-# It also checks if the SSH port is alive before deploying the application.
-# The deployment is done using SSH and Docker Compose.
-# The workflow uses the appleboy/ssh-action to execute commands on the remote server.
-# The workflow also reads the Docker Compose and Kong configuration files
-# and updates them before deploying the application.
-# The workflow uses the SSH key stored in GitHub secrets to connect to the remote server.
-# The workflow also uses the Terraform API token stored in GitHub secrets
-# to authenticate with Terraform Cloud.
-# The workflow is defined in YAML format and uses GitHub Actions syntax.
+name: CD_ENV
 on:
-  workflow_run:
-    workflows: ["CD"]
-    types:
-      - completed
+  push:
     branches:
       - main
-
-env:
-  TF_CLI_CONFIG_FILE: "./.terraformrc"
-  TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
-  TERRAFORM_DIR: "devops_course/cicd_workshop/env"
 jobs:
   deployment:
     runs-on: ubuntu-latest
@@ -36,37 +13,37 @@ jobs:
       - name: Setup Terraform Config File
         id: terraform-config
         run: |-
-          cat > .terraformrc <<EOF
+          cat > $HOME/.terraformrc <<EOF
           credentials "app.terraform.io" {
             token = "${{ secrets.TF_API_TOKEN }}"
           }
           EOF
-
       - name: Terraform Init
         id: init
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: terraform init
-
+        run: |
+          cd devops_course/cicd_workshop/env
+          TF_VAR_terraform=${{ secrets.DO_TOKEN }} terraform init -input=false
       - name: Terraform Validate
         id: validate
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: terraform validate -no-color
-
+        run: |
+          cd devops_course/cicd_workshop/env
+          terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: terraform plan -no-color
-
+        run: |
+          cd devops_course/cicd_workshop/env
+          TF_VAR_terraform=${{ secrets.DO_TOKEN }} terraform plan -input=false -no-color
       - name: Terraform Apply
         id: apply
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: terraform apply -auto-approve -no-color
-
+        run: |
+          cd devops_course/cicd_workshop/env
+          TF_VAR_terraform=${{ secrets.DO_TOKEN }} terraform apply -auto-approve -input=false -no-color
+          
       - name: Terraform Output
         id: output
-        working-directory: ${{ env.TERRAFORM_DIR }}
-        run: terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
-
+        run: |
+          cd devops_course/cicd_workshop/env
+          terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
       - name: Check SSH Port Alive
         id: check-ssh-alive
         run: |
@@ -74,20 +51,22 @@ jobs:
             sleep 1
             echo "port not response"
           done
-
+      - name: Debug Docker Compose File
+        run: |
+          echo "Checking docker-compose.yml content:"
+          cat devops_course/cicd_workshop/env/docker-compose.yml
+          
       - name: Read Config
         id: config
         run: |
-          docker_content=$(cat ${{ env.TERRAFORM_DIR }}/docker-compose.yml)
+          docker_content=$(cat devops_course/cicd_workshop/env/docker-compose.yml)
           echo "docker_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$docker_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-
-          kong_content=$(cat ${{ env.TERRAFORM_DIR }}/kong/kong.yml)
+          kong_content=$(cat devops_course/cicd_workshop/env/kong/kong.yml)
           echo "kong_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$kong_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-
       - name: Deploy
         id: deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -97,9 +76,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             docker compose down
-
             rm -f ./docker-compose.yml
-
             mkdir -p ./kong
             cat > ./kong/kong.yml <<EOF
             ${{steps.config.outputs.kong_content}}
@@ -107,5 +84,6 @@ jobs:
             cat > ./docker-compose.yml <<EOF
             ${{steps.config.outputs.docker_content}}
             EOF
-
+            echo "Docker compose file content:"
+            cat ./docker-compose.yml
             docker compose up -d
