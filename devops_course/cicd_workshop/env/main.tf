@@ -6,13 +6,14 @@ terraform {
     }
   }
 
-  cloud {
-    organization = "devops-quickstart"
+  cloud { 
+    
+    organization = "dv-quickstart" 
 
-    workspaces {
-      name = "github-actions"
-    }
-  }
+    workspaces { 
+      name = "github-actions" 
+    } 
+  } 
 }
 
 variable "do_token" {

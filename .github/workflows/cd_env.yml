@@ -1,10 +1,11 @@
-name: CD
+name: CD_ENV
 on:
   push:
     branches:
       - main
 env:
   TF_CLI_CONFIG_FILE: "./.terraformrc"
+  TF_WORKING_DIR: "devops_course/cicd_workshop/env"
 jobs:
   deployment:
     runs-on: ubuntu-latest
@@ -23,23 +24,33 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
+        run: |
+          cd ${{ env.TF_WORKING_DIR }}
+          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color
+        run: |
+          cd ${{ env.TF_WORKING_DIR }}
+          terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
-        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
+        run: |
+          cd ${{ env.TF_WORKING_DIR }}
+          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
 
       - name: Terraform Apply
         id: apply
-        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
+        run: |
+          cd ${{ env.TF_WORKING_DIR }}
+          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
 
       - name: Terraform Output
         id: output
-        run: terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
+        run: |
+          cd ${{ env.TF_WORKING_DIR }}
+          terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
 
       - name: Check SSH Port Alive
         id: check-ssh-alive
@@ -52,12 +63,12 @@ jobs:
       - name: Read Config
         id: config
         run: |
-          docker_content=$(cat ./docker-compose.yml)
+          docker_content=$(cat ${{ env.TF_WORKING_DIR }}/docker-compose.yml)
           echo "docker_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$docker_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          kong_content=$(cat ./kong/kong.yml)
+          kong_content=$(cat ${{ env.TF_WORKING_DIR }}/kong/kong.yml)
           echo "kong_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$kong_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
