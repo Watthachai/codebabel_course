@@ -16,14 +16,14 @@ terraform {
   } 
 }
 
-variable "terraform" {
+variable "do_token" {  # Changed from "terraform" to "do_token"
   type        = string
   description = "The DigitalOcean Personal Access Token"
   sensitive = true
 }
 
 provider "digitalocean" {
-  token = var.terraform
+  token = var.do_token  # Changed to match the new variable name
 }
 
 data "digitalocean_ssh_key" "terraform" {
