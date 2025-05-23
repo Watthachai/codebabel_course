@@ -1,6 +1,9 @@
 name: CD_ENV
 on:
-  push:
+  workflow_run:
+    workflows: ["CD"]
+    types:
+      - completed
     branches:
       - main
 jobs:
@@ -23,7 +26,7 @@ jobs:
         id: init
         run: |
           cd devops_course/cicd_workshop/env
-          TF_VAR_terraform=${{ secrets.DO_TOKEN }} terraform init -input=false
+          TF_VAR_do_token=${{ secrets.DO_TOKEN }} terraform init -input=false
 
       - name: Terraform Validate
         id: validate
@@ -35,13 +38,13 @@ jobs:
         id: plan
         run: |
           cd devops_course/cicd_workshop/env
-          TF_VAR_terraform=${{ secrets.DO_TOKEN }} terraform plan -input=false -no-color
+          TF_VAR_do_token=${{ secrets.DO_TOKEN }} terraform plan -input=false -no-color
 
       - name: Terraform Apply
         id: apply
         run: |
           cd devops_course/cicd_workshop/env
-          TF_VAR_terraform=${{ secrets.DO_TOKEN }} terraform apply -auto-approve -input=false -no-color
+          TF_VAR_do_token=${{ secrets.DO_TOKEN }} terraform apply -auto-approve -input=false -no-color
           
       - name: Terraform Output
         id: output
