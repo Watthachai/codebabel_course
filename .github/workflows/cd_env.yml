@@ -24,13 +24,14 @@ on:
 
 env:
   TF_CLI_CONFIG_FILE: "./.terraformrc"
+  TF_VAR_do_token: ${{ secrets.DO_TOKEN }}
+  TERRAFORM_DIR: "devops_course/cicd_workshop/env"
 jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
-
 
       - name: Setup Terraform Config File
         id: terraform-config
@@ -41,31 +42,30 @@ jobs:
           }
           EOF
 
-
       - name: Terraform Init
         id: init
-        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
-
+        working-directory: ${{ env.TERRAFORM_DIR }}
+        run: terraform init
 
       - name: Terraform Validate
         id: validate
+        working-directory: ${{ env.TERRAFORM_DIR }}
         run: terraform validate -no-color
-
 
       - name: Terraform Plan
         id: plan
-        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
-
+        working-directory: ${{ env.TERRAFORM_DIR }}
+        run: terraform plan -no-color
 
       - name: Terraform Apply
         id: apply
-        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
-
+        working-directory: ${{ env.TERRAFORM_DIR }}
+        run: terraform apply -auto-approve -no-color
 
       - name: Terraform Output
         id: output
+        working-directory: ${{ env.TERRAFORM_DIR }}
         run: terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
-
 
       - name: Check SSH Port Alive
         id: check-ssh-alive
@@ -75,21 +75,18 @@ jobs:
             echo "port not response"
           done
 
-
       - name: Read Config
         id: config
         run: |
-          docker_content=$(cat ./docker-compose.yml)
+          docker_content=$(cat ${{ env.TERRAFORM_DIR }}/docker-compose.yml)
           echo "docker_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$docker_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-
-          kong_content=$(cat ./kong/kong.yml)
+          kong_content=$(cat ${{ env.TERRAFORM_DIR }}/kong/kong.yml)
           echo "kong_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$kong_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-
 
       - name: Deploy
         id: deploy
@@ -101,9 +98,7 @@ jobs:
           script: |
             docker compose down
 
-
             rm -f ./docker-compose.yml
-
 
             mkdir -p ./kong
             cat > ./kong/kong.yml <<EOF
@@ -112,6 +107,5 @@ jobs:
             cat > ./docker-compose.yml <<EOF
             ${{steps.config.outputs.docker_content}}
             EOF
-
 
             docker compose up -d
