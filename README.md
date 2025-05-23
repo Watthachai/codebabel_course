@@ -1,7 +1,7 @@
 # 🚀 CodeBabel Course Progress
 <div align="center">
 
-![Overall Progress](https://img.shields.io/badge/Progress-24%25-1A73E8?style=for-the-badge&width=500)
+![Overall Progress](https://img.shields.io/badge/Progress-48%25-1A73E8?style=for-the-badge&width=500)
 
 ## 📊 Learning Curve & Time Investment (2 Month Plan)
 
@@ -29,21 +29,21 @@
   <td>DevOps (Docker, K8s)</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#326CE5;height:100%;border-radius:5px;width:0%"></div>
+    <div style="background:#326CE5;height:100%;border-radius:5px;width:100%"></div>
     </div>
-    <span>Currently Learning ⭐</span>
+    <span>Completed ✅</span>
   </td>
   <td>50 hrs</td>
   <td>Weeks 3-5</td>
-  <td>-</td>
+  <td>21-23 พ.ค. 2568</td>
   </tr>
   <tr>
   <td>Next.js/TypeScript</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#000000;height:100%;border-radius:5px;width:70%"></div>
+    <div style="background:#000000;height:100%;border-radius:5px;width:0%"></div>
     </div>
-    <span>Medium-High</span>
+    <span>Currently Learning ⭐</span>
   </td>
   <td>35 hrs</td>
   <td>Weeks 5-7</td>
@@ -98,14 +98,29 @@
     <img src="https://img.shields.io/badge/DevOps-Fundamentals-326CE5?style=flat-square&logo=kubernetes" alt="DevOps Fundamentals"/>
     </a>
   </td>
+  <td>✅ เสร็จสิ้น</td>
+  <td>
+    <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
+    <div style="background-color:#326CE5;height:100%;width:100%;border-radius:5px;"></div>
+    </div>
+    <strong>100%</strong>
+  </td>
+  <td>23 พ.ค. 2568</td>
+  </tr>
+  <tr>
+  <td>
+    <a href="./nextjs_course/README.md">
+    <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js Development"/>
+    </a>
+  </td>
   <td>⭐ กำลังเรียน</td>
   <td>
     <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
-    <div style="background-color:#326CE5;height:100%;width:10%;border-radius:5px;"></div>
+    <div style="background-color:#000000;height:100%;width:5%;border-radius:5px;"></div>
     </div>
-    <strong>10%</strong>
+    <strong>5%</strong>
   </td>
-  <td>20 พ.ค. 2568</td>
+  <td>23 พ.ค. 2568</td>
   </tr>
 </table>
 
@@ -124,24 +139,24 @@
         <p><strong>เสร็จสิ้น ✅</strong></p>
       </td>
       <td width="50%" align="center">
-        <img src="https://img.shields.io/badge/Phase-2-lightgrey?style=for-the-badge" alt="Phase 2"/>
+        <img src="https://img.shields.io/badge/Phase-2-success?style=for-the-badge" alt="Phase 2"/>
         <h3>DevOps ขั้นเทพ</h3>
         <a href="./devops_course/README.md">
           <img src="https://img.shields.io/badge/DevOps-Fundamentals-326CE5?style=flat-square&logo=kubernetes" alt="DevOps"/>
         </a>
         <p>Docker, Kubernetes, CI/CD</p>
-        <p><strong>กำลังเรียนอยู่ ⭐</strong></p>
+        <p><strong>เสร็จสิ้น ✅</strong></p>
       </td>
     </tr>
     <tr>
   <td width="50%" align="center">
-    <img src="https://img.shields.io/badge/Phase-3-lightgrey?style=for-the-badge" alt="Phase 3"/>
+    <img src="https://img.shields.io/badge/Phase-3-blue?style=for-the-badge" alt="Phase 3"/>
     <h3>Front-End ขั้นสูง</h3>
     <a href="./nextjs_course/README.md">
       <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </a>
     <p>TypeScript, Next.js, Tailwind</p>
-    <p><strong>กำหนดการเรียน 📅</strong></p>
+    <p><strong>กำลังเรียนอยู่ ⭐</strong></p>
   </td>
   <td width="50%" align="center">
     <img src="https://img.shields.io/badge/Phase-4-lightgrey?style=for-the-badge" alt="Phase 4"/>
@@ -165,22 +180,7 @@
   <li>✅ สถาปัตยกรรมและวงจรชีวิตของคอมโพเนนต์</li>
   <li>✅ การจัดการสเตทด้วย Redux</li>
   <li>✅ Material UI สำหรับการออกแบบที่ตอบสนอง</li>
-  <li>✅ React Hooks และ Custom Hooks</li>
-  <li>✅ การเพิ่มประสิทธิภาพการทำงาน</li>
-  </ul>
-  <p><a href="./reactFundCourse/workshop_product/frontend/README.md">ดูความคืบหน้าโดยละเอียด →</a></p>
-</details>
-
-<details>
-  <summary><strong>🐳 คอร์สสั้น DevOps (กำลังเรียน)</strong></summary>
-  <br>
-  <ul>
-  <li>📦 การใช้คอนเทนเนอร์ด้วย Docker</li>
-  <li>☸️ การจัดการระบบด้วย Kubernetes</li>
-  <li>🏗️ Infrastructure as Code ด้วย Terraform</li>
-  <li>📊 การตรวจสอบระบบด้วย Datadog</li>
-  <li>🔄 การสร้าง CI/CD Pipeline</li>
-  <li>🔌 API Gateway ด้วย Kong</li>
+  <li>✅ React
   <li>📝 วิธีการทำงานแบบ GitOps</li>
   <li>🧩 สถาปัตยกรรมไมโครเซอร์วิส</li>
   </ul>
@@ -254,7 +254,7 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 20 พ.ค. 2568</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 23 พ.ค. 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
   
