@@ -1,4 +1,19 @@
-name: CD_ENV
+name: CD Env
+# This workflow is triggered by the completion of the CD workflow
+# and is responsible for deploying the application to the environment.
+# It uses the Terraform CLI to manage infrastructure and deploys the application using Docker Compose.
+# The workflow is triggered when the CD workflow completes successfully.
+# It checks out the code, sets up Terraform, initializes the configuration,
+# validates the configuration, creates a plan, and applies the changes.
+# It also checks if the SSH port is alive before deploying the application.
+# The deployment is done using SSH and Docker Compose.
+# The workflow uses the appleboy/ssh-action to execute commands on the remote server.
+# The workflow also reads the Docker Compose and Kong configuration files
+# and updates them before deploying the application.
+# The workflow uses the SSH key stored in GitHub secrets to connect to the remote server.
+# The workflow also uses the Terraform API token stored in GitHub secrets
+# to authenticate with Terraform Cloud.
+# The workflow is defined in YAML format and uses GitHub Actions syntax.
 on:
   workflow_run:
     workflows: ["CD"]
@@ -6,9 +21,9 @@ on:
       - completed
     branches:
       - main
+
 env:
   TF_CLI_CONFIG_FILE: "./.terraformrc"
-  TF_WORKING_DIR: "devops_course/cicd_workshop/env"
 jobs:
   deployment:
     runs-on: ubuntu-latest
@@ -16,52 +31,41 @@ jobs:
       - uses: actions/checkout@v4
       - uses: hashicorp/setup-terraform@v3
 
+
       - name: Setup Terraform Config File
         id: terraform-config
         run: |-
-          # Create Terraform CLI config file in the HOME directory where Terraform looks for it by default
-          cat > $HOME/.terraformrc <<EOF
+          cat > .terraformrc <<EOF
           credentials "app.terraform.io" {
             token = "${{ secrets.TF_API_TOKEN }}"
           }
           EOF
-          
-          # Set DigitalOcean token as environment variable for Terraform to use
-          echo "TF_VAR_do_token=${{ secrets.DO_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Debug .terraformrc File
-        run: |
-          cat .terraformrc || echo ".terraformrc file not found!"
 
       - name: Terraform Init
         id: init
-        run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          terraform init
+        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
+
 
       - name: Terraform Validate
         id: validate
-        run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          terraform validate -no-color
+        run: terraform validate -no-color
+
 
       - name: Terraform Plan
         id: plan
-        run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          terraform plan -no-color
+        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
+
 
       - name: Terraform Apply
         id: apply
-        run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          terraform apply -auto-approve -no-color
+        run: TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
+
 
       - name: Terraform Output
         id: output
-        run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
+        run: terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
+
 
       - name: Check SSH Port Alive
         id: check-ssh-alive
@@ -71,18 +75,21 @@ jobs:
             echo "port not response"
           done
 
+
       - name: Read Config
         id: config
         run: |
-          docker_content=$(cat ${{ env.TF_WORKING_DIR }}/docker-compose.yml)
+          docker_content=$(cat ./docker-compose.yml)
           echo "docker_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$docker_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          kong_content=$(cat ${{ env.TF_WORKING_DIR }}/kong/kong.yml)
+
+          kong_content=$(cat ./kong/kong.yml)
           echo "kong_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$kong_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
+
 
       - name: Deploy
         id: deploy
@@ -94,7 +101,9 @@ jobs:
           script: |
             docker compose down
 
+
             rm -f ./docker-compose.yml
+
 
             mkdir -p ./kong
             cat > ./kong/kong.yml <<EOF
@@ -103,5 +112,6 @@ jobs:
             cat > ./docker-compose.yml <<EOF
             ${{steps.config.outputs.docker_content}}
             EOF
+
 
             docker compose up -d
