@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - main
-env:
-  TF_CLI_CONFIG_FILE: "./.terraformrc"
-  TF_WORKING_DIR: "devops_course/cicd_workshop/env"
 jobs:
   deployment:
     runs-on: ubuntu-latest
@@ -16,7 +13,7 @@ jobs:
       - name: Setup Terraform Config File
         id: terraform-config
         run: |-
-          cat > .terraformrc <<EOF
+          cat > ${{ github.workspace }}/.terraformrc <<EOF
           credentials "app.terraform.io" {
             token = "${{ secrets.TF_API_TOKEN }}"
           }
@@ -25,31 +22,31 @@ jobs:
       - name: Terraform Init
         id: init
         run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform init
+          cd devops_course/cicd_workshop/env
+          terraform init -input=false
 
       - name: Terraform Validate
         id: validate
         run: |
-          cd ${{ env.TF_WORKING_DIR }}
+          cd devops_course/cicd_workshop/env
           terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
         run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform plan -no-color
+          cd devops_course/cicd_workshop/env
+          terraform plan -input=false -no-color
 
       - name: Terraform Apply
         id: apply
         run: |
-          cd ${{ env.TF_WORKING_DIR }}
-          TF_CLI_CONFIG_FILE=${{env.TF_CLI_CONFIG_FILE}} terraform apply -auto-approve -no-color
-
+          cd devops_course/cicd_workshop/env
+          terraform apply -auto-approve -input=false -no-color
+          
       - name: Terraform Output
         id: output
         run: |
-          cd ${{ env.TF_WORKING_DIR }}
+          cd devops_course/cicd_workshop/env
           terraform output | sed -r 's/.+"([0-9,\.]+)"/ip=\1/' >> "$GITHUB_OUTPUT"
 
       - name: Check SSH Port Alive
@@ -63,12 +60,12 @@ jobs:
       - name: Read Config
         id: config
         run: |
-          docker_content=$(cat ${{ env.TF_WORKING_DIR }}/docker-compose.yml)
+          docker_content=$(cat devops_course/cicd_workshop/env/docker-compose.yml)
           echo "docker_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$docker_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-          kong_content=$(cat ${{ env.TF_WORKING_DIR }}/kong/kong.yml)
+          kong_content=$(cat devops_course/cicd_workshop/env/kong/kong.yml)
           echo "kong_content<<EOF" >> "$GITHUB_OUTPUT"
           echo "$kong_content" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
