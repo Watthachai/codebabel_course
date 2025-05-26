@@ -1,7 +1,7 @@
 # 🚀 CodeBabel Course Progress
 <div align="center">
 
-![Overall Progress](https://img.shields.io/badge/Progress-48%25-1A73E8?style=for-the-badge&width=500)
+![Overall Progress](https://img.shields.io/badge/Progress-52%25-1A73E8?style=for-the-badge&width=500)
 
 ## 📊 Learning Curve & Time Investment (2 Month Plan)
 
@@ -41,21 +41,21 @@
   <td>Next.js/TypeScript</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#000000;height:100%;border-radius:5px;width:0%"></div>
+    <div style="background:#000000;height:100%;border-radius:5px;width:31%"></div>
     </div>
     <span>Currently Learning ⭐</span>
   </td>
   <td>35 hrs</td>
   <td>Weeks 5-7</td>
-  <td>-</td>
+  <td>23 พ.ค. - ปัจจุบัน</td>
   </tr>
   <tr>
   <td>Go REST API</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#00ADD8;height:100%;border-radius:5px;width:80%"></div>
+    <div style="background:#00ADD8;height:100%;border-radius:5px;width:0%"></div>
     </div>
-    <span>Medium-High</span>
+    <span>Planned</span>
   </td>
   <td>40 hrs</td>
   <td>Weeks 8-9</td>
@@ -116,11 +116,11 @@
   <td>⭐ กำลังเรียน</td>
   <td>
     <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
-    <div style="background-color:#000000;height:100%;width:5%;border-radius:5px;"></div>
+    <div style="background-color:#000000;height:100%;width:31%;border-radius:5px;"></div>
     </div>
-    <strong>5%</strong>
+    <strong>31% (12/39 บท)</strong>
   </td>
-  <td>23 พ.ค. 2568</td>
+  <td>วันนี้</td>
   </tr>
 </table>
 
@@ -150,13 +150,13 @@
     </tr>
     <tr>
   <td width="50%" align="center">
-    <img src="https://img.shields.io/badge/Phase-3-blue?style=for-the-badge" alt="Phase 3"/>
+    <img src="https://img.shields.io/badge/Phase-3-orange?style=for-the-badge" alt="Phase 3"/>
     <h3>Front-End ขั้นสูง</h3>
     <a href="./nextjs_course/README.md">
       <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </a>
     <p>TypeScript, Next.js, Tailwind</p>
-    <p><strong>กำลังเรียนอยู่ ⭐</strong></p>
+    <p><strong>กำลังเรียนอยู่ ⭐ (31%)</strong></p>
   </td>
   <td width="50%" align="center">
     <img src="https://img.shields.io/badge/Phase-4-lightgrey?style=for-the-badge" alt="Phase 4"/>
@@ -180,24 +180,38 @@
   <li>✅ สถาปัตยกรรมและวงจรชีวิตของคอมโพเนนต์</li>
   <li>✅ การจัดการสเตทด้วย Redux</li>
   <li>✅ Material UI สำหรับการออกแบบที่ตอบสนอง</li>
-  <li>✅ React
-  <li>📝 วิธีการทำงานแบบ GitOps</li>
-  <li>🧩 สถาปัตยกรรมไมโครเซอร์วิส</li>
+  <li>✅ React Router และการนำทางระหว่างหน้า</li>
+  <li>✅ การจัดการฟอร์มและการตรวจสอบข้อมูล</li>
+  </ul>
+  <p><a href="./reactFundCourse/workshop_product/frontend/README.md">ดูรายละเอียดคอร์ส →</a></p>
+</details>
+
+<details>
+  <summary><strong>✅ DevOps พื้นฐาน (เสร็จสิ้น - 100%)</strong></summary>
+  <br>
+  <ul>
+  <li>✅ Docker และการจัดการ Container</li>
+  <li>✅ Kubernetes สำหรับการจัดการ Orchestration</li>
+  <li>✅ CI/CD Pipeline ด้วย GitLab</li>
+  <li>✅ การติดตั้งและกำหนดค่า Infrastructure</li>
+  <li>✅ วิธีการทำงานแบบ GitOps</li>
+  <li>✅ สถาปัตยกรรมไมโครเซอร์วิส</li>
   </ul>
   <p><a href="./devops_course/README.md">ดูรายละเอียดคอร์ส →</a></p>
 </details>
 
 <details>
-  <summary><strong>⚡ การพัฒนาด้วย Next.js (วางแผนไว้)</strong></summary>
+  <summary><strong>⚡ การพัฒนาด้วย Next.js (กำลังเรียน - 31%)</strong></summary>
   <br>
   <ul>
-  <li>📘 การใช้งาน TypeScript</li>
-  <li>🔄 Server-Side Rendering และ Static Generation</li>
-  <li>🧭 การจัดการเส้นทางขั้นสูง</li>
-  <li>🗃️ การจัดการสเตทด้วย Zustand</li>
-  <li>💅 การจัดรูปแบบด้วย Tailwind CSS</li>
-  <li>📊 การดึงข้อมูลด้วย React Query</li>
-  <li>🧩 ไลบรารีคอมโพเนนต์ด้วย Shadcn</li>
+  <li>✅ การติดตั้งและการตั้งค่า Next.js (บท 1-4)</li>
+  <li>✅ พื้นฐาน TypeScript (บท 5-8)</li>
+  <li>⭐ Server-Side Rendering และ Static Generation (บท 9-12)</li>
+  <li>📘 การจัดการเส้นทางขั้นสูง (บท 13-16)</li>
+  <li>🗃️ การจัดการสเตทด้วย Zustand (บท 17-22)</li>
+  <li>💅 การจัดรูปแบบด้วย Tailwind CSS (บท 23-28)</li>
+  <li>📊 การดึงข้อมูลด้วย React Query (บท 29-34)</li>
+  <li>🧩 ไลบรารีคอมโพเนนต์ด้วย Shadcn (บท 35-39)</li>
   </ul>
   <p><a href="./nextjs_course/README.md">ดูรายละเอียดคอร์ส →</a></p>
 </details>
@@ -228,7 +242,7 @@
     <img src="https://img.shields.io/badge/React-100%25-61DAFB?style=flat-square&logo=react" alt="React"/>
     <img src="https://img.shields.io/badge/Redux-100%25-764ABC?style=flat-square&logo=redux" alt="Redux"/>
     <img src="https://img.shields.io/badge/Material_UI-100%25-0081CB?style=flat-square&logo=material-ui" alt="Material UI"/>
-    <img src="https://img.shields.io/badge/Next.js-Planned-000000?style=flat-square&logo=next.js" alt="Next.js"/>
+    <img src="https://img.shields.io/badge/Next.js-31%25-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </td>
   </tr>
   <tr>
@@ -243,9 +257,9 @@
   <tr>
     <td><strong>DevOps</strong></td>
     <td>
-    <img src="https://img.shields.io/badge/Docker-Planned-2496ED?style=flat-square&logo=docker" alt="Docker"/>
-    <img src="https://img.shields.io/badge/Kubernetes-Planned-326CE5?style=flat-square&logo=kubernetes" alt="Kubernetes"/>
-    <img src="https://img.shields.io/badge/CI/CD-Planned-FC6D26?style=flat-square&logo=gitlab" alt="CI/CD"/>
+    <img src="https://img.shields.io/badge/Docker-100%25-2496ED?style=flat-square&logo=docker" alt="Docker"/>
+    <img src="https://img.shields.io/badge/Kubernetes-100%25-326CE5?style=flat-square&logo=kubernetes" alt="Kubernetes"/>
+    <img src="https://img.shields.io/badge/CI/CD-100%25-FC6D26?style=flat-square&logo=gitlab" alt="CI/CD"/>
     </td>
   </tr>
   </table>
@@ -254,7 +268,7 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 23 พ.ค. 2568</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> วันนี้</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
   

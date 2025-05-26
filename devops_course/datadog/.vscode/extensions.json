@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "humao.rest-client",
+    "golang.go",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "hashicorp.terraform"
+  ]
+}

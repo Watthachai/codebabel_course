@@ -1,0 +1,16 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: site-service
+    url: http://site:80
+    routes:
+      - name: site
+        paths:
+          - /
+  - name: api-service
+    url: http://api:3000
+    routes:
+      - name: api
+        paths:
+          - /api
