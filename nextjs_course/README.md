@@ -139,14 +139,14 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 - [ทบทวนการใช้งาน TypeScript](documents/10_re_learning_ts.md) - ทบทวน TypeScript เพื่อเพิ่มความปลอดภัยให้กับโค้ด
 
 ### 🔧 **ส่วนที่ 2: Development Environment Setup**
-- [การตั้งค่า ESLint และ Prettier สำหรับโปรเจค Next.js](documents/eslint-prettier-setup.md) - การตั้งค่าเครื่องมือสำหรับการเขียนโค้ดที่มีคุณภาพ
+- [การตั้งค่า ESLint และ Prettier สำหรับโปรเจค Next.js](documents/12_eslint_prettier.md) - การตั้งค่าเครื่องมือสำหรับการเขียนโค้ดที่มีคุณภาพ
 
 ### ⚛️ **ส่วนที่ 3: React & Next.js Development**
-- [React Fundamentals](documents/react-fundamentals.md) - หลักการพื้นฐานของ React และ Component-Based Design
-- [Parent-Child Communication](documents/parent-child-communication.md) - การสื่อสารระหว่าง Component
-- [useEffect](documents/useeffect.md) - การใช้งาน useEffect Hook
-- [Custom Hooks](documents/custom-hooks.md) - การสร้าง Custom Hooks เพื่อ Reuse Logic
-- [Static and Dynamic Rendering](documents/static-dynamic-rendering.md) - ทำความเข้าใจการ Render แบบต่างๆ ใน Next.js
+- [React Fundamentals](documents/13_react_funde.md) - หลักการพื้นฐานของ React และ Component-Based Design
+- [Parent-Child Communication](documents/14_parent_child_communication.md) - การสื่อสารระหว่าง Component
+- [useEffect](documents/15_useeffect.md) - การใช้งาน useEffect Hook
+- [Custom Hooks](documents/16_custom_hooks.md) - การสร้าง Custom Hooks เพื่อ Reuse Logic
+- [Static and Dynamic Rendering](documents/17_static_dynamic_rendering.md) - ทำความเข้าใจการ Render แบบต่างๆ ใน Next.js
 - [Fetch-based Rendering](documents/fetch-based-rendering.md) - การ Fetch ข้อมูลใน Next.js
 - [Next.js API](documents/nextjs-api.md) - การสร้าง API ด้วย Next.js
 - [Consuming API](documents/consuming-api.md) - การเรียกใช้งาน API
