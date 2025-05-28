@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 
@@ -14,55 +14,52 @@ interface TodoList {
 interface TodoFormProps {
     onSubmit: (input: string) => void;
 }
-const TodoForm = ({onSubmit}: TodoFormProps) => {
-    const [input, setInput] = useState('');
+const TodoForm = ({ onSubmit }: TodoFormProps) => {
+    const [input, setInput] = useState("");
 
     const handdleSubmit = () => {
-        onSubmit(input)
-        setInput('')
-    }
+        onSubmit(input);
+        setInput("");
+    };
 
     return (
         <>
-            <input 
-                type="text" 
-                onChange={e => setInput(e.target.value)}
+            <input
+                type="text"
+                onChange={(e) => setInput(e.target.value)}
                 value={input}
             />
-            <button type="button" onClick={handdleSubmit}>Add</button>
+            <button type="button" onClick={handdleSubmit}>
+                Add
+            </button>
         </>
-    )
-}
-
-const TodoList = ({ todos }: TodoList) => {
-
-    return(
-            
-            <ul>
-                {
-                todos.map((todo) => (
-                    <TodoItem key={todo.id} {...todo}></TodoItem>
-                ))}
-            </ul>
     );
 };
 
-const TodoItem = ({text}: Todo) => {
-    return(
-        <li>{text}</li>
-    )
-}
+const TodoList = ({ todos }: TodoList) => {
+    return (
+        <ul>
+            {todos.map((todo) => (
+                <TodoItem key={todo.id} {...todo}></TodoItem>
+            ))}
+        </ul>
+    );
+};
+
+const TodoItem = ({ text }: Todo) => {
+    return <li>{text}</li>;
+};
 
 export default function TodoApp() {
     const [todos, setTodos] = useState<Todo[]>([]);
 
-    const addTodo = (input: string ) => {
-        setTodos([{ id: +new Date(), text: input }, ...todos])
-    }
-    return(
+    const addTodo = (input: string) => {
+        setTodos([{ id: +new Date(), text: input }, ...todos]);
+    };
+    return (
         <>
             <TodoForm onSubmit={addTodo}></TodoForm>
             <TodoList todos={todos}></TodoList>
         </>
     );
-};
+}

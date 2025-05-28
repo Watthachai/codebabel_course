@@ -1,13 +1,9 @@
-'use client';
+"use client";
 
 import { useEffect } from "react";
 
 const HomePage = () => {
-    return(
-        useEffect(() => {
-            
-        }, [])
-    );
+    return useEffect(() => {}, []);
 };
 
 export default HomePage;

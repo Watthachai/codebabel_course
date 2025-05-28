@@ -20,14 +20,14 @@
 
 ```mermaid
 graph TD
-    A[Developer เขียนโค้ด] --> B[ESLint ตรวจสอบคุณภาพ]
-    B --> C[Prettier จัดรูปแบบ]
-    C --> D[โค้ดมีมาตรฐานเดียวกัน]
-    
-    style A fill:#e1f5fe
-    style B fill:#fff3e0
-    style C fill:#f3e5f5
-    style D fill:#e8f5e8
+  A[Developer เขียนโค้ด] --> B[ESLint ตรวจสอบคุณภาพ]
+  B --> C[Prettier จัดรูปแบบ]
+  C --> D[โค้ดมีมาตรฐานเดียวกัน]
+  
+  style A fill:#e1f5fe
+  style B fill:#fff3e0
+  style C fill:#f3e5f5
+  style D fill:#e8f5e8
 ```
 
 ## 🛠️ ความจำเป็นของเครื่องมือ
@@ -119,7 +119,7 @@ const eslintConfig = [
 export default eslintConfig;
 ```
 
-### แก้ไข Configuration สำหรับ Prettier และ TypeScript
+### แก้ไข Configuration สำหรับ Prettier และ TypeScript (เวอร์ชัน ESLint v9)
 
 แก้ไขไฟล์ `eslint.config.mjs` ให้เป็น:
 
@@ -127,69 +127,69 @@ export default eslintConfig;
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
 const eslintConfig = [
   ...compat.extends(
-    "next/core-web-vitals",
-    "next/typescript",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
-    "plugin:prettier/recommended"
+  "next/core-web-vitals",
+  "next/typescript",
+  "plugin:@typescript-eslint/recommended-type-checked",
+  "plugin:@typescript-eslint/stylistic-type-checked",
+  "plugin:prettier/recommended"
   ),
   {
-    languageOptions: {
-      parserOptions: {
-        project: true,
-      },
+  languageOptions: {
+    parserOptions: {
+    project: true,
     },
-    rules: {
-      // กฎเหล่านี้เปิดใช้งานใน stylistic-type-checked
-      '@typescript-eslint/array-type': 'off',
-      '@typescript-eslint/consistent-type-definitions': 'off',
-      '@typescript-eslint/prefer-nullish-coalescing': 'off',
-      '@typescript-eslint/consistent-type-imports': [
-        'warn',
-        {
-          prefer: 'type-imports',
-          fixStyle: 'inline-type-imports',
-        },
-      ],
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-misused-promises': [
-        2,
-        {
-          checksVoidReturn: { attributes: false },
-        },
-      ],
-      '@typescript-eslint/no-floating-promises': 'off',
+  },
+  rules: {
+    // กฎเหล่านี้เปิดใช้งานใน stylistic-type-checked
+    '@typescript-eslint/array-type': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off',
+    '@typescript-eslint/prefer-nullish-coalescing': 'off',
+    '@typescript-eslint/consistent-type-imports': [
+    'warn',
+    {
+      prefer: 'type-imports',
+      fixStyle: 'inline-type-imports',
     },
+    ],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-misused-promises': [
+    2,
+    {
+      checksVoidReturn: { attributes: false },
+    },
+    ],
+    '@typescript-eslint/no-floating-promises': 'off',
+  },
   },
 ];
 
 export default eslintConfig;
 ```
 
+### การแก้ไขที่สำคัญสำหรับ ESLint v9:
+
+1. **เพิ่ม import**: `import js from "@eslint/js";`
+2. **ระบุ recommendedConfig**: เพิ่ม `recommendedConfig: js.configs.recommended` ใน FlatCompat constructor
+3. **ระบุ allConfig**: เพิ่ม `allConfig: js.configs.all` ใน FlatCompat constructor
+
 ### ความแตกต่างของ Flat Config:
 
 - **ES Modules**: ใช้ `import` แทน `require`
 - **Array format**: Configuration เป็น array ของ objects
 - **compat**: ใช้ FlatCompat เพื่อใช้งาน legacy configs
-- **languageOptions**: การตั้งค่า parser และ parser options
-
-## 💅 การตั้งค่า Prettier
-
-สร้างไฟล์ `prettier.config.mjs`:
-
-```javascript
-/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').options} */
-const config = {
   plugins: ['prettier-plugin-tailwindcss'],
   singleQuote: true,
   trailingComma: 'all',

@@ -67,7 +67,7 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 - [useEffect](documents/15_useeffect.md) - การใช้งาน useEffect Hook
 - [Custom Hooks](documents/16_custom_hooks.md) - การสร้าง Custom Hooks เพื่อ Reuse Logic
 - [Static and Dynamic Rendering](documents/17_static_dynamic_rendering.md) - ทำความเข้าใจการ Render แบบต่างๆ ใน Next.js
-- [Fetch-based Rendering](documents/fetch-based-rendering.md) - การ Fetch ข้อมูลใน Next.js
+- [Fetch-based Rendering](documents/18_fetchbased_rendering.md) - การ Fetch ข้อมูลใน Next.js
 - [Next.js API](documents/nextjs-api.md) - การสร้าง API ด้วย Next.js
 - [Consuming API](documents/consuming-api.md) - การเรียกใช้งาน API
 - [Client-Side Rendering](documents/client-side-rendering.md) - การ Render ฝั่ง Client
