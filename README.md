@@ -1,7 +1,7 @@
 # 🚀 CodeBabel Course Progress
 <div align="center">
 
-![Overall Progress](https://img.shields.io/badge/Progress-52%25-1A73E8?style=for-the-badge&width=500)
+![Overall Progress](https://img.shields.io/badge/Progress-58%25-1A73E8?style=for-the-badge&width=500)
 
 ## 📊 Learning Curve & Time Investment (2 Month Plan)
 
@@ -41,7 +41,7 @@
   <td>Next.js/TypeScript</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#000000;height:100%;border-radius:5px;width:31%"></div>
+    <div style="background:#000000;height:100%;border-radius:5px;width:54%"></div>
     </div>
     <span>Currently Learning ⭐</span>
   </td>
@@ -116,11 +116,11 @@
   <td>⭐ กำลังเรียน</td>
   <td>
     <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
-    <div style="background-color:#000000;height:100%;width:31%;border-radius:5px;"></div>
+    <div style="background-color:#000000;height:100%;width:54%;border-radius:5px;"></div>
     </div>
-    <strong>31% (12/39 บท)</strong>
+    <strong>54% (21/39 บท)</strong>
   </td>
-  <td>วันนี้</td>
+  <td>28 พฤษภาคม 2025</td>
   </tr>
 </table>
 
@@ -156,7 +156,7 @@
       <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </a>
     <p>TypeScript, Next.js, Tailwind</p>
-    <p><strong>กำลังเรียนอยู่ ⭐ (31%)</strong></p>
+    <p><strong>กำลังเรียนอยู่ ⭐ (54%)</strong></p>
   </td>
   <td width="50%" align="center">
     <img src="https://img.shields.io/badge/Phase-4-lightgrey?style=for-the-badge" alt="Phase 4"/>
@@ -201,15 +201,15 @@
 </details>
 
 <details>
-  <summary><strong>⚡ การพัฒนาด้วย Next.js (กำลังเรียน - 31%)</strong></summary>
+  <summary><strong>⚡ การพัฒนาด้วย Next.js (กำลังเรียน - 54%)</strong></summary>
   <br>
   <ul>
   <li>✅ การติดตั้งและการตั้งค่า Next.js (บท 1-4)</li>
   <li>✅ พื้นฐาน TypeScript (บท 5-8)</li>
-  <li>⭐ Server-Side Rendering และ Static Generation (บท 9-12)</li>
-  <li>📘 การจัดการเส้นทางขั้นสูง (บท 13-16)</li>
-  <li>🗃️ การจัดการสเตทด้วย Zustand (บท 17-22)</li>
-  <li>💅 การจัดรูปแบบด้วย Tailwind CSS (บท 23-28)</li>
+  <li>✅ Server-Side Rendering และ Static Generation (บท 9-12)</li>
+  <li>✅ การจัดการเส้นทางขั้นสูง (บท 13-16)</li>
+  <li>⭐ การจัดการสเตทด้วย Zustand (บท 17-22)</li>
+  <li>📘 การจัดรูปแบบด้วย Tailwind CSS (บท 23-28)</li>
   <li>📊 การดึงข้อมูลด้วย React Query (บท 29-34)</li>
   <li>🧩 ไลบรารีคอมโพเนนต์ด้วย Shadcn (บท 35-39)</li>
   </ul>
@@ -242,7 +242,7 @@
     <img src="https://img.shields.io/badge/React-100%25-61DAFB?style=flat-square&logo=react" alt="React"/>
     <img src="https://img.shields.io/badge/Redux-100%25-764ABC?style=flat-square&logo=redux" alt="Redux"/>
     <img src="https://img.shields.io/badge/Material_UI-100%25-0081CB?style=flat-square&logo=material-ui" alt="Material UI"/>
-    <img src="https://img.shields.io/badge/Next.js-31%25-000000?style=flat-square&logo=next.js" alt="Next.js"/>
+    <img src="https://img.shields.io/badge/Next.js-54%25-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </td>
   </tr>
   <tr>
@@ -268,7 +268,6 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> วันนี้</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 28 พฤษภาคม 2025</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
-  
