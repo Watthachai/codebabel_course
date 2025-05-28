@@ -68,10 +68,10 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 - [Custom Hooks](documents/16_custom_hooks.md) - การสร้าง Custom Hooks เพื่อ Reuse Logic
 - [Static and Dynamic Rendering](documents/17_static_dynamic_rendering.md) - ทำความเข้าใจการ Render แบบต่างๆ ใน Next.js
 - [Fetch-based Rendering](documents/18_fetchbased_rendering.md) - การ Fetch ข้อมูลใน Next.js
-- [Next.js API](documents/nextjs-api.md) - การสร้าง API ด้วย Next.js
-- [Consuming API](documents/consuming-api.md) - การเรียกใช้งาน API
-- [Client-Side Rendering](documents/client-side-rendering.md) - การ Render ฝั่ง Client
-- [Next Navigation](documents/next-navigation.md) - การจัดการ Navigation ใน Next.js
+- [Next.js API](documents/19_nextjs_api.md) - การสร้าง API ด้วย Next.js
+- [Consuming API](documents/20_consuming_api.md) - การเรียกใช้งาน API
+- [Client-Side Rendering](documents/21_client_side_rendering.md) - การ Render ฝั่ง Client
+- [Next Navigation](documents/22_next_navigation.md) - การจัดการ Navigation ใน Next.js
 
 ### 🗄️ **ส่วนที่ 4: Database Management**
 - [Prisma ORM](documents/prisma-orm.md) - การจัดการฐานข้อมูลด้วย Prisma
