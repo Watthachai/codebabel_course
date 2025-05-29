@@ -12,16 +12,21 @@
         "db:push": "npx prisma db push",
         "db:seed": "npx prisma db seed",
         "db:studio": "npx prisma studio",
-        "db:generate": "npx prisma generate"
+        "db:generate": "npx prisma generate",
+        "db:reset": "npx prisma migrate reset"
     },
     "prisma": {
         "seed": "npx tsx prisma/seed.ts"
     },
     "dependencies": {
         "@prisma/client": "6.8.2",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "lucide-react": "^0.511.0",
         "next": "15.3.2",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "tailwind-merge": "^3.3.0",
         "zod": "^3.25.32"
     },
     "devDependencies": {
@@ -44,6 +49,7 @@
         "tailwindcss": "^4",
         "ts-node": "^10.9.2",
         "tsx": "^4.19.2",
+        "tw-animate-css": "^1.3.1",
         "typescript": "^5"
     }
 }

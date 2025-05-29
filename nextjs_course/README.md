@@ -83,13 +83,13 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 ### 🗄️ **ส่วนที่ 4: Database Management**
 
 - [Prisma ORM](documents/23_prismaorm.md) - การจัดการฐานข้อมูลด้วย Prisma
-- [Prisma Workflow](documents/prisma-workflow.md) - กระบวนการทำงานกับ Prisma
-- [Prisma Q & A](documents/prisma-qa.md) - คำถามและคำตอบเกี่ยวกับ Prisma
-- [Connecting API to the Database](documents/api-database-connection.md) - การเชื่อมต่อ API กับฐานข้อมูล
+- [Prisma Workflow](documents/24_prisma_workflow.md) - กระบวนการทำงานกับ Prisma
+- [Prisma Q & A](documents/25_prisma_qna.md) - คำถามและคำตอบเกี่ยวกับ Prisma
+- [Connecting API to the Database](documents/26_connect_api_to_prismadb.md) - การเชื่อมต่อ API กับฐานข้อมูล
 
 ### 🎨 **ส่วนที่ 5: UI/UX Development**
 
-- [Tailwind CSS and Shadcn UI](documents/tailwind-shadcn.md) - การใช้งาน Utility-first CSS Framework และ Component Library
+- [Tailwind CSS and Shadcn UI](documents/27_tailwindcss_shadcnui.md) - การใช้งาน Utility-first CSS Framework และ Component Library
 - [Styling Page with Tailwind CSS and Shadcn UI](documents/styling-pages.md) - การตกแต่งหน้าเว็บ
 - [Custom Components](documents/custom-components.md) - การสร้าง Component แบบกำหนดเอง
 
