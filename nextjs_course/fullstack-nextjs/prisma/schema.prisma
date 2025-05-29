@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  MEMBER
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  image         String?
+  role          Role           @default(MEMBER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now())
+  leaves        Leave[]
+  announcements Announcement[]
+  articles      Article[]
+}
+
+model Leave {
+  id              Int         @id @default(autoincrement())
+  status          LeaveStatus @default(PENDING)
+  reason          String
+  leaveDate       String
+  rejectionReason String?
+  userId          Int
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
+  user            User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, leaveDate])
+}
+
+model Announcement {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Article {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String
+  image     String
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}

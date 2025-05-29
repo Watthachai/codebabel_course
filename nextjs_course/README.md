@@ -1,4 +1,3 @@
-
 # Next.js Fullstack Development Course
 
 ## รายละเอียด
@@ -8,28 +7,33 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 ### 🎯 **สิ่งที่จะได้เรียนรู้**
 
 **Frontend Development:**
+
 - การใช้งาน React ร่วมกับ Next.js 14 เพื่อสร้าง Modern Web Application (ผู้เรียนใช้ Next.js 15+ แล้ว 5555 ภายในเอกสารอาจจะไม่ได้อัพเดทนะครับซึ่งอาจจะเขียนแตกต่างเล็กน้อย)
 - การจัดการ Routes ทั้งแบบ Static และ Dynamic
 - การทำความเข้าใจ React Server Components (RSC) vs Client Components
 - การใช้งาน App Router และการจัดการ Layout, Error และ Loading States
 
 **Styling & UI:**
+
 - การตกแต่งหน้าเว็บด้วย Tailwind CSS
 - การใช้งาน Shadcn UI สำหรับ Component Library
 - การสร้าง Responsive Design ที่รองรับทุกอุปกรณ์
 
 **Backend Development:**
+
 - การพัฒนา API ด้วย Next.js API Routes
 - การจัดการ HTTP Methods (GET, POST, PATCH, DELETE)
 - การรับและประมวลผล Form Data และ File Uploads
 - การจัดการ Error Handling และ Response Format
 
 **Database Integration:**
+
 - การใช้งาน Prisma ORM เป็นตัวกลางในการติดต่อฐานข้อมูล
 - การออกแบบ Database Schema และ Relations
 - การทำ CRUD Operations อย่างมีประสิทธิภาพ
 
 **Advanced Features:**
+
 - การจัดการ Client State ด้วย Zustand
 - การใช้งาน React Query สำหรับ Server State Management
 - การทำ Authentication และ Authorization
@@ -50,6 +54,7 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 ## เนื้อหาหลักของเอกสารต่างๆครับ (ลิงก์ไปยังเอกสาร)
 
 ### 📚 **ส่วนที่ 1: Modern JavaScript & TypeScript Foundation**
+
 - [JS Tech Stack](documents/1_nextjs_tech_stackoverview.md) - ทำความเข้าใจกับเครื่องมือและไลบรารี่ที่ใช้ในการพัฒนาเว็บสมัยใหม่
 - [Next.js Demo](documents/2_nextjs_demo.md) - ตัวอย่างการใช้งาน Next.js เบื้องต้น
 - [Arrow Functions, Spread, Rest, Destructuring](documents/3_arrow_spread_rest_destructuring.md) - เรียนรู้ Modern JavaScript Syntax
@@ -59,9 +64,11 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 - [ทบทวนการใช้งาน TypeScript](documents/10_re_learning_ts.md) - ทบทวน TypeScript เพื่อเพิ่มความปลอดภัยให้กับโค้ด
 
 ### 🔧 **ส่วนที่ 2: Development Environment Setup**
+
 - [การตั้งค่า ESLint และ Prettier สำหรับโปรเจค Next.js](documents/12_eslint_prettier.md) - การตั้งค่าเครื่องมือสำหรับการเขียนโค้ดที่มีคุณภาพ
 
 ### ⚛️ **ส่วนที่ 3: React & Next.js Development**
+
 - [React Fundamentals](documents/13_react_funde.md) - หลักการพื้นฐานของ React และ Component-Based Design
 - [Parent-Child Communication](documents/14_parent_child_communication.md) - การสื่อสารระหว่าง Component
 - [useEffect](documents/15_useeffect.md) - การใช้งาน useEffect Hook
@@ -74,32 +81,39 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 - [Next Navigation](documents/22_next_navigation.md) - การจัดการ Navigation ใน Next.js
 
 ### 🗄️ **ส่วนที่ 4: Database Management**
-- [Prisma ORM](documents/prisma-orm.md) - การจัดการฐานข้อมูลด้วย Prisma
+
+- [Prisma ORM](documents/23_prismaorm.md) - การจัดการฐานข้อมูลด้วย Prisma
 - [Prisma Workflow](documents/prisma-workflow.md) - กระบวนการทำงานกับ Prisma
 - [Prisma Q & A](documents/prisma-qa.md) - คำถามและคำตอบเกี่ยวกับ Prisma
 - [Connecting API to the Database](documents/api-database-connection.md) - การเชื่อมต่อ API กับฐานข้อมูล
 
 ### 🎨 **ส่วนที่ 5: UI/UX Development**
+
 - [Tailwind CSS and Shadcn UI](documents/tailwind-shadcn.md) - การใช้งาน Utility-first CSS Framework และ Component Library
 - [Styling Page with Tailwind CSS and Shadcn UI](documents/styling-pages.md) - การตกแต่งหน้าเว็บ
 - [Custom Components](documents/custom-components.md) - การสร้าง Component แบบกำหนดเอง
 
 ### 📝 **ส่วนที่ 6: Form Management**
+
 - [Form](documents/form.md) - การจัดการฟอร์มใน React
 - [Form Data](documents/form-data.md) - การจัดการข้อมูลฟอร์ม
 
 ### 🔄 **ส่วนที่ 7: State Management & Data Fetching**
+
 - [React Query (Tanstack Query)](documents/react-query.md) - การจัดการ Server State และ Caching
 - [Zustand](documents/zustand.md) - การจัดการ Client State อย่างง่ายและมีประสิทธิภาพ
 
 ### 🔐 **ส่วนที่ 8: Authentication & Authorization**
+
 - [Authentication](documents/authentication.md) - ระบบ Authentication
 - [Authorization](documents/authorization.md) - การจัดการสิทธิ์การเข้าถึง
 
 ### 🚀 **ส่วนที่ 9: Advanced Features & Optimization**
+
 - [Advanced App Router](documents/advanced-app-router.md) - การใช้งาน App Router ขั้นสูง
 - [SEO](documents/seo.md) - การเพิ่มประสิทธิภาพสำหรับ Search Engine
 - [React Optimization](documents/react-optimization.md) - เทคนิคการปรับปรุงประสิทธิภาพ React
 
 ### 🏗️ **ส่วนที่ 10: Deployment**
+
 - [Deployment](documents/deployment.md) - การ Deploy แอปพลิเคชัน

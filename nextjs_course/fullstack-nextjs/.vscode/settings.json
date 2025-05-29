@@ -11,5 +11,8 @@
         "typescript",
         "javascriptreact",
         "typescriptreact"
-    ]
+    ],
+    "[prisma]": {
+        "editor.defaultFormatter": "Prisma.prisma"
+    }
 }
