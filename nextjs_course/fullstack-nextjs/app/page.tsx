@@ -1,9 +1,5 @@
-"use client";
-
-import { useEffect } from "react";
-
 const HomePage = () => {
-    return useEffect(() => {}, []);
+  return <div>Home</div>;
 };
 
 export default HomePage;

@@ -1,13 +1,13 @@
-import { findById } from "@/features/articles/api";
+import { findById } from '@/features/articles/api';
 
 interface Params {
-    params: {
-        id: string;
-    };
+  params: {
+    id: string;
+  };
 }
 
 export const GET = async (_req: Request, { params: { id } }: Params) => {
-    const article = await findById(+id);
+  const article = await findById(+id);
 
-    return Response.json(article);
+  return Response.json(article);
 };

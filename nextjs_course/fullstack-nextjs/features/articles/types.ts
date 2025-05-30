@@ -1,5 +1,11 @@
-import { type findById, type findAll } from "@/features/articles/api";
+import { type update, type add } from '@/features/articles/validators';
+import { type z } from 'zod';
 
-export type ArticleItem = Awaited<ReturnType<typeof findAll>>[number];
+export interface Article {
+  id: number;
+  title: string;
+}
 
-export type ArticleDetails = NonNullable<Awaited<ReturnType<typeof findById>>>;
+export type CreateArticleInput = z.infer<typeof add>;
+
+export type UpdateArticleInput = z.infer<typeof update>;
