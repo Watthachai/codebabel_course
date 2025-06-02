@@ -1,11 +1,8 @@
-/** @type {import('prettier').Config} */
+/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').options} */
 const config = {
-    semi: true,
-    singleQuote: false,
-    trailingComma: "all",
-    tabWidth: 4, // Changed from 2 to 4
-    printWidth: 80,
-    useTabs: false, // Use spaces instead of tabs
+  plugins: ['prettier-plugin-tailwindcss'],
+  singleQuote: true,
+  trailingComma: 'all',
 };
 
 export default config;

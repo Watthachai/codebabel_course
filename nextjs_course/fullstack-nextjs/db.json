@@ -1,17 +1,17 @@
 {
-    "articles": [
-        { "id": 1, "title": "Title#1" },
-        { "id": 2, "title": "Title#2" },
-        { "id": 3, "title": "Title#3" }
-    ],
-    "announcements": [
-        { "id": 1, "title": "Title#1" },
-        { "id": 2, "title": "Title#2" },
-        { "id": 3, "title": "Title#3" }
-    ],
-    "leaves": [
-        { "id": 1, "reason": "Reason#1" },
-        { "id": 2, "reason": "Reason#2" },
-        { "id": 3, "reason": "Reason#3" }
-    ]
+  "articles": [
+    { "id": 1, "title": "Title#1" },
+    { "id": 2, "title": "Title#2" },
+    { "id": 3, "title": "Title#3" }
+  ],
+  "announcements": [
+    { "id": 1, "title": "Title#1" },
+    { "id": 2, "title": "Title#2" },
+    { "id": 3, "title": "Title#3" }
+  ],
+  "leaves": [
+    { "id": 1, "reason": "Reason#1" },
+    { "id": 2, "reason": "Reason#2" },
+    { "id": 3, "reason": "Reason#3" }
+  ]
 }

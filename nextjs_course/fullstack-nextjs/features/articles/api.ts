@@ -1,53 +1,40 @@
-import {
-    type CreateArticleInput,
-    type Article,
-    type UpdateArticleInput,
-} from "@/features/articles/types";
-import { faker } from "@faker-js/faker";
+import db from '@/features/shared/db';
 
-const length = faker.helpers.rangeToNumber({ min: 3, max: 10 });
-let articles = Array.from({ length }).map(() => ({
-    id: faker.number.int(),
-    title: faker.lorem.sentence(),
-}));
+interface FindAllParams {
+  limit?: number | undefined;
+}
 
-export const findAll = () => {
-    return Promise.resolve(articles);
+export const findAll = async ({ limit }: FindAllParams = {}) => {
+  const articles = await db.article.findMany({
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      excerpt: true,
+      image: true,
+      updatedAt: true,
+    },
+    orderBy: {
+      updatedAt: 'desc',
+    },
+    take: limit,
+  });
+
+  return articles;
 };
 
-export const findById = async (id: Article["id"]) => {
-    const article = articles.find((article) => article.id === id);
+export const findById = async (id: number) => {
+  const article = await db.article.findUnique({
+    where: { id },
+  });
 
-    if (!article) return Promise.resolve(null);
-
-    return Promise.resolve(article);
+  return article;
 };
 
-export const create = (form: CreateArticleInput) => {
-    const article = {
-        id: faker.number.int(),
-        ...form,
-    };
+export const findBySlug = async (slug: string) => {
+  const article = await db.article.findUnique({
+    where: { slug },
+  });
 
-    articles.push(article);
-    return Promise.resolve(article);
-};
-
-export const update = async (id: Article["id"], form: UpdateArticleInput) => {
-    const article = await findById(id);
-    if (!article) return Promise.resolve(null);
-
-    Object.assign(article, form);
-    return Promise.resolve(article);
-};
-
-export const remove = (id: Article["id"]) => {
-    const index = articles.findIndex((article) => article.id === id);
-    const newArticles = [
-        ...articles.slice(0, index),
-        ...articles.slice(index + 1),
-    ];
-
-    articles = newArticles;
-    return Promise.resolve(index);
+  return article;
 };

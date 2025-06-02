@@ -1,20 +1,33 @@
-import { type Announcement } from "@/features/announcements/types";
-import { faker } from "@faker-js/faker";
+import db from '@/features/shared/db';
 
-export const findAll = () => {
-    const length = faker.helpers.rangeToNumber({ min: 3, max: 10 });
-    const announcements = Array.from({ length }).map(() => ({
-        id: faker.number.int(),
-        title: faker.lorem.sentence(),
-    }));
+interface FindAllParams {
+  limit?: number | undefined;
+}
 
-    return Promise.resolve(announcements);
+export const findAll = async ({ limit }: FindAllParams = {}) => {
+  const announcements = await db.announcement.findMany({
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      excerpt: true,
+      updatedAt: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: limit,
+  });
+
+  return announcements;
 };
 
-export const findById = async (id: Announcement["id"]) => {
-    const res = await fetch(`http://localhost:5151/announcements/${id}`, {
-        cache: "no-store",
-    });
+export const findById = async (id: number) => {
+  const announcement = await db.announcement.findUnique({
+    where: { id },
+  });
 
-    return res.json() as Promise<Announcement>;
+  if (!announcement) throw new Error('announcement not found');
+
+  return announcement;
 };
