@@ -1,16 +1,14 @@
 import { findAll } from '@/features/articles/api';
 import ArticleList from '@/features/articles/components/ArticleList';
-import CreateArticle from '@/features/articles/components/CreateArticle';
+
+export const metadata = {
+  title: 'All Articles - Absence Management',
+};
 
 const ArticlesPage = async () => {
   const articles = await findAll();
 
-  return (
-    <>
-      <ArticleList articles={articles}></ArticleList>
-      <CreateArticle></CreateArticle>
-    </>
-  );
+  return <ArticleList articles={articles}></ArticleList>;
 };
 
 export default ArticlesPage;

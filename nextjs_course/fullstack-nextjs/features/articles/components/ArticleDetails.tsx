@@ -1,20 +1,28 @@
 'use client';
-import { type Article } from '@/features/articles/types';
-import { Button } from '@/features/shadcn/components/ui/button';
+import { type ArticleDetails } from '@/features/articles/types';
+import Image from 'next/image';
 
 interface ArticleDetailsProps {
-  article: Article;
-  onUpdate: (id: Article['id']) => void;
+  article: ArticleDetails;
 }
 
-const ArticleDetails = ({ article, onUpdate }: ArticleDetailsProps) => {
+const ArticleDetails = ({
+  article: { image, title, content },
+}: ArticleDetailsProps) => {
   return (
-    <div>
-      {article.title}
-      <Button variant="outline" onClick={() => onUpdate(article.id)}>
-        Update
-      </Button>
-    </div>
+    <article>
+      <div className="relative h-[500px]">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(min-width: 800px) 50vw, 100vw"
+          className="object-cover"
+        ></Image>
+      </div>
+      <h2 className="my-4 text-center text-4xl font-bold">{title}</h2>
+      <p className="my-4 text-xl">{content}</p>
+    </article>
   );
 };
 

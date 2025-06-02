@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  app:
+    platform: 'linux/amd64'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        NEXT_PUBLIC_CLIENTVAR: 'clientvar'
+        DATABASE_URL: 'postgresql://myapp:mypassword@localhost:9111/absence-management?schema=public'
+        NEXTAUTH_SECRET: 'p0I0oiZgFGhha0eQKzumB5Awyeqe4hQ2jmaQ4t/HuMk='
+        NEXTAUTH_URL: 'http://localhost:3000'
+        NEXTAPP_URL: 'http://localhost:3000'
+    working_dir: /app
+    volumes:
+      - ./data/uploads:/app/public/uploads
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: 'postgresql://myapp:mypassword@db:5432/absence-management?schema=public'
+    depends_on:
+      - db
+  db:
+    image: 'postgres:15.3-alpine3.18'
+    ports:
+      - '9111:5432'
+    environment:
+      POSTGRES_USER: myapp
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data

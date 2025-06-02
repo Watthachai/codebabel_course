@@ -90,17 +90,17 @@ Next.js เป็นหนึ่งในเครื่องมือพัฒ
 ### 🎨 **ส่วนที่ 5: UI/UX Development**
 
 - [Tailwind CSS and Shadcn UI](documents/27_tailwindcss_shadcnui.md) - การใช้งาน Utility-first CSS Framework และ Component Library
-- [Styling Page with Tailwind CSS and Shadcn UI](documents/styling-pages.md) - การตกแต่งหน้าเว็บ
-- [Custom Components](documents/custom-components.md) - การสร้าง Component แบบกำหนดเอง
+- [Styling Page with Tailwind CSS and Shadcn UI](documents/28_styling_page_with_tailwindcss_and_shadcnui.md) - การตกแต่งหน้าเว็บ
+- [Custom Components](documents/29_custom_components.md) - การสร้าง Component แบบกำหนดเอง
 
 ### 📝 **ส่วนที่ 6: Form Management**
 
-- [Form](documents/form.md) - การจัดการฟอร์มใน React
-- [Form Data](documents/form-data.md) - การจัดการข้อมูลฟอร์ม
+- [Form](documents/30_form.md) - การจัดการฟอร์มใน React
+- [Form Data](documents/31_formdata.md) - การจัดการข้อมูลฟอร์ม
 
 ### 🔄 **ส่วนที่ 7: State Management & Data Fetching**
 
-- [React Query (Tanstack Query)](documents/react-query.md) - การจัดการ Server State และ Caching
+- [React Query (Tanstack Query)](documents/32_react_query_tanstack_query.md) - การจัดการ Server State และ Caching
 - [Zustand](documents/zustand.md) - การจัดการ Client State อย่างง่ายและมีประสิทธิภาพ
 
 ### 🔐 **ส่วนที่ 8: Authentication & Authorization**

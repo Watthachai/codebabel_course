@@ -1,5 +1,11 @@
+import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
+
 const DashboardPage = () => {
-  return <div>Dashboard</div>;
+  return (
+    <ProtectedRoute roles={['ADMIN', 'MANAGER']}>
+      <div>Dashboard</div>
+    </ProtectedRoute>
+  );
 };
 
 export default DashboardPage;

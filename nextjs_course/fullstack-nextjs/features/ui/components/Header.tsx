@@ -1,5 +1,7 @@
 'use client';
 
+import AuthMenu from '@/features/auth/components/AuthMenu';
+import ProtectedResource from '@/features/auth/guards/ProtectedResource';
 import { Button } from '@/features/shadcn/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -33,10 +35,14 @@ const Header = () => {
           height={50}
         ></Image>
       </Link>
-      <NavLink path="/admin">Admin</NavLink>
+      <ProtectedResource roles={['ADMIN', 'MANAGER']}>
+        <NavLink path="/admin">Admin</NavLink>
+      </ProtectedResource>
       <NavLink path="/leaves">Leaves</NavLink>
       <NavLink path="/articles">Articles</NavLink>
       <NavLink path="/announcements">Announcements</NavLink>
+      <div className="!ml-auto h-[40px] w-[1px] bg-gray-300"></div>
+      <AuthMenu></AuthMenu>
     </nav>
   );
 };
