@@ -119,9 +119,9 @@
     <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
     <div style="background-color:#000000;height:100%;width:69%;border-radius:5px;"></div>
     </div>
-    <strong>69% (27/39 บท)</strong>
+    <strong>74% (32/39 บท)</strong>
   </td>
-  <td>29 พฤษภาคม 2568</td>
+  <td>2 มิถุนายน 2568</td>
   </tr>
 </table>
 
@@ -269,6 +269,6 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 29 พฤษภาคม 2568</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 2 มิถุนายน 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
