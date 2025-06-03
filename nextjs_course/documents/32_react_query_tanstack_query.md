@@ -9,6 +9,7 @@
 - [🔍 Query - การดึงข้อมูล](#-query---การดึงข้อมูล)
 - [✏️ Mutation - การแก้ไขข้อมูล](#️-mutation---การแก้ไขข้อมูล)
 - [🔄 Cache Management](#-cache-management)
+- [🌐 การทำงานร่วมกับ Next.js App Router](#-การทำงานร่วมกับ-nextjs-app-router)
 - [🆚 เปรียบเทียบ แบบเก่า vs แบบใหม่](#-เปรียบเทียบ-แบบเก่า-vs-แบบใหม่)
 
 ---
@@ -52,6 +53,8 @@ graph TD
 - **🔄 ข้อมูลล่าสุดเสมอ**: อัพเดทข้อมูลใน Background
 - **📡 Auto Refetch**: ดึงข้อมูลใหม่เมื่อกลับมาที่หน้าเว็บ
 - **🗂️ Cache Management**: จัดการ Cache อัตโนมัติ
+- **🚀 Stale-While-Revalidate**: แสดงข้อมูลเก่าทันที ดึงข้อมูลใหม่เบื้องหลัง
+- **🛠️ Optimistic Updates**: อัพเดท UI ทันทีก่อนยืนยันจากเซิร์ฟเวอร์
 
 ---
 
@@ -71,23 +74,30 @@ pnpm add @tanstack/react-query-devtools
 
 > **💡 อัพเดท 2025**: ในเวอร์ชันใหม่ของ Next.js 15.3.2 เราจำเป็นต้องแยก Client Component ออกมาต่างหาก
 
-**สร้างไฟล์ `app/components/client-providers.tsx`**
+**สร้างไฟล์ `app/providers.tsx`**
 
 ```tsx
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ReactNode } from "react";
+import React, { useState } from "react";
 
-// สร้าง Query Client
-const queryClient = new QueryClient();
+export function Providers({ children }: { children: React.ReactNode }) {
+  // useState ช่วยให้ QueryClient ถูกสร้างขึ้นเพียงครั้งเดียว
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 1000 * 60 * 5, // ข้อมูลจะถือว่าสดเป็นเวลา 5 นาที
+            retry: 3, // จำนวนครั้งที่ retry เมื่อเกิด error
+            refetchOnWindowFocus: true, // refetch เมื่อกลับมาที่หน้าต่าง
+          },
+        },
+      })
+  );
 
-interface ClientProvidersProps {
-  children: ReactNode;
-}
-
-export default function ClientProviders({ children }: ClientProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
@@ -101,7 +111,8 @@ export default function ClientProviders({ children }: ClientProvidersProps) {
 **อัพเดท `app/layout.tsx`**
 
 ```tsx
-import ClientProviders from "./components/client-providers";
+import { Providers } from "./providers";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -111,7 +122,7 @@ export default function RootLayout({
   return (
     <html lang="th">
       <body>
-        <ClientProviders>{children}</ClientProviders>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
@@ -126,24 +137,43 @@ export default function RootLayout({
 
 Query ใช้สำหรับการ **อ่านข้อมูล** จาก API โดยมีการ Cache ข้อมูลไว้
 
+### 🔑 Query Key Strategies
+
+```tsx
+// ❌ แบบเก่า - Query Key ง่ายเกินไป
+queryKey: ["leaves"];
+
+// ✅ แบบใหม่ 2025 - Query Key ที่ดี
+queryKey: ["leaves"]; // สำหรับรายการทั้งหมด
+queryKey: ["leaves", { userId: "user123" }]; // สำหรับใบลาของ User คนนั้น
+queryKey: ["leave", { leaveId: "leaveXYZ" }]; // สำหรับใบลาใบเดียว
+```
+
 ### 📝 ตัวอย่าง: ระบบลางาน
 
 **Hook สำหรับดึงข้อมูลใบลา**
 
 ```tsx
-// features/leave/hooks/api.ts
+// features/leaves/hooks/useGetLeaves.ts
 import { useQuery } from "@tanstack/react-query";
+import { LeaveListItem } from "@/types/leave";
 
-export function useGetLeaves() {
-  return useQuery({
-    queryKey: ["leaves"], // 🔑 Key สำหรับระบุ Cache
-    queryFn: async () => {
-      const response = await fetch("/api/leaves");
-      const data = await response.json();
-      return data;
-    },
+// ฟังก์ชันสำหรับดึงข้อมูลการลาทั้งหมด
+const fetchLeaves = async (): Promise<LeaveListItem[]> => {
+  const response = await fetch("/api/leaves");
+  if (!response.ok) {
+    throw new Error("ไม่สามารถดึงข้อมูลการลาได้");
+  }
+  return response.json();
+};
+
+export const useGetLeaves = () => {
+  return useQuery<LeaveListItem[], Error>({
+    queryKey: ["leaves"], // Key สำหรับระบุ Cache
+    queryFn: fetchLeaves, // ฟังก์ชันที่ใช้ดึงข้อมูล
+    staleTime: 1000 * 60 * 2, // ข้อมูลจะสดเป็นเวลา 2 นาที
   });
-}
+};
 ```
 
 **การใช้งานใน Component**
@@ -152,43 +182,33 @@ export function useGetLeaves() {
 // app/leaves/page.tsx
 "use client";
 
-import { useGetLeaves } from "@/features/leave/hooks/api";
+import { useGetLeaves } from "@/features/leaves/hooks/useGetLeaves";
 
 export default function LeavesPage() {
-  const { data: leaves, status, isLoading } = useGetLeaves();
+  const { data: leaves, isLoading, isError, error } = useGetLeaves();
 
   if (isLoading) {
-    return <div>กำลังโหลด...</div>;
+    return <div>กำลังโหลดข้อมูลการลา...</div>;
   }
 
-  if (status === "error") {
-    return <div>เกิดข้อผิดพลาด</div>;
+  if (isError) {
+    return <div>เกิดข้อผิดพลาด: {error?.message}</div>;
   }
 
   return (
     <div>
       <h1>รายการใบลา</h1>
-      {leaves?.map((leave) => (
-        <div key={leave.id}>
-          <p>วันที่ลา: {leave.leaveDate}</p>
-          <p>เหตุผล: {leave.reason}</p>
-        </div>
-      ))}
+      <ul>
+        {leaves?.map((leave) => (
+          <li key={leave.id}>
+            <p>วันที่ลา: {leave.leaveDate}</p>
+            <p>เหตุผล: {leave.reason}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-```
-
-### 🔐 Query Key Strategies
-
-```tsx
-// ❌ แบบเก่า - Query Key ง่ายเกินไป
-queryKey: ["leaves"];
-
-// ✅ แบบใหม่ 2025 - Query Key ที่ดี
-queryKey: ["leaves"]; // สำหรับรายการทั้งหมด
-queryKey: ["leaves", userId]; // สำหรับใบลาของ User คนนั้น
-queryKey: ["leaves", "detail", leaveId]; // สำหรับใบลาใบเดียว
 ```
 
 ### 🎨 Visual: Query Flow
@@ -221,27 +241,46 @@ Mutation ใช้สำหรับการ **เปลี่ยนแปล�
 **Hook สำหรับสร้างใบลา**
 
 ```tsx
-// features/leave/hooks/api.ts
+// features/leaves/hooks/useCreateLeave.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CreateLeavePayload, LeaveDetail } from "@/types/leave";
 
-export function useCreateLeave() {
+// ฟังก์ชันสำหรับส่งข้อมูลไปสร้างการลาใหม่ที่ API
+const createLeaveAPI = async (
+  payload: CreateLeavePayload
+): Promise<LeaveDetail> => {
+  const response = await fetch("/api/leaves", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    const errorData = await response
+      .json()
+      .catch(() => ({ message: "ไม่สามารถสร้างรายการลาได้" }));
+    throw new Error(errorData.message || "ไม่สามารถสร้างรายการลาได้");
+  }
+  return response.json();
+};
+
+export const useCreateLeave = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (input: CreateLeaveInput) => {
-      const response = await fetch("/api/leaves", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(input),
-      });
-      return response.json();
-    },
-    onSuccess: () => {
+  return useMutation<LeaveDetail, Error, CreateLeavePayload>({
+    mutationFn: createLeaveAPI,
+    onSuccess: (newLeaveData) => {
       // 🔄 อัพเดท Cache หลังสร้างสำเร็จ
       queryClient.invalidateQueries({ queryKey: ["leaves"] });
+
+      // แสดงการแจ้งเตือนสำเร็จ
+      alert("สร้างรายการลาสำเร็จ!");
+    },
+    onError: (error) => {
+      console.error("เกิดข้อผิดพลาดในการสร้างรายการลา:", error.message);
+      alert(`เกิดข้อผิดพลาด: ${error.message}`);
     },
   });
-}
+};
 ```
 
 **การใช้งานใน Form**
@@ -250,40 +289,30 @@ export function useCreateLeave() {
 // components/CreateLeaveForm.tsx
 "use client";
 
-import { useCreateLeave } from "@/features/leave/hooks/api";
+import { useCreateLeave } from "@/features/leaves/hooks/useCreateLeave";
 import { useRouter } from "next/navigation";
 
 export default function CreateLeaveForm() {
   const router = useRouter();
-  const { mutateAsync: createLeave } = useCreateLeave();
+  const { mutate: createLeave, isPending: isCreatingLeave } = useCreateLeave();
 
-  const handleSubmit = async (formData: CreateLeaveInput) => {
-    try {
-      await createLeave(formData); // รอให้สร้างเสร็จ
-      router.push("/leaves"); // ค่อยเปลี่ยนหน้า
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาด:", error);
-    }
+  const handleSubmit = async (formData: CreateLeavePayload) => {
+    createLeave(formData, {
+      onSuccess: () => {
+        router.push("/leaves"); // เปลี่ยนหน้าหลังสำเร็จ
+      },
+    });
   };
 
-  return <form onSubmit={handleSubmit}>{/* Form fields */}</form>;
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      <button type="submit" disabled={isCreatingLeave}>
+        {isCreatingLeave ? "กำลังสร้าง..." : "สร้างใบลา"}
+      </button>
+    </form>
+  );
 }
-```
-
-### 🔄 การจัดการ Cache หลัง Mutation
-
-```tsx
-// ✅ วิธีที่ดีที่สุด - Invalidate Queries
-onSuccess: () => {
-  queryClient.invalidateQueries({ queryKey: ["leaves"] });
-};
-
-// 🔧 วิธีอื่น - อัพเดท Cache โดยตรง
-onSuccess: (newLeave) => {
-  queryClient.setQueryData(["leaves"], (oldData) => {
-    return [...(oldData || []), newLeave];
-  });
-};
 ```
 
 ### 🎨 Visual: Mutation Flow
@@ -297,7 +326,7 @@ sequenceDiagram
   participant Cache
 
   User->>Form: กรอกข้อมูลและ Submit
-  Form->>Mutation: เรียก mutateAsync()
+  Form->>Mutation: เรียก mutate()
   Mutation->>API: POST /api/leaves
   API-->>Mutation: Response (201 Created)
   Mutation->>Cache: invalidateQueries(['leaves'])
@@ -315,7 +344,7 @@ sequenceDiagram
 
 ```tsx
 // ✅ แบบใหม่ 2025 - การจัดการ Cache ที่ดี
-export function useEditLeave(leaveId: number) {
+export function useEditLeave(leaveId: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -331,54 +360,142 @@ export function useEditLeave(leaveId: number) {
       // อัพเดททั้งรายการและรายละเอียด
       queryClient.invalidateQueries({ queryKey: ["leaves"] });
       queryClient.invalidateQueries({
-        queryKey: ["leaves", "detail", leaveId],
+        queryKey: ["leave", { leaveId }],
       });
     },
   });
 }
 ```
 
-### 🎯 Best Practices สำหรับ 2025
+### 🔄 การจัดการ Cache หลัง Mutation
 
-1. **Query Key Strategy**
+```tsx
+// ✅ วิธีที่ดีที่สุด - Invalidate Queries
+onSuccess: () => {
+  queryClient.invalidateQueries({ queryKey: ["leaves"] });
+};
 
-   ```tsx
-   // ❌ แบบเก่า
-   queryKey: ["data"];
+// 🔧 วิธีอื่น - อัพเดท Cache โดยตรง (Optimistic Update)
+onSuccess: (newLeave) => {
+  queryClient.setQueryData(["leaves"], (oldData: LeaveListItem[] = []) => {
+    return [...oldData, newLeave];
+  });
+};
+```
 
-   // ✅ แบบใหม่
-   queryKey: ["leaves", "list", { userId, status }];
-   ```
+---
 
-2. **Type Safety**
+## 🌐 การทำงานร่วมกับ Next.js App Router
 
-   ```tsx
-   // ✅ ใช้ TypeScript เต็มรูปแบบ
-   interface LeaveItem {
-     id: number;
-     leaveDate: string;
-     reason: string;
-     status: "pending" | "approved" | "rejected";
-   }
+### 🏗️ แนวคิดใหม่: Server Components + TanStack Query
 
-   export function useGetLeaves(): UseQueryResult<LeaveItem[]> {
-     return useQuery({
-       queryKey: ["leaves"],
-       queryFn: fetchLeaves,
-     });
-   }
-   ```
+```mermaid
+graph TD
+  A[Server Component] --> B[ดึงข้อมูลเริ่มต้น]
+  B --> C[ส่ง initialData ไปยัง Client]
+  C --> D[Client Component]
+  D --> E[TanStack Query hydrate data]
+  E --> F[จัดการ State ฝั่ง Client]
+  F --> G[Background Sync & Cache]
+```
 
-3. **Error Handling**
+### 📋 เปรียบเทียบแนวทาง
 
-   ```tsx
-   // ✅ จัดการ Error แบบสมบูรณ์
-   const { data, error, isLoading, isError } = useGetLeaves();
+| แง่มุม                   | แบบเก่า (CSR เท่านั้น)            | แบบใหม่ (RSC + TanStack Query)                 |
+| ------------------------ | --------------------------------- | ---------------------------------------------- |
+| **การโหลดเริ่มต้น**      | JavaScript ดึงข้อมูลหลังหน้าโหลด  | Server ดึงข้อมูลและส่ง HTML พร้อมข้อมูล        |
+| **Mutations**            | `useMutation` + API Routes        | Server Actions + `revalidatePath`              |
+| **Cache Invalidation**   | `invalidateQueries` ฝั่ง Client   | `revalidatePath` ฝั่ง Server + TQ ฝั่ง Client  |
+| **บทบาท TanStack Query** | เครื่องมือหลักจัดการ Server State | เสริมการ Caching ฝั่ง Client + Background Sync |
 
-   if (isError) {
-     return <ErrorBoundary error={error} />;
-   }
-   ```
+### 🔧 ตัวอย่างการผสมผสาน
+
+**Server Component (ดึงข้อมูลเริ่มต้น)**
+
+```tsx
+// app/leaves/page.tsx (Server Component)
+import { getLeaves } from "@/lib/api";
+import LeavesClient from "./leaves-client";
+
+export default async function LeavesPage() {
+  const initialLeaves = await getLeaves(); // ดึงข้อมูลบน Server
+
+  return <LeavesClient initialData={initialLeaves} />;
+}
+```
+
+**Client Component (จัดการ State)**
+
+```tsx
+// app/leaves/leaves-client.tsx
+"use client";
+
+import { useGetLeaves } from "@/features/leaves/hooks/useGetLeaves";
+import { LeaveListItem } from "@/types/leave";
+
+interface LeavesClientProps {
+  initialData: LeaveListItem[];
+}
+
+export default function LeavesClient({ initialData }: LeavesClientProps) {
+  const { data: leaves, isLoading } = useGetLeaves({
+    initialData, // ใช้ข้อมูลจาก Server เป็น seed
+  });
+
+  // TanStack Query จะจัดการ Background Sync และ Cache ต่อไป
+  return (
+    <div>
+      {leaves?.map((leave) => (
+        <div key={leave.id}>{leave.reason}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+---
+
+## 🎯 Best Practices สำหรับ 2025
+
+### 1. **Query Key Strategy**
+
+```tsx
+// ❌ แบบเก่า
+queryKey: ["data"];
+
+// ✅ แบบใหม่
+queryKey: ["leaves", "list", { userId, status }];
+```
+
+### 2. **Type Safety**
+
+```tsx
+// ✅ ใช้ TypeScript เต็มรูปแบบ
+interface LeaveItem {
+  id: string;
+  leaveDate: string;
+  reason: string;
+  status: "pending" | "approved" | "rejected";
+}
+
+export function useGetLeaves(): UseQueryResult<LeaveItem[]> {
+  return useQuery({
+    queryKey: ["leaves"],
+    queryFn: fetchLeaves,
+  });
+}
+```
+
+### 3. **Error Handling**
+
+```tsx
+// ✅ จัดการ Error แบบสมบูรณ์
+const { data, error, isLoading, isError } = useGetLeaves();
+
+if (isError) {
+  return <ErrorBoundary error={error} />;
+}
+```
 
 ---
 
@@ -394,6 +511,7 @@ export function useEditLeave(leaveId: number) {
 | **Background Refetch** | ❌ ไม่มี                       | ✅ Auto                  |
 | **Optimistic Updates** | 🔧 ยากต่อการทำ                 | ✅ ง่าย                  |
 | **DevTools**           | ❌ ไม่มี                       | ✅ มี DevTools           |
+| **Type Safety**        | 🔧 ต้องทำเอง                   | ✅ Built-in              |
 
 ### 🔄 Code Comparison
 
@@ -402,9 +520,9 @@ export function useEditLeave(leaveId: number) {
 ```tsx
 // ❌ แบบเก่า - ยุ่งยากและไม่มี Cache
 function LeavesPage() {
-  const [leaves, setLeaves] = useState([]);
+  const [leaves, setLeaves] = useState<LeaveItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchLeaves() {
@@ -414,7 +532,7 @@ function LeavesPage() {
         const data = await response.json();
         setLeaves(data);
       } catch (err) {
-        setError(err);
+        setError(err as Error);
       } finally {
         setLoading(false);
       }
@@ -435,7 +553,7 @@ function LeavesPage() {
   const { data: leaves, isLoading, error } = useGetLeaves();
 
   if (isLoading) return <div>กำลังโหลด...</div>;
-  if (error) return <div>เกิดข้อผิดพลาด</div>;
+  if (error) return <div>เกิดข้อผิดพลาด: {error.message}</div>;
 
   return (
     <div>
@@ -449,11 +567,12 @@ function LeavesPage() {
 
 ### 🚀 Migration Path (แนวทางการย้าย)
 
-1. **Phase 1**: ติดตั้ง TanStack Query
-2. **Phase 2**: สร้าง Custom Hooks
-3. **Phase 3**: แทนที่ useState/useEffect
-4. **Phase 4**: เพิ่ม Cache Invalidation
-5. **Phase 5**: Optimize Query Keys
+1. **Phase 1**: ติดตั้ง TanStack Query และตั้งค่า Provider
+2. **Phase 2**: สร้าง Custom Hooks สำหรับ API calls
+3. **Phase 3**: แทนที่ useState/useEffect ด้วย useQuery
+4. **Phase 4**: เพิ่ม useMutation และ Cache Invalidation
+5. **Phase 5**: Optimize Query Keys และ Error Handling
+6. **Phase 6**: ผสมผสานกับ Server Components (ถ้าใช้ Next.js)
 
 ---
 
@@ -465,6 +584,8 @@ function LeavesPage() {
 - **⚡ Better UX**: แสดงข้อมูลทันทีจาก Cache
 - **🔍 DevTools**: เครื่องมือ Debug ที่ดี
 - **📱 Background Sync**: อัพเดทข้อมูลใน Background
+- **🛡️ Type Safety**: รองรับ TypeScript เต็มรูปแบบ
+- **🤝 Server Integration**: ทำงานร่วมกับ Server Components ได้ดี
 
 ### 🎓 สิ่งที่เรียนรู้
 
@@ -472,12 +593,52 @@ function LeavesPage() {
 2. การใช้ useQuery สำหรับดึงข้อมูล
 3. การใช้ useMutation สำหรับแก้ไขข้อมูล
 4. การจัดการ Cache และ Invalidation
-5. Best Practices สำหรับปี 2025
+5. การผสมผสานกับ Server Components
+6. Best Practices สำหรับปี 2025
 
 ### 🔮 อนาคต
 
-TanStack Query กำลังพัฒนาไปสู่การเป็น "State Management" ที่ครอบคลุมมากขึ้น พร้อมกับการรองรับ React Server Components และ Suspense ในอนาคต
+TanStack Query กำลังพัฒนาไปสู่การเป็น "State Management" ที่ครอบคลุมมากขึ้น พร้อมกับการรองรับ React Server Components และ Suspense ในอนาคต โดยยังคงบทบาทสำคัญในการจัดการ Server State ฝั่ง Client
 
 ---
 
-> **💡 Tips**: ลองใช้ DevTools เพื่อดูการทำงานของ Cache แบบ Real-time และเข้าใจการทำงานของ TanStack Query ได้ดีขึ้น!
+## 🎮 ตัวอย่างโครงการจริง: ระบบจัดการการลา
+
+### 📁 โครงสร้างโฟลเดอร์
+
+```
+src/
+├── features/
+│   └── leaves/
+│       ├── hooks/
+│       │   ├── useGetLeaves.ts
+│       │   ├── useCreateLeave.ts
+│       │   └── useUpdateLeave.ts
+│       ├── types/
+│       │   └── leave.ts
+│       └── components/
+│           ├── LeaveList.tsx
+│           └── LeaveForm.tsx
+├── app/
+│   ├── providers.tsx
+│   ├── layout.tsx
+│   └── leaves/
+│       ├── page.tsx
+│       └── [id]/
+│           └── page.tsx
+└── types/
+    └── api.ts
+```
+
+### 🔧 ความสามารถที่พัฒนาขึ้น
+
+1. **Intelligent Caching**: ข้อมูลจาก API ถูกเก็บในแคชเพื่อหลีกเลี่ยงการดึงซ้ำ
+2. **Stale-While-Revalidate**: แสดงข้อมูลเก่าทันที ดึงใหม่เบื้องหลัง
+3. **Background Updates**: อัพเดทอัตโนมัติเมื่อโฟกัสหน้าต่าง
+4. **Query Invalidation**: ซิงค์ข้อมูลหลัง Mutation
+5. **Optimistic Updates**: อัพเดท UI ก่อนยืนยันจากเซิร์ฟเวอร์
+6. **Type-Safe API**: การใช้ TypeScript อย่างเต็มประสิทธิภาพ
+
+---
+
+> **💡 Tips**: ลองใช้ DevTools เพื่อดูการทำงานของ Cache แบบ Real-time และเข้าใจการทำงานของ TanStack Query ได้ดีขึ้น! กด `Ctrl+Shift+I` แล้วดูแท็บ "React Query" ใน DevTools
