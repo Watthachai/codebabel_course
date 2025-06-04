@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Overall Progress](https://img.shields.io/badge/Progress-65%25-1A73E8?style=for-the-badge&width=500)
+![Overall Progress](https://img.shields.io/badge/Progress-75%25-1A73E8?style=for-the-badge&width=500)
 
 ## 📊 Learning Curve & Time Investment (2 Month Plan)
 
@@ -42,25 +42,25 @@
   <td>Next.js/TypeScript</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#000000;height:100%;border-radius:5px;width:92%"></div>
+    <div style="background:#000000;height:100%;border-radius:5px;width:100%"></div>
     </div>
-    <span>Currently Learning ⭐</span>
+    <span>Completed ✅</span>
   </td>
   <td>35 hrs</td>
   <td>Weeks 5-7</td>
-  <td>23 พ.ค. - ปัจจุบัน</td>
+  <td>23 พ.ค. - 4 มิ.ย. 2568</td>
   </tr>
   <tr>
   <td>Go REST API</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#00ADD8;height:100%;border-radius:5px;width:0%"></div>
+    <div style="background:#00ADD8;height:100%;border-radius:5px;width:5%"></div>
     </div>
-    <span>Planned</span>
+    <span>Currently Learning ⭐</span>
   </td>
   <td>40 hrs</td>
   <td>Weeks 8-9</td>
-  <td>-</td>
+  <td>4 มิ.ย. - ปัจจุบัน</td>
   </tr>
 </table>
 
@@ -114,14 +114,29 @@
     <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js Development"/>
     </a>
   </td>
+  <td>✅ เสร็จสิ้น</td>
+  <td>
+    <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
+    <div style="background-color:#000000;height:100%;width:100%;border-radius:5px;"></div>
+    </div>
+    <strong>100% (39/39 บท)</strong>
+  </td>
+  <td>4 มิถุนายน 2568</td>
+  </tr>
+  <tr>
+  <td>
+    <a href="./golang_api/README.md">
+    <img src="https://img.shields.io/badge/Go-RESTful_API-00ADD8?style=flat-square&logo=go" alt="Go RESTful API"/>
+    </a>
+  </td>
   <td>⭐ กำลังเรียน</td>
   <td>
     <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
-    <div style="background-color:#000000;height:100%;width:92%;border-radius:5px;"></div>
+    <div style="background-color:#00ADD8;height:100%;width:5%;border-radius:5px;"></div>
     </div>
-    <strong>92% (36/39 บท)</strong>
+    <strong>5% (เริ่มต้น)</strong>
   </td>
-  <td>3 มิถุนายน 2568</td>
+  <td>4 มิถุนายน 2568</td>
   </tr>
 </table>
 
@@ -151,22 +166,22 @@
     </tr>
     <tr>
   <td width="50%" align="center">
-    <img src="https://img.shields.io/badge/Phase-3-orange?style=for-the-badge" alt="Phase 3"/>
+    <img src="https://img.shields.io/badge/Phase-3-success?style=for-the-badge" alt="Phase 3"/>
     <h3>Front-End ขั้นสูง</h3>
     <a href="./nextjs_course/README.md">
       <img src="https://img.shields.io/badge/Next.js-Development-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </a>
     <p>TypeScript, Next.js, Tailwind</p>
-    <p><strong>กำลังเรียนอยู่ ⭐ (92%)</strong></p>
+    <p><strong>เสร็จสิ้น ✅</strong></p>
   </td>
   <td width="50%" align="center">
-    <img src="https://img.shields.io/badge/Phase-4-lightgrey?style=for-the-badge" alt="Phase 4"/>
+    <img src="https://img.shields.io/badge/Phase-4-orange?style=for-the-badge" alt="Phase 4"/>
     <h3>Back-End ด้วย Go</h3>
     <a href="./golang_api/README.md">
       <img src="https://img.shields.io/badge/Go-RESTful_API-00ADD8?style=flat-square&logo=go" alt="Go RESTful API"/>
     </a>
     <p>Gin Framework, GORM, Authentication</p>
-    <p><strong>กำหนดการเรียน 📅</strong></p>
+    <p><strong>กำลังเรียนอยู่ ⭐ (5%)</strong></p>
   </td>
 </tr>
   </table>
@@ -202,7 +217,7 @@
 </details>
 
 <details>
-  <summary><strong>⚡ การพัฒนาด้วย Next.js (กำลังเรียน - 92%)</strong></summary>
+  <summary><strong>✅ การพัฒนาด้วย Next.js (เสร็จสิ้น - 100%)</strong></summary>
   <br>
   <ul>
   <li>✅ การติดตั้งและการตั้งค่า Next.js (บท 1-4)</li>
@@ -212,23 +227,23 @@
   <li>✅ การจัดการสเตทด้วย Zustand (บท 17-22)</li>
   <li>✅ การจัดรูปแบบด้วย Tailwind CSS (บท 23-28)</li>
   <li>✅ การดึงข้อมูลด้วย React Query (บท 29-34)</li>
-  <li>⭐ ไลบรารีคอมโพเนนต์ด้วย Shadcn (บท 35-39)</li>
+  <li>✅ ไลบรารีคอมโพเนนต์ด้วย Shadcn (บท 35-39)</li>
   </ul>
   <p><a href="./nextjs_course/README.md">ดูรายละเอียดคอร์ส →</a></p>
 </details>
 
 <details>
-  <summary><strong>🐹 RESTful API ด้วย Go (วางแผนไว้)</strong></summary>
+  <summary><strong>⭐ RESTful API ด้วย Go (กำลังเรียน - 5%)</strong></summary>
   <br>
   <ul>
-  <li>🔍 พื้นฐานภาษา Go</li>
-  <li>🍸 การพัฒนาเว็บด้วย Gin Framework</li>
-  <li>📡 หลักการออกแบบ RESTful API</li>
-  <li>🔒 ระบบยืนยันตัวตนและสิทธิ์</li>
-  <li>📊 การเชื่อมต่อกับฐานข้อมูลด้วย GORM</li>
-  <li>📝 การตรวจสอบข้อมูลในฟอร์ม</li>
-  <li>📦 การอัพโหลดไฟล์ผ่านฟอร์ม</li>
-  <li>👑 การจัดการสิทธิ์แบบ RBAC</li>
+  <li>⭐ พื้นฐานภาษา Go</li>
+  <li>🔍 การพัฒนาเว็บด้วย Gin Framework</li>
+  <li>🔍 หลักการออกแบบ RESTful API</li>
+  <li>🔍 ระบบยืนยันตัวตนและสิทธิ์</li>
+  <li>🔍 การเชื่อมต่อกับฐานข้อมูลด้วย GORM</li>
+  <li>🔍 การตรวจสอบข้อมูลในฟอร์ม</li>
+  <li>🔍 การอัพโหลดไฟล์ผ่านฟอร์ม</li>
+  <li>🔍 การจัดการสิทธิ์แบบ RBAC</li>
   </ul>
   <p><a href="./golang_api/README.md">ดูรายละเอียดคอร์ส →</a></p>
 </details>
@@ -243,7 +258,7 @@
     <img src="https://img.shields.io/badge/React-100%25-61DAFB?style=flat-square&logo=react" alt="React"/>
     <img src="https://img.shields.io/badge/Redux-100%25-764ABC?style=flat-square&logo=redux" alt="Redux"/>
     <img src="https://img.shields.io/badge/Material_UI-100%25-0081CB?style=flat-square&logo=material-ui" alt="Material UI"/>
-    <img src="https://img.shields.io/badge/Next.js-92%25-000000?style=flat-square&logo=next.js" alt="Next.js"/>
+    <img src="https://img.shields.io/badge/Next.js-100%25-000000?style=flat-square&logo=next.js" alt="Next.js"/>
     </td>
   </tr>
   <tr>
@@ -251,8 +266,8 @@
     <td>
     <img src="https://img.shields.io/badge/Node.js-Planned-339933?style=flat-square&logo=node.js" alt="Node.js"/>
     <img src="https://img.shields.io/badge/Express-Planned-000000?style=flat-square&logo=express" alt="Express"/>
-    <img src="https://img.shields.io/badge/Go-Planned-00ADD8?style=flat-square&logo=go" alt="Go"/>
-    <img src="https://img.shields.io/badge/Gin-Planned-00ADD8?style=flat-square&logo=go" alt="Gin"/>
+    <img src="https://img.shields.io/badge/Go-5%25-00ADD8?style=flat-square&logo=go" alt="Go"/>
+    <img src="https://img.shields.io/badge/Gin-Starting-00ADD8?style=flat-square&logo=go" alt="Gin"/>
     </td>
   </tr>
   <tr>
@@ -269,6 +284,6 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 3 มิถุนายน 2568</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 4 มิถุนายน 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>
