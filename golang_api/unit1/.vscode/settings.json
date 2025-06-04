@@ -1,0 +1,8 @@
+{
+  "go.formatTool": "gofmt",
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "go.useLanguageServer": true,
+  "go.lintOnSave": "package",
+  "go.vetOnSave": "package"
+}
