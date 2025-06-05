@@ -15,10 +15,10 @@
 ### [📁 Go Fundamentals](./documents/_introduction.md)
 
 - [Unit 1: พื้นฐานการใช้งานภาษา Go](./documents/unit_1.md)
-- [Unit 2: Array, Slice และ Map](./documents)
-- [Unit 3: String, []byte และ Rune](./documents/unit-3/)
-- [Unit 4: Structs, Interfaces และ Go Modules](./documents/unit-4/)
-- [Unit 5: Defer, Errors, Panic และ Recover](./documents/unit-5/)
+- [Unit 2: Array, Slice และ Map](./documents/unit_2.md)
+- [Unit 3: String, []byte และ Rune](./documents/unit_3.md)
+- [Unit 4: Structs, Interfaces และ Go Modules](./documents/unit_4.md)
+- [Unit 5: Defer, Errors, Panic และ Recover](./documents/unit_5.md)
 - [Unit 6: Goroutines](./documents/unit-6/)
 
 ### [📁 RESTful API Development](./documents/)
