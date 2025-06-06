@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Overall Progress](https://img.shields.io/badge/Progress-78%25-1A73E8?style=for-the-badge&width=500)
+![Overall Progress](https://img.shields.io/badge/Progress-82%25-1A73E8?style=for-the-badge&width=500)
 
 ## 📊 Learning Curve & Time Investment (2 Month Plan)
 
@@ -54,7 +54,7 @@
   <td>Go REST API</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#00ADD8;height:100%;border-radius:5px;width:25%"></div>
+    <div style="background:#00ADD8;height:100%;border-radius:5px;width:40%"></div>
     </div>
     <span>Currently Learning ⭐</span>
   </td>
@@ -132,11 +132,11 @@
   <td>⭐ กำลังเรียน</td>
   <td>
     <div style="background-color:#e0e0e0;border-radius:5px;height:20px;width:100%">
-    <div style="background-color:#00ADD8;height:100%;width:25%;border-radius:5px;"></div>
+    <div style="background-color:#00ADD8;height:100%;width:40%;border-radius:5px;"></div>
     </div>
-    <strong>25% (5/20 บท)</strong>
+    <strong>40% (8/20 บท)</strong>
   </td>
-  <td>5 มิถุนายน 2568</td>
+  <td>6 มิถุนายน 2568</td>
   </tr>
 </table>
 
@@ -181,7 +181,7 @@
       <img src="https://img.shields.io/badge/Go-RESTful_API-00ADD8?style=flat-square&logo=go" alt="Go RESTful API"/>
     </a>
     <p>Gin Framework, GORM, Authentication</p>
-    <p><strong>กำลังเรียนอยู่ ⭐ (25%)</strong></p>
+    <p><strong>กำลังเรียนอยู่ ⭐ (40%)</strong></p>
   </td>
 </tr>
   </table>
@@ -233,14 +233,28 @@
 </details>
 
 <details>
-  <summary><strong>⭐ RESTful API ด้วย Go (กำลังเรียน - 25%)</strong></summary>
+  <summary><strong>⭐ RESTful API ด้วย Go (กำลังเรียน - 40%)</strong></summary>
   <br>
   <ul>
   <li>✅ พื้นฐานภาษา Go (บท 1-5)</li>
-  <li>🔍 การพัฒนาเว็บด้วย Gin Framework</li>
+  <li>✅ การพัฒนาเว็บด้วย Gin Framework (บท 6-7)</li>
+  <li>🔄 การเชื่อมต่อฐานข้อมูลและใช้งาน GORM (บท 8) - <strong>กำลังเรียน</strong>
+    <ul>
+      <li>✅ การเชื่อมต่อฐานข้อมูลผ่าน GORM</li>
+      <li>✅ Database Migrations</li>
+      <li>🔄 การสร้างข้อมูลใหม่ในฐานข้อมูล - <strong>ขณะนี้</strong></li>
+      <li>🔍 การ Query ข้อมูลด้วยเทคนิคต่าง ๆ</li>
+      <li>🔍 การสร้างการทำงานของ Pagination</li>
+      <li>🔍 การปรับปรุงประสิทธิภาพของ Pagination</li>
+      <li>🔍 การอัพเดทข้อมูลจากฟอร์ม</li>
+      <li>🔍 การลบข้อมูล</li>
+      <li>🔍 ทบทวนการใช้งาน CRUD ผ่าน GORM</li>
+      <li>🔍 Associations</li>
+      <li>🔍 Database Seeding</li>
+    </ul>
+  </li>
   <li>🔍 หลักการออกแบบ RESTful API</li>
   <li>🔍 ระบบยืนยันตัวตนและสิทธิ์</li>
-  <li>🔍 การเชื่อมต่อกับฐานข้อมูลด้วย GORM</li>
   <li>🔍 การตรวจสอบข้อมูลในฟอร์ม</li>
   <li>🔍 การอัพโหลดไฟล์ผ่านฟอร์ม</li>
   <li>🔍 การจัดการสิทธิ์แบบ RBAC</li>
@@ -266,8 +280,9 @@
     <td>
     <img src="https://img.shields.io/badge/Node.js-Planned-339933?style=flat-square&logo=node.js" alt="Node.js"/>
     <img src="https://img.shields.io/badge/Express-Planned-000000?style=flat-square&logo=express" alt="Express"/>
-    <img src="https://img.shields.io/badge/Go-25%25-00ADD8?style=flat-square&logo=go" alt="Go"/>
-    <img src="https://img.shields.io/badge/Gin-Starting-00ADD8?style=flat-square&logo=go" alt="Gin"/>
+    <img src="https://img.shields.io/badge/Go-40%25-00ADD8?style=flat-square&logo=go" alt="Go"/>
+    <img src="https://img.shields.io/badge/Gin-Learning-00ADD8?style=flat-square&logo=go" alt="Gin"/>
+    <img src="https://img.shields.io/badge/GORM-Learning-00ADD8?style=flat-square&logo=go" alt="GORM"/>
     </td>
   </tr>
   <tr>
@@ -284,6 +299,6 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 5 มิถุนายน 2568</p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 6 มิถุนายน 2568</p>
   <p><em>การเรียนรู้คือการเดินทาง ไม่ใช่จุดหมายปลายทาง</em></p>
 </div>

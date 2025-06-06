@@ -19,12 +19,12 @@
 - [Unit 3: String, []byte และ Rune](./documents/unit_3.md)
 - [Unit 4: Structs, Interfaces และ Go Modules](./documents/unit_4.md)
 - [Unit 5: Defer, Errors, Panic และ Recover](./documents/unit_5.md)
-- [Unit 6: Goroutines](./documents/unit-6/)
+- [Unit 6: Goroutines](./documents/unit_6.md)
 
-### [📁 RESTful API Development](./documents/)
+### [📁 RESTful API Development]
 
-- [Unit 7: สร้าง RESTful API ด้วย Gin Framework](./documents/unit-7/)
-- [Unit 8: การเชื่อมต่อฐานข้อมูลและใช้งาน GORM](./documents/unit-8/)
+- [Unit 7: สร้าง RESTful API ด้วย Gin Framework](./documents/unit_7.md)
+- [Unit 8: การเชื่อมต่อฐานข้อมูลและใช้งาน GORM](./documents/unit_8.md)
 - [Unit 9: Authentication และ Authorization](./documents/unit-9/)
 - [Unit 10: Production](./documents/unit-10/)
 
