@@ -163,7 +163,7 @@ func (a *ArticleController) SetArticleImage(c *gin.Context, article *models.Arti
 }
 ```
 
-## 🔧 การปรับปรุงเพิ่มเติมสำหรับปี 2024
+## 🔧 การปรับปรุงเพิ่มเติมสำหรับปี 2025
 
 ### 1. ใช้ Generic Response Pattern
 
@@ -281,7 +281,7 @@ project/
 └── main.go
 ```
 
-## 🚀 Best Practices 2024
+## 🚀 Best Practices 2025
 
 1. **ใช้ Dependency Injection**: ทำให้โค้ดทดสอบง่าย
 2. **Error Handling ที่ครอบคลุม**: จัดการทุกกรณีที่เป็นไปได้

@@ -76,8 +76,8 @@ GORM จะสร้าง table พิเศษชื่อ `migrations` เพ
 
 | ID                            | Applied At          |
 | ----------------------------- | ------------------- |
-| 20240315001_create_articles   | 2024-03-15 10:30:00 |
-| 20240316002_add_content_field | 2024-03-16 14:20:00 |
+| 20250315001_create_articles   | 2025-03-15 10:30:00 |
+| 20250316002_add_content_field | 2025-03-16 14:20:00 |
 
 ## 📝 การสร้าง Migration Files
 
@@ -86,12 +86,12 @@ GORM จะสร้าง table พิเศษชื่อ `migrations` เพ
 ```
 migrations/
 ├── migration.go
-└── m_20240315001_create_articles_table.go
+└── m_20250315001_create_articles_table.go
 ```
 
 ### ตัวอย่าง Migration File
 
-**migrations/m_20240315001_create_articles_table.go**
+**migrations/m_20250315001_create_articles_table.go**
 
 ```go
 package migrations
@@ -102,9 +102,9 @@ import (
   "gorm.io/gorm"
 )
 
-func M20240315001CreateArticlesTable() *gormigrate.Migration {
+func M20250315001CreateArticlesTable() *gormigrate.Migration {
   return &gormigrate.Migration{
-    ID: "20240315001",
+    ID: "20250315001",
     Migrate: func(tx *gorm.DB) error {
       // สร้าง table articles
       return tx.AutoMigrate(&models.Article{})
@@ -123,7 +123,7 @@ func M20240315001CreateArticlesTable() *gormigrate.Migration {
 # macOS/Linux
 date +%Y%m%d%H%M%S
 
-# ผลลัพธ์: 20240315143022
+# ผลลัพธ์: 20250315143022
 ```
 
 ## 🛠️ การจัดการ Migration
@@ -145,7 +145,7 @@ func Migrate() error {
   db := config.GetDB()
 
   m := gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{
-    M20240315001CreateArticlesTable(),
+    M20250315001CreateArticlesTable(),
     // เพิ่ม migrations อื่นๆ ที่นี่
   })
 
@@ -221,7 +221,7 @@ tx.Model(&models.Article{}).DropColumn("description")
 
 ### สิ่งที่ปรับปรุงใหม่
 
-#### 1. GORM v2 (2024)
+#### 1. GORM v2 (2025)
 
 ```go
 // เก่า (GORM v1)
@@ -259,9 +259,9 @@ db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 **1. Migration 001: Create Users Table**
 
 ```go
-func M20240315001CreateUsersTable() *gormigrate.Migration {
+func M20250315001CreateUsersTable() *gormigrate.Migration {
   return &gormigrate.Migration{
-    ID: "20240315001",
+    ID: "20250315001",
     Migrate: func(tx *gorm.DB) error {
       type User struct {
         gorm.Model
@@ -281,9 +281,9 @@ func M20240315001CreateUsersTable() *gormigrate.Migration {
 **2. Migration 002: Add User Foreign Key to Articles**
 
 ```go
-func M20240316002AddUserToArticles() *gormigrate.Migration {
+func M20250316002AddUserToArticles() *gormigrate.Migration {
   return &gormigrate.Migration{
-    ID: "20240316002",
+    ID: "20250316002",
     Migrate: func(tx *gorm.DB) error {
       return tx.Exec("ALTER TABLE articles ADD COLUMN user_id INTEGER").Error
     },
@@ -307,4 +307,4 @@ Migration ใน GORM ช่วยให้เราจัดการการ�
 
 ---
 
-_หมายเหตุ: ตัวอย่างโค้ดใน README นี้ได้ปรับปรุงให้ใช้ GORM v2 และ Gormigrate v2 ซึ่งเป็นเวอร์ชันล่าสุดในปี 2024_
+_หมายเหตุ: ตัวอย่างโค้ดใน README นี้ได้ปรับปรุงให้ใช้ GORM v2 และ Gormigrate v2 ซึ่งเป็นเวอร์ชันล่าสุดในปี 2025_

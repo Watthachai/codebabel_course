@@ -302,8 +302,8 @@ curl "http://localhost:8080/api/v1/articles/999"
       "author": "John Doe",
       "category": "Programming",
       "tags": ["go", "programming", "tutorial"],
-      "created_at": "2024-01-01T10:00:00Z",
-      "updated_at": "2024-01-06T10:00:00Z"
+      "created_at": "2025-01-01T10:00:00Z",
+      "updated_at": "2025-01-06T10:00:00Z"
     }
   ],
   "pagination": {
