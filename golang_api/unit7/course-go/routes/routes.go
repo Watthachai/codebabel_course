@@ -9,12 +9,25 @@ import (
 
 func Serve(r *gin.Engine) {
 	db := config.GetDB()
-	articlesGroup := r.Group("/api/v1/articles")
-	articlesController := controllers.Articles{DB: db}
+	v1 := r.Group("/api/v1")
+
+	articlesGroup := v1.Group("articles")
+	articleController := controllers.Articles{DB: db}
 	{
-		articlesGroup.GET("", articlesController.FindAll)
-		articlesGroup.GET("/:id", articlesController.FindOne)
-		articlesGroup.POST("", articlesController.Create)
+		articlesGroup.GET("", articleController.FindAll)
+		articlesGroup.GET("/:id", articleController.FindOne)
+		articlesGroup.PATCH("/:id", articleController.Update)
+		articlesGroup.DELETE("/:id", articleController.Delete)
+		articlesGroup.POST("", articleController.Create)
 	}
 
+	categoriesGroup := v1.Group("categories")
+	categoryController := controllers.Categories{DB: db}
+	{
+		categoriesGroup.GET("", categoryController.FindAll)
+		categoriesGroup.GET("/:id", categoryController.FindOne)
+		categoriesGroup.PATCH("/:id", categoryController.Update)
+		categoriesGroup.DELETE("/:id", categoryController.Delete)
+		categoriesGroup.POST("", categoryController.Create)
+	}
 }
