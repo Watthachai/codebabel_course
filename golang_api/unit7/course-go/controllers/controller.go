@@ -1,12 +1,17 @@
 package controllers
 
 import (
-	"math"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
+
+type pagination struct {
+	ctx     *gin.Context
+	query   *gorm.DB
+	records interface{}
+}
 
 type pagingResult struct {
 	Page      int `json:"page"`
@@ -17,45 +22,43 @@ type pagingResult struct {
 	TotalPage int `json:"totalPage"`
 }
 
-type pagination struct {
-	ctx     *gin.Context
-	query   *gorm.DB
-	records interface{}
-}
-
 func (p *pagination) paginate() *pagingResult {
 	page, _ := strconv.Atoi(p.ctx.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(p.ctx.DefaultQuery("limit", "12"))
 
-	ch := make(chan int)
-	go p.countRecords(ch)
+	if page <= 0 {
+		page = 1
+	}
+	if limit <= 0 {
+		limit = 12
+	}
 
 	offset := (page - 1) * limit
-	p.query.Limit(limit).Offset(offset).Find(p.records)
 
-	count := <-ch
-	totalPage := int(math.Ceil(float64(count) / float64(limit)))
+	// Create a session for counting to avoid affecting the main query
+	var totalCount int64
+	countQuery := p.query.Session(&gorm.Session{})
+	countQuery.Model(p.records).Count(&totalCount)
 
-	var nextPage int
-	if page == totalPage {
-		nextPage = totalPage
-	} else {
+	// Execute the main query with pagination
+	p.query.Offset(offset).Limit(limit).Find(p.records)
+
+	totalPage := int((totalCount + int64(limit) - 1) / int64(limit))
+
+	var prevPage, nextPage int
+	if page > 1 {
+		prevPage = page - 1
+	}
+	if page < totalPage {
 		nextPage = page + 1
 	}
 
 	return &pagingResult{
 		Page:      page,
 		Limit:     limit,
-		Count:     count,
-		PrevPage:  page - 1,
+		PrevPage:  prevPage,
 		NextPage:  nextPage,
+		Count:     int(totalCount),
 		TotalPage: totalPage,
 	}
-}
-
-func (p *pagination) countRecords(ch chan int) {
-	var count int64
-	p.query.Model(p.records).Count(&count)
-
-	ch <- int(count)
 }
