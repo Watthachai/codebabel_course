@@ -18,25 +18,32 @@ type Articles struct {
 }
 
 type createArticleForm struct {
-	Title   string                `form:"title" binding:"required"`
-	Body    string                `form:"body" binding:"required"`
-	Excerpt string                `form:"excerpt" binding:"required"`
-	Image   *multipart.FileHeader `form:"image" binding:"required"`
+	Title      string                `form:"title" binding:"required"`
+	Body       string                `form:"body" binding:"required"`
+	Excerpt    string                `form:"excerpt" binding:"required"`
+	CategoryID uint                  `form:"categoryId" binding:"required"`
+	Image      *multipart.FileHeader `form:"image" binding:"required"`
 }
 
 type updateArticleForm struct {
-	Title   string                `form:"title"`
-	Body    string                `form:"body"`
-	Excerpt string                `form:"excerpt"`
-	Image   *multipart.FileHeader `form:"image"`
+	Title      string                `form:"title"`
+	Body       string                `form:"body"`
+	Excerpt    string                `form:"excerpt"`
+	CategoryID uint                  `form:"categoryId"`
+	Image      *multipart.FileHeader `form:"image"`
 }
 
 type articleResponse struct {
-	ID      uint   `json:"id"`
-	Title   string `json:"title"`
-	Excerpt string `json:"excerpt"`
-	Body    string `json:"body"`
-	Image   string `json:"image"`
+	ID         uint   `json:"id"`
+	Title      string `json:"title"`
+	Excerpt    string `json:"excerpt"`
+	Body       string `json:"body"`
+	Image      string `json:"image"`
+	CategoryID uint   `json:"categoryId"`
+	Category   struct {
+		ID   uint   `json:"id"`
+		Name string `json:"name"`
+	} `json:"category"`
 }
 
 type articlesPaging struct {
@@ -44,16 +51,10 @@ type articlesPaging struct {
 	Paging *pagingResult     `json:"paging"`
 }
 
-type articleUpdateData struct {
-	Title   string `json:"title"`
-	Body    string `json:"body"`
-	Excerpt string `json:"excerpt"`
-}
-
 func (a *Articles) FindAll(ctx *gin.Context) {
 	var articles []models.Article
 
-	pagination := pagination{ctx: ctx, query: a.DB.Order("id desc"), records: &articles}
+	pagination := pagination{ctx: ctx, query: a.DB.Preload("Category").Order("id desc"), records: &articles}
 	paging := pagination.paginate()
 
 	var serializedArticles []articleResponse
@@ -95,17 +96,6 @@ func (a *Articles) Create(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, gin.H{"article": serializedArticle})
 }
 
-func (a *Articles) Delete(ctx *gin.Context) {
-	article, err := a.findArticleByID(ctx)
-	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-		return
-	}
-
-	a.DB.Delete(&article)
-	ctx.Status(http.StatusNoContent)
-}
-
 func (a *Articles) Update(ctx *gin.Context) {
 	var form updateArticleForm
 	if err := ctx.ShouldBind(&form); err != nil {
@@ -119,16 +109,27 @@ func (a *Articles) Update(ctx *gin.Context) {
 		return
 	}
 
-	// Create update data without the Image field
-	updateData := articleUpdateData{
-		Title:   form.Title,
-		Body:    form.Body,
-		Excerpt: form.Excerpt,
+	// Create update data map to avoid multipart.FileHeader issues
+	updateData := make(map[string]interface{})
+	if form.Title != "" {
+		updateData["title"] = form.Title
+	}
+	if form.Body != "" {
+		updateData["body"] = form.Body
+	}
+	if form.Excerpt != "" {
+		updateData["excerpt"] = form.Excerpt
+	}
+	if form.CategoryID != 0 {
+		updateData["category_id"] = form.CategoryID
 	}
 
-	if err := a.DB.Model(&article).Updates(updateData).Error; err != nil {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-		return
+	// Use Updates() instead of Update() for GORM v2
+	if len(updateData) > 0 {
+		if err := a.DB.Model(&article).Updates(updateData).Error; err != nil {
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			return
+		}
 	}
 
 	// Handle image upload separately
@@ -142,6 +143,17 @@ func (a *Articles) Update(ctx *gin.Context) {
 	var serializedArticle articleResponse
 	copier.Copy(&serializedArticle, article)
 	ctx.JSON(http.StatusOK, gin.H{"article": serializedArticle})
+}
+
+func (a *Articles) Delete(ctx *gin.Context) {
+	article, err := a.findArticleByID(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	a.DB.Unscoped().Delete(&article)
+	ctx.Status(http.StatusNoContent)
 }
 
 func (a *Articles) setArticleImage(ctx *gin.Context, article *models.Article) error {
@@ -173,7 +185,7 @@ func (a *Articles) findArticleByID(ctx *gin.Context) (*models.Article, error) {
 	var article models.Article
 	id := ctx.Param("id")
 
-	if err := a.DB.First(&article, id).Error; err != nil {
+	if err := a.DB.Preload("Category").First(&article, id).Error; err != nil {
 		return nil, err
 	}
 

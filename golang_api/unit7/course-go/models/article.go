@@ -4,8 +4,10 @@ import "gorm.io/gorm"
 
 type Article struct {
 	gorm.Model
-	Title   string `gorm:"unique;not null"`
-	Excerpt string `gorm:"not null"`
-	Body    string `gorm:"not null"`
-	Image   string `gorm:"not null"`
+	Title      string `json:"title"`
+	Body       string `json:"body"`
+	Excerpt    string `json:"excerpt"`
+	Image      string `json:"image"`
+	CategoryID uint
+	Category   Category
 }

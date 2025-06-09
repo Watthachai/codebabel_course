@@ -90,13 +90,25 @@ func (c *Categories) Update(ctx *gin.Context) {
 		return
 	}
 
-	if err := c.DB.Model(&category).Updates(&form).Error; err != nil {
-		ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
-		return
+	// Create update data map
+	updateData := make(map[string]interface{})
+	if form.Name != "" {
+		updateData["name"] = form.Name
+	}
+	if form.Desc != "" {
+		updateData["desc"] = form.Desc
+	}
+
+	// Use Updates() instead of Update() for GORM v2
+	if len(updateData) > 0 {
+		if err := c.DB.Model(&category).Updates(updateData).Error; err != nil {
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			return
+		}
 	}
 
 	var serializedCategory categoryResponse
-	copier.Copy(&serializedCategory, &category)
+	copier.Copy(&serializedCategory, category)
 	ctx.JSON(http.StatusOK, gin.H{"category": serializedCategory})
 }
 

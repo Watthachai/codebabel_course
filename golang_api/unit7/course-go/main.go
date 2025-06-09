@@ -4,6 +4,7 @@ import (
 	"course-go/config"
 	"course-go/migrations"
 	"course-go/routes"
+	"course-go/seed"
 	"log"
 	"os"
 
@@ -21,6 +22,7 @@ func main() {
 	config.InitDB()
 	defer config.CloseDB()
 	migrations.Migrate()
+	seed.Load()
 
 	r := gin.Default()
 

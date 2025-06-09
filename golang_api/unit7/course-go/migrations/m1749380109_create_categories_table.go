@@ -14,7 +14,7 @@ func m1749380109CreateCategoriesTable() *gormigrate.Migration {
 			return tx.AutoMigrate(&models.Category{})
 		},
 		Rollback: func(tx *gorm.DB) error {
-			return tx.Migrator().DropTable("articles")
+			return tx.Migrator().DropTable("categories")
 		},
 	}
 }
