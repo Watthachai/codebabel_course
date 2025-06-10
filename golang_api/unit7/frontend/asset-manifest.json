@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/static/js/main.affc0478.chunk.js",
+    "main.js.map": "/static/js/main.affc0478.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b43b082e.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b43b082e.js.map",
+    "static/css/2.ad76a385.chunk.css": "/static/css/2.ad76a385.chunk.css",
+    "static/js/2.de368096.chunk.js": "/static/js/2.de368096.chunk.js",
+    "static/js/2.de368096.chunk.js.map": "/static/js/2.de368096.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.7bc884576e433de4d6ba321bd29e9106.js": "/precache-manifest.7bc884576e433de4d6ba321bd29e9106.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.ad76a385.chunk.css.map": "/static/css/2.ad76a385.chunk.css.map",
+    "static/js/2.de368096.chunk.js.LICENSE.txt": "/static/js/2.de368096.chunk.js.LICENSE.txt",
+    "static/media/sathit.png": "/static/media/sathit.73636e81.png",
+    "static/media/sombut.png": "/static/media/sombut.8f784fcf.png",
+    "static/media/somchai.png": "/static/media/somchai.b68b4d9b.png",
+    "static/media/somprasong.png": "/static/media/somprasong.f65b03ee.png",
+    "static/media/sornthep.png": "/static/media/sornthep.292cd797.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b43b082e.js",
+    "static/css/2.ad76a385.chunk.css",
+    "static/js/2.de368096.chunk.js",
+    "static/js/main.affc0478.chunk.js"
+  ]
+}
