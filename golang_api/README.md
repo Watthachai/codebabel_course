@@ -25,18 +25,8 @@
 
 - [Unit 7: สร้าง RESTful API ด้วย Gin Framework](./documents/unit_7.md)
 - [Unit 8: การเชื่อมต่อฐานข้อมูลและใช้งาน GORM](./documents/unit_8.md)
-- [Unit 9: Authentication และ Authorization](./documents/unit-9/)
-- [Unit 10: Production](./documents/unit-10/)
-
-### 📁 Workshop Examples
-
-- [บทความจัดการระบบ (Article Management System)](./documents/article-management/)
-- [ตัวอย่าง API Endpoints](./documents/examples/)
-
-### 📁 Updates & Resources
-
-- [คอร์สอัพเดท](./resources/updates/)
-- [เครื่องมือและทรัพยากร](./resources/tools/)
+- [Unit 9: Authentication และ Authorization](./documents/unit_9.md)
+- [Unit 10: Production](./documents/unit_10.md)
 
 ---
 
