@@ -2,9 +2,9 @@
 
 <div align="center">
 
-![Overall Progress](https://img.shields.io/badge/Progress-100%25-4CAF50?style=for-the-badge&width=500)
+![Overall Progress](https://img.shields.io/badge/Progress-85%25-4CAF50?style=for-the-badge&width=500)
 
-## 📊 Learning Curve & Time Investment (2 Month Plan)
+## 📊 Learning Curve & Time Investment (3 Month Plan)
 
 <table>
   <tr>
@@ -62,6 +62,18 @@
   <td>Weeks 8-9</td>
   <td>4 มิ.ย. - 10 มิ.ย. 2568</td>
   </tr>
+  <tr>
+  <td>Cypress & K6 Testing</td>
+  <td>
+    <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
+    <div style="background:#17202C;height:100%;border-radius:5px;width:25%"></div>
+    </div>
+    <span>In Progress 🚧 (25%)</span>
+  </td>
+  <td>45 hrs</td>
+  <td>Weeks 10-12</td>
+  <td>16 มิ.ย. - เป็นต้นไป</td>
+  </tr>
 </table>
 
 </div>
@@ -118,6 +130,19 @@
     <p><strong>เสร็จสิ้น ✅</strong></p>
   </td>
 </tr>
+<tr>
+  <td colspan="2" align="center">
+    <img src="https://img.shields.io/badge/Phase-5-warning?style=for-the-badge" alt="Phase 5"/>
+    <h3>Automated Testing</h3>
+    <div style="margin: 10px 0;">
+      <a href="./cypress_k6_course/README.md">
+        <img src="https://img.shields.io/badge/📖_ดูเอกสาร-Cypress_&_K6_Testing-17202C?style=for-the-badge&logo=cypress" alt="Testing Docs"/>
+      </a>
+    </div>
+    <p>Cypress (Web Testing), K6 (Performance Testing)</p>
+    <p><strong>กำลังเรียน 🚧 (25%)</strong></p>
+  </td>
+</tr>
   </table>
 </div>
 
@@ -128,28 +153,34 @@
 <div align="center">
   <table width="100%">
     <tr>
-      <td align="center" width="25%">
+      <td align="center" width="20%">
         <a href="./reactFundCourse/workshop_product/frontend/README.md">
           <img src="https://img.shields.io/badge/React-Course-61DAFB?style=flat&logo=react&logoColor=white" alt="React Course"/>
           <br><strong>React Fundamentals</strong>
         </a>
       </td>
-      <td align="center" width="25%">
+      <td align="center" width="20%">
         <a href="./devops_course/README.md">
           <img src="https://img.shields.io/badge/DevOps-Course-326CE5?style=flat&logo=kubernetes&logoColor=white" alt="DevOps Course"/>
           <br><strong>DevOps Fundamentals</strong>
         </a>
       </td>
-      <td align="center" width="25%">
+      <td align="center" width="20%">
         <a href="./nextjs_course/README.md">
           <img src="https://img.shields.io/badge/Next.js-Course-000000?style=flat&logo=next.js&logoColor=white" alt="Next.js Course"/>
           <br><strong>Next.js Development</strong>
         </a>
       </td>
-      <td align="center" width="25%">
+      <td align="center" width="20%">
         <a href="./golang_api/README.md">
           <img src="https://img.shields.io/badge/Go-REST_API-00ADD8?style=flat&logo=go&logoColor=white" alt="Go REST API"/>
           <br><strong>Go RESTful API</strong>
+        </a>
+      </td>
+      <td align="center" width="20%">
+        <a href="./cypress_k6_course/README.md">
+          <img src="https://img.shields.io/badge/Testing-Course-17202C?style=flat&logo=cypress&logoColor=white" alt="Testing Course"/>
+          <br><strong>Cypress & K6</strong>
         </a>
       </td>
     </tr>
@@ -231,6 +262,34 @@
   <p><a href="./golang_api/README.md">📖 ดูรายละเอียดคอร์ส →</a></p>
 </details>
 
+<details>
+  <summary><strong>🚧 Automated Testing ด้วย Cypress และ K6 (กำลังเรียน - 25%)</strong></summary>
+  <br>
+  <ul>
+  <li>✅ ทบทวนการใช้งาน JavaScript (บท 1)</li>
+  <li>✅ ทบทวนการใช้งาน TypeScript (บท 2)</li>
+  <li>✅ Software Testing Techniques (บท 3)</li>
+  <li>✅ การตั้งค่าโปรเจค (บท 4)</li>
+  <li>✅ Mocha (บท 5)</li>
+  <li>🔄 Lodash (บท 6) - กำลังเรียน</li>
+  <li>⏳ jQuery Selectors (บท 7)</li>
+  <li>⏳ แบบฝึกหัดเรื่อง should และ expect (บท 8)</li>
+  <li>⏳ การใช้งาน within (บท 9)</li>
+  <li>⏳ แบบฝึกหัดเรื่อง Selectors (บท 10)</li>
+  <li>⏳ การตั้งค่าฐานข้อมูล (บท 11)</li>
+  <li>⏳ Tasks และ Fixtures (บท 12)</li>
+  <li>⏳ Excel Fixtures (บท 13)</li>
+  <li>⏳ ทบทวนการใช้งาน RESTful API (บท 14)</li>
+  <li>⏳ Authentication Testing (บท 15)</li>
+  <li>⏳ Authorization Testing (บท 16)</li>
+  <li>⏳ Form Testing (บท 17)</li>
+  <li>⏳ Debugging (บท 18)</li>
+  <li>⏳ API Testing (บท 19)</li>
+  <li>⏳ Performance Testing (บท 20)</li>
+  </ul>
+  <p><a href="./cypress_k6_course/README.md">📖 ดูรายละเอียดคอร์ส →</a></p>
+</details>
+
 ## 📈 การติดตามพัฒนาทักษะ
 
 <div align="center">
@@ -262,12 +321,21 @@
     <img src="https://img.shields.io/badge/CI/CD-100%25-FC6D26?style=flat-square&logo=gitlab" alt="CI/CD"/>
     </td>
   </tr>
+  <tr>
+    <td><strong>Testing</strong></td>
+    <td>
+    <img src="https://img.shields.io/badge/Cypress-25%25-17202C?style=flat-square&logo=cypress" alt="Cypress"/>
+    <img src="https://img.shields.io/badge/K6-25%25-7D64FF?style=flat-square&logo=k6" alt="K6"/>
+    <img src="https://img.shields.io/badge/Mocha-100%25-8D6748?style=flat-square&logo=mocha" alt="Mocha"/>
+    </td>
+  </tr>
   </table>
 </div>
 
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 10 มิถุนายน 2568</p>
-  <p><em>🎉 ภารกิจสำเร็จ! ทุกคอร์สเสร็จสมบูรณ์แล้ว</em></p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 16 มิถุนายน 2568</p>
+  <p><em>🚀 กำลังเรียนรู้ Automated Testing ด้วย Cypress และ K6</em></p>
 </div>
+
