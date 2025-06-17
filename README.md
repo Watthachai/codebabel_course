@@ -66,9 +66,9 @@
   <td>Cypress & K6 Testing</td>
   <td>
     <div style="background:#f0f0f0;border-radius:5px;height:15px;width:100%">
-    <div style="background:#17202C;height:100%;border-radius:5px;width:25%"></div>
+    <div style="background:#17202C;height:100%;border-radius:5px;width:50%"></div>
     </div>
-    <span>In Progress 🚧 (25%)</span>
+    <span>In Progress 🚧 (50%)</span>
   </td>
   <td>45 hrs</td>
   <td>Weeks 10-12</td>
@@ -140,7 +140,7 @@
       </a>
     </div>
     <p>Cypress (Web Testing), K6 (Performance Testing)</p>
-    <p><strong>กำลังเรียน 🚧 (25%)</strong></p>
+    <p><strong>กำลังเรียน 🚧 (50%)</strong></p>
   </td>
 </tr>
   </table>
@@ -263,7 +263,7 @@
 </details>
 
 <details>
-  <summary><strong>🚧 Automated Testing ด้วย Cypress และ K6 (กำลังเรียน - 25%)</strong></summary>
+  <summary><strong>🚧 Automated Testing ด้วย Cypress และ K6 (กำลังเรียน - 50%)</strong></summary>
   <br>
   <ul>
   <li>✅ ทบทวนการใช้งาน JavaScript (บท 1)</li>
@@ -271,12 +271,12 @@
   <li>✅ Software Testing Techniques (บท 3)</li>
   <li>✅ การตั้งค่าโปรเจค (บท 4)</li>
   <li>✅ Mocha (บท 5)</li>
-  <li>🔄 Lodash (บท 6) - กำลังเรียน</li>
-  <li>⏳ jQuery Selectors (บท 7)</li>
-  <li>⏳ แบบฝึกหัดเรื่อง should และ expect (บท 8)</li>
-  <li>⏳ การใช้งาน within (บท 9)</li>
-  <li>⏳ แบบฝึกหัดเรื่อง Selectors (บท 10)</li>
-  <li>⏳ การตั้งค่าฐานข้อมูล (บท 11)</li>
+  <li>✅ Lodash (บท 6)</li>
+  <li>✅ jQuery Selectors (บท 7)</li>
+  <li>✅ แบบฝึกหัดเรื่อง should และ expect (บท 8)</li>
+  <li>✅ การใช้งาน within (บท 9)</li>
+  <li>✅ แบบฝึกหัดเรื่อง Selectors (บท 10)</li>
+  <li>🔄 การตั้งค่าฐานข้อมูล (บท 11) - เตรียมเริ่ม</li>
   <li>⏳ Tasks และ Fixtures (บท 12)</li>
   <li>⏳ Excel Fixtures (บท 13)</li>
   <li>⏳ ทบทวนการใช้งาน RESTful API (บท 14)</li>
@@ -287,7 +287,7 @@
   <li>⏳ API Testing (บท 19)</li>
   <li>⏳ Performance Testing (บท 20)</li>
   </ul>
-  <p><a href="./cypress_k6_course/README.md">📖 ดูรายละเอียดคอร์ส →</a></p>
+  <p><a href="./cypress_k6_course/readme.md">📖 ดูรายละเอียดคอร์ส →</a></p>
 </details>
 
 ## 📈 การติดตามพัฒนาทักษะ
@@ -324,8 +324,8 @@
   <tr>
     <td><strong>Testing</strong></td>
     <td>
-    <img src="https://img.shields.io/badge/Cypress-25%25-17202C?style=flat-square&logo=cypress" alt="Cypress"/>
-    <img src="https://img.shields.io/badge/K6-25%25-7D64FF?style=flat-square&logo=k6" alt="K6"/>
+    <img src="https://img.shields.io/badge/Cypress-50%25-17202C?style=flat-square&logo=cypress" alt="Cypress"/>
+    <img src="https://img.shields.io/badge/K6-50%25-7D64FF?style=flat-square&logo=k6" alt="K6"/>
     <img src="https://img.shields.io/badge/Mocha-100%25-8D6748?style=flat-square&logo=mocha" alt="Mocha"/>
     </td>
   </tr>
@@ -335,7 +335,6 @@
 ---
 
 <div align="center">
-  <p><strong>ปรับปรุงล่าสุด:</strong> 16 มิถุนายน 2568</p>
-  <p><em>🚀 กำลังเรียนรู้ Automated Testing ด้วย Cypress และ K6</em></p>
+  <p><strong>ปรับปรุงล่าสุด:</strong> 17 มิถุนายน 2568</p>
+  <p><em>🚀 กำลังเรียนรู้ Automated Testing ด้วย Cypress และ K6 - เตรียมเริ่มบทที่ 11</em></p>
 </div>
-

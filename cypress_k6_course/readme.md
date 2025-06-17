@@ -7,11 +7,11 @@
 3. [Software Testing Techniques](./documents/03_software-testing-techniques.md)
 4. [การตั้งค่าโปรเจค](./documents/04_project-setting-guideline.md)
 5. [Mocha](./documents/05_mocha.md)
-6. [Lodash](./06-lodash.md)
-7. [jQuery Selectors](./07-jquery-selectors.md)
-8. [แบบฝึกหัดเรื่อง should และ expect](./08-should-expect-exercises.md)
-9. [การใช้งาน within](./09-within-usage.md)
-10. [แบบฝึกหัดเรื่อง Selectors](./10-selectors-exercises.md)
+6. [Lodash](./documents/06_lodash.md)
+7. [jQuery Selectors](./documents/07_jquery-selectors.md)
+8. [แบบฝึกหัดเรื่อง should และ expect]() เข้าถึงเนื้อหาไม่ได้
+9. [การใช้งาน within](./documents/09_how-to-use-within.md)
+10. [แบบฝึกหัดเรื่อง Selectors]() เข้าถึงเนื้อหาไม่ได้
 11. [การตั้งค่าฐานข้อมูล](./11-database-setup.md)
 12. [Tasks และ Fixtures](./12-tasks-fixtures.md)
 13. [Excel Fixtures](./13-excel-fixtures.md)
